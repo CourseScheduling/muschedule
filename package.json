@@ -1,0 +1,29 @@
+{
+  "name": "muscheduler",
+  "version": "0.0.1",
+  "description": "The UBC Course Scheduler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joe-tom/muscheduler.git"
+  },
+  "keywords": [
+    "scheduler",
+    "schedule",
+    "mu"
+  ],
+  "author": "Joe Thomas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joe-tom/muscheduler/issues"
+  },
+  "homepage": "https://github.com/joe-tom/muscheduler#readme",
+  "dependencies": {
+    "async": "^2.1.5",
+    "whoop": "0.0.2",
+    "xml2js": "^0.4.17"
+  }
+}

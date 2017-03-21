@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,300');
+@import url('https://fonts.googleapis.com/css?family=Anonymous+Pro');
+
+body{
+  background-color: #f2f2f2;
+  text-align: center;
+}
+#calendar__header{
+  font-family: Montserrat;
+  font-size: 35px;
+  width: 800px;
+  margin: auto;
+  text-align: left;
+  padding: 30px;
+  color: #444;
+  font-weight: 100;
+}
+  #calendar__subheader{
+    color: #888;
+    font-size: 11px;
+    font-weight: 300;
+    margin-left: 3px;
+    margin-top: 5px;
+  }
+  .calendar__nav{
+    font-family: Montserrat;
+    font-weight: 400;
+      font-size: 12px;
+      float: right;
+  }
+    .calendar__navlet{
+      padding: 10px;
+      display: inline-block;
+    }
+#calendar__wrap{
+  width: 600px;
+  max-height: 800px;
+  box-shadow: 0px 1px 1px #CCC;
+  border-radius: 3px;
+  padding: 5px;
+  background-color: #FFF;
+  margin: auto;
+  display: inline-block;
+}
+  .time__dayWrap{
+    width: calc(100% - 50px);
+    float: right;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #999;
+  }
+  .time__day{
+    font-size: 11px;
+    font-family: Anonymous Pro;
+    font-weight: 300;
+    display: inline-block;
+    width: calc(100% / 7);
+    border-left: 1px solid rgba(0,0,0,0.05);
+    box-sizing: border-box;
+    padding: 7.5px 0;
+  }
+  .time__row{
+    border-bottom: 1px dashed #EEE;
+    width: 100%;
+    float: left;
+    height: 40px;
+  }
+    .time__row:last-of-type{
+      border-bottom: 0;
+    }
+    .time__rowHead{
+      font-family: Anonymous Pro;
+      font-weight: 600;
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 1px;
+      height: 40px;
+      line-height: 40px;
+      width: 50px;
+      border-right: 1px solid rgba(0,0,0,0.05);
+      text-align: center;
+      float: left;
+      border-top: 0;
+    }
+      .time__rowHead--top{
+        border-top: 1px dashed #EEE;
+      }
+  .time__rowSplit{
+    border-bottom: 1px solid #f9f9f9;
+    width: calc(100% - 55px);
+    margin-top: 20px;
+    float: right;
+  }
+
+
+
+
+
+
+#calendar__control{
+  min-height: 300px;
+  width: 300px;
+  box-shadow: 0px 1px 1px #CCC;
+  background-color: #FFF;
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 10px;
+  border-radius: 3px;
+}
+  #calendar__courseWrap{
+    width: 100%;
+    float: left;
+    border-bottom: 2px solid #F2f2F2;
+  }
+    #calendar__search{
+      padding-left: 40px;
+      width: 100%;
+      border: 0;
+      font-family: Montserrat;
+      height: 40px;
+      background: url(glass.png) center left 7.5px no-repeat;
+      background-size: 25px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      outline: 0;
+      font-size: 10px;
+    }
+    #calendar__resultWrap{
+      width: 100%;
+    }
+      .calendar__result{
+        border-top: 1px solid #EEE;
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+        .calendar__resultHead{
+          font-family: Montserrat;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          text-align: left;
+        }
+        .calendar__resultBody{
+          font-family: Montserrat;
+          font-size: 10px;
+          color: #999;
+          text-align: left;
+          margin-top: 4px;
+        }
+        .calendar__result:hover{
+          background-color: #F2f2F2;
+          cursor: pointer;
+        }
