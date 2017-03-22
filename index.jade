@@ -9,7 +9,7 @@ html
         each day in ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
           div.time__day=day
       div.time__row
-        div.time__rowHead.time__rowHead--top 7:00
+        div.time__rowHead.time__rowHead--top 07:00
         div.time__rowSplit
       each hour in [8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11]
         div.time__row
@@ -28,3 +28,24 @@ html
           .calendar__result
             .calendar__resultHead CPSC 110
             .calendar__resultBody Introduction to computer science, and that stuff.
+      #calendar__added
+        .added__course
+          .remove__courseBtn
+          .added__courseLbl CPSC 110
+        .added__course.added__course--color1
+          .remove__courseBtn
+          .added__courseLbl CPSC 210
+        .added__course.added__course--color2
+          .remove__courseBtn
+          .added__courseLbl CPSC 310
+        .added__course.added__course--color3
+          .remove__courseBtn
+          .added__courseLbl CHEM 113
+        .added__course.added__course--color4
+          .remove__courseBtn
+          .added__courseLbl CPEN 310
+      #calendar__range
+        .range__label.range__label--left MORNING
+        .range__label.range__label--right EVENING
+        .range__nub
+        .range__line

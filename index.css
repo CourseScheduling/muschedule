@@ -84,6 +84,7 @@ body{
       border-top: 0;
     }
       .time__rowHead--top{
+        margin-top: -1px;
         border-top: 1px dashed #EEE;
       }
   .time__rowSplit{
@@ -153,3 +154,88 @@ body{
           background-color: #F2f2F2;
           cursor: pointer;
         }
+
+#calendar__added{
+  float: left;
+  width: 100%;
+  margin-top: 10px;
+  padding: 0px 10px;
+}
+  .added__course{
+    font-family: Montserrat;
+    font-weight: 300;
+    color: #FFF;
+    float: left;
+    padding: 7.5px 10px 7.5px 5px;
+    font-size: 10px;
+    background-color: #446CB3;
+    margin: 3px;
+    border-radius: 5px;
+  }
+
+  .added__course--color1{
+    background-color: #87D37C;
+  }
+  .added__course--color2{
+    background-color: #EB974E;
+  }
+  .added__course--color3{
+    background-color: #CF000F;
+  }
+  .added__course--color4{
+    background-color: #1BBC9B;
+  }
+
+  .remove__courseBtn{
+    height: 12px;
+    width: 12px;
+    background: url(./x.png) center center no-repeat;
+    background-size: 100%;
+    float: left;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  .added__courseLbl{
+    float: right;
+  }
+
+#calendar__range{
+  width: 100%;
+  margin-top: 10px;
+  float: left;
+  margin-bottom: 10px;
+  border-top: 1px solid #EEE;
+  padding-top: 5px;
+}
+  .range__label{
+    font-family: Montserrat;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block;
+    color: #999;
+    margin: 0px 10px;
+  }
+  .range__label--left{
+    float: left;
+  }
+  .range__label--right{
+    float: right;
+  }
+
+  .range__nub{
+    height: 20px;
+    width: 20px;
+    box-shadow: 0px 1px 1px #999;
+    border-radius: 10px;
+    float: left;
+  }
+  .range__line{
+    height: 3px;
+    width: 90%;
+    background-color: #446CB3;
+    border-radius: 3px;
+    float: left;
+    margin-left: 5%;
+    margin-top: 10px;
+  }
