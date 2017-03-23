@@ -1,19 +1,24 @@
+doctype html
 html
   head
+    meta(content="text/html; charset=UTF-8" http-equiv="content-type")
     link(rel="stylesheet" href="./index.css")
   body
-    div#calendar__header #[span(style="font-weight:400;color: #8E44AD") µ]Schedule
+    div#calendar__header #[span(style="font-weight:400;color: #FFF;background-color: #D2527F;padding: 0 3px;margin-right: 2px;") µ]Schedule
       div#calendar__subheader Course planning is now super easy.
     div#calendar__wrap
       div.time__dayWrap
         each day in ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
           div.time__day=day
       div.time__row
-        div.time__rowHead.time__rowHead--top 07:00
+        div.time__rowHead.time__rowHead--top &nbsp;7:00
         div.time__rowSplit
       each hour in [8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11]
         div.time__row
-          div.time__rowHead=(hour >= 10? hour:'0'+hour)+':00'
+          if hour >= 10
+            div.time__rowHead #{hour}:00
+          else
+            div.time__rowHead &nbsp;#{hour}:00
           div.time__rowSplit
     div#calendar__control
       #calendar__courseWrap
@@ -23,10 +28,10 @@ html
             .calendar__resultHead CPSC 110
             .calendar__resultBody Introduction to computer science, and that stuff.
           .calendar__result
-            .calendar__resultHead CPSC 110
+            .calendar__resultHead CPSC 210
             .calendar__resultBody Introduction to computer science, and that stuff.
           .calendar__result
-            .calendar__resultHead CPSC 110
+            .calendar__resultHead CPSC 300
             .calendar__resultBody Introduction to computer science, and that stuff.
       #calendar__added
         .added__course
@@ -45,7 +50,14 @@ html
           .remove__courseBtn
           .added__courseLbl CPEN 310
       #calendar__range
+        .range__label.range__label--left 1 RMP
+        .range__label.range__label--right 5 RMP
+        .range__wrap
+          .range__line
+          .range__nub
+      #calendar__range
         .range__label.range__label--left MORNING
         .range__label.range__label--right EVENING
-        .range__nub
-        .range__line
+        .range__wrap
+          .range__line
+          .range__nub

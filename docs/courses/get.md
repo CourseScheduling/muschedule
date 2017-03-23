@@ -12,7 +12,7 @@ Grab the courses from the model as specified.
    These are the most important part of this route. CSV is a string of comma separated values.
    *Required*
    `courses=[CSV<String>]`
-    * courses cannot contain more than 12 values. Or 0 values.
+    * you cannot put in more than 12 courses
    
 * **Success Response**
    * **Code**: 200
