@@ -1,4 +1,4 @@
-#getCourses
+# getCourses
 ---
 Grab the courses from the model as specified.
 
@@ -19,7 +19,7 @@ Grab the courses from the model as specified.
    * **Content**: 
    ```
     {
-        courses: []
+      "courses": []
     }
    ```   
    
@@ -28,6 +28,6 @@ Grab the courses from the model as specified.
    * **Content**: 
    ```
     {
-        error: "You put in too many courses..."
+      "error": "You put in too many courses..."
     }
    ```
