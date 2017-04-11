@@ -17,6 +17,7 @@ var SectionSchema = new Schema({
 
 // This is the Schema for a single course.
 var CourseSchema = new Schema({
+  id: Number,
   name: String,
   tags: [String],
   description: String,
