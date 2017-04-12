@@ -11,7 +11,8 @@ var SectionSchema = new Schema({
   time: [Number],
   campus: String,
   status: String,
-  comment: String
+  comment: String,
+  mangled: [[Number]]
 })
 
 

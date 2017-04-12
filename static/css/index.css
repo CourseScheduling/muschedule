@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:100,300');
-@import url('https://fonts.googleapis.com/css?family=Anonymous+Pro');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,300,400');
 
 body{
   background-color: #f2f2f2;
@@ -25,13 +24,51 @@ body{
   .calendar__nav{
     font-family: Montserrat;
     font-weight: 400;
-      font-size: 12px;
-      float: right;
+    font-size: 12px;
+    float: right;
   }
     .calendar__navlet{
       padding: 10px;
       display: inline-block;
     }
+.material{
+  font-family: Montserrat;
+  font-size: 11px;
+  letter-spacing: 1px;
+  background-color: #FFF;
+  padding: 10px;
+  width: 80%;
+  box-sizing: border-box;
+  margin: auto;
+  margin-bottom: -200px;
+  display: inline-block;
+  background-color: #D2527F;
+  color: #FFF;
+  border-radius: 5px;
+  font-weight: 400;
+  cursor: pointer;
+  margin-top: 50px;
+}
+#calendar__termWrap{
+  width: 100%;
+  float: left;
+  border-bottom: 1px solid #EEE;
+}
+  .calendar__term{
+    width: 50%;
+    display: inline-block;
+    padding: 10px;
+    border-right: 1px solid #EEE;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+    font-weight: 300;
+    font-family: Montserrat;
+    font-size: 12px;
+  }
+    .calendar__term--inactive{
+      background-color: #F9f9f9;
+    }
+
 #calendar__wrap{
   width: 600px;
   max-height: 800px;
@@ -51,17 +88,17 @@ body{
     color: #999;
   }
   .time__day{
-    font-size: 11px;
-    font-family: Anonymous Pro;
-    font-weight: 300;
+    font-size: 10px;
+    font-family: Montserrat;
+    font-weight: 800;
     display: inline-block;
-    width: calc(100% / 7);
+    width: calc(100% / 5);
     border-left: 1px solid rgba(0,0,0,0.05);
     box-sizing: border-box;
     padding: 7.5px 0;
   }
   .time__row{
-    border-bottom: 1px dashed #EEE;
+    border-bottom: 1px solid #f9f9f9;
     width: 100%;
     float: left;
     height: 40px;
@@ -85,7 +122,7 @@ body{
     }
       .time__rowHead--top{
         margin-top: -1px;
-        border-top: 1px dashed #EEE;
+        border-top: 1px solid #EEE;
       }
   .time__rowSplit{
     border-bottom: 1px solid #f9f9f9;
@@ -120,7 +157,7 @@ body{
       border: 0;
       font-family: Montserrat;
       height: 40px;
-      background: url(glass.png) center left 7.5px no-repeat;
+      background: url(../img/glass.png) center left 7.5px no-repeat;
       background-size: 25px;
       letter-spacing: 0.5px;
       text-transform: uppercase;
@@ -157,9 +194,10 @@ body{
 
 #calendar__added{
   float: left;
-  width: 100%;
+  max-width: 100%;
   margin-top: 10px;
   padding: 0px 10px;
+  box-sizing: border-box;
 }
   .added__course{
     font-family: Montserrat;
@@ -172,7 +210,16 @@ body{
     margin: 3px;
     border-radius: 5px;
     cursor: default;
+    width: 85px;
+    height: 28px;
+    transition: height .25s, width .25s;
+    box-sizing: border-box;
   }
+    .added__course--active{
+      height: 100px;
+      width: 200px;
+      transition: height .25s, width .25s;
+    }
 
   .added__course--color1{
     background-color: #87D37C;
@@ -190,7 +237,7 @@ body{
   .remove__courseBtn{
     height: 12px;
     width: 12px;
-    background: url(./x.png) center center no-repeat;
+    background: url(../img/x.png) center center no-repeat;
     background-size: 100%;
     float: left;
     margin-right: 5px;
@@ -211,7 +258,7 @@ body{
   .range__label{
     font-family: Montserrat;
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 400;
     text-transform: uppercase;
     display: inline-block;
     color: #999;
@@ -251,3 +298,41 @@ body{
       z-index: 1;
       top: 13.5px;
     }
+
+
+
+
+    .time__block{
+      height: 41px;
+      width: 110px; /* This is 550px / 7 */
+      font-family: Montserrat;
+      background-color: #00B16A;
+      margin-top: 60px;
+      margin-left: 51px;
+      z-index: 100;
+      color: #FFF;
+      border-radius: 3px;
+      position: absolute;
+      box-sizing: border-box;
+      padding-top: 5px;
+    }
+      .block__course{
+        font-weight: 400;
+        font-size: 12px;
+        letter-spacing: 1px;
+      }
+      .block__time{
+        color: #000;
+        font-weight: 500;
+        font-size: 9px;
+        margin-top: 5px;
+      }
+      .block__lock {
+        height: 15px;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 15px;
+        background: url(/static/img/lock.png) center center no-repeat;
+        background-size: 100%;
+      }

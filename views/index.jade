@@ -2,13 +2,17 @@ doctype html
 html
   head
     meta(content="text/html; charset=UTF-8" http-equiv="content-type")
-    link(rel="stylesheet" href="./index.css")
+    link(rel="stylesheet" href="/static/css/index.css")
   body
-    div#calendar__header #[span(style="font-weight:400;color: #FFF;background-color: #D2527F;padding: 0 3px;margin-right: 2px;") µ]Schedule
+    div#calendar__header #[span(style="font-weight:300;color: #FFF;background-color: #D2527F;padding: 0 3px;margin-right: 2px;") µ]Schedule
       div#calendar__subheader Course planning is now super easy.
     div#calendar__wrap
+      div.time__block
+        div.block__course CPSC 110
+        div.block__time 11:00 - 12:00
+        div.block__lock
       div.time__dayWrap
-        each day in ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+        each day in ['Mon','Tue','Wed','Thu','Fri']
           div.time__day=day
       div.time__row
         div.time__rowHead.time__rowHead--top &nbsp;7:00
@@ -21,6 +25,9 @@ html
             div.time__rowHead &nbsp;#{hour}:00
           div.time__rowSplit
     div#calendar__control
+      div#calendar__termWrap
+        div.calendar__term TERM 1
+        div.calendar__term.calendar__term--inactive TERM 2
       #calendar__courseWrap
         input(placeholder="Find your courses..")#calendar__search
         #calendar__resultWrap
@@ -34,7 +41,7 @@ html
             .calendar__resultHead CPSC 300
             .calendar__resultBody Introduction to computer science, and that stuff.
       #calendar__added
-        .added__course
+        .added__course.added__course--active
           .remove__courseBtn
           .added__courseLbl CPSC 110
         .added__course.added__course--color1
@@ -49,15 +56,15 @@ html
         .added__course.added__course--color4
           .remove__courseBtn
           .added__courseLbl CPEN 310
-      #calendar__range
-        .range__label.range__label--left 1 RMP
-        .range__label.range__label--right 5 RMP
-        .range__wrap
+      #calendar__range(style="display: none")
+        .range__wrap#time
           .range__line
           .range__nub
-      #calendar__range
-        .range__label.range__label--left MORNING
-        .range__label.range__label--right EVENING
-        .range__wrap
-          .range__line
-          .range__nub
+      div.material AUTO GENERATE
+    script.
+      [].forEach.call(document.getElementsByClassName('added__course'), (el) => {
+        el.onclick = (e) => {
+          el.classList.toggle('added__course--active')
+        }
+      })
+
