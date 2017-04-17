@@ -3,6 +3,7 @@ html
   head
     meta(content="text/html; charset=UTF-8" http-equiv="content-type")
     link(rel="stylesheet" href="/static/css/index.css")
+    link(rel="stylesheet" href="/static/css/gen.css")
   body
     div#calendar__header #[span(style="font-weight:300;color: #FFF;background-color: #D2527F;padding: 0 3px;margin-right: 2px;") µ]Schedule
       div#calendar__subheader Course planning is now super easy.
@@ -61,6 +62,16 @@ html
           .range__line
           .range__nub
       div.material AUTO GENERATE
+    div#gen(style="display:none").fadeMeFast
+      div#gen__wrap
+        div#gen__center
+          div#gen__loading
+            div.gen__loadingText Generating Schedules
+            div#loading__container
+              div.loading__dot
+              div.loading__dot
+              div.loading__dot
+            div.gen__loadingSubText.fadeMe Looking Through #[label(style="background-color: #444;padding: 2px 4px; margin: 0 4px; font-family: Courier") 1,123,743,238] Potential Schedules
     script.
       [].forEach.call(document.getElementsByClassName('added__course'), (el) => {
         el.onclick = (e) => {

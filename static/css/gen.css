@@ -7,8 +7,9 @@
   height: 100%;
   width: 100%;
   text-align: center;
-  background-color: rgba(0,0,0,0.9);
+  background-color: rgba(0,0,0,0.93);
     overflow-y: scroll;
+    z-index: 100000000;
 }
   #gen__center{
     width: 90%;
@@ -72,6 +73,13 @@
           -ms-animation: fadein 1s; /* Internet Explorer */
            -o-animation: fadein 1s; /* Opera < 12.1 */
               animation: fadein 1s;
+    }
+    .fadeMeFast{
+      -webkit-animation: fadein 0.25s; /* Safari, Chrome and Opera > 12.1 */
+         -moz-animation: fadein 0.25s; /* Firefox < 16 */
+          -ms-animation: fadein 0.25s; /* Internet Explorer */
+           -o-animation: fadein 0.25s; /* Opera < 12.1 */
+              animation: fadein 0.25s;
     }
     @keyframes fadein {
         from { opacity: 0; }

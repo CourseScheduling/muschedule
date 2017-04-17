@@ -1,2 +1,2 @@
 # muschedule
-The new  uplanit / schedular thing.
+The new  Uplanit / Schedular thing.

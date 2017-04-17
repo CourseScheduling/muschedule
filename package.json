@@ -23,7 +23,17 @@
   "homepage": "https://github.com/joe-tom/muscheduler#readme",
   "dependencies": {
     "async": "^2.1.5",
+    "pump": "^1.0.2",
     "whoop": "0.0.2",
     "xml2js": "^0.4.17"
+  },
+  "devDependencies": {
+    "gulp": "latest",
+    "gulp-util": "latest",
+    "gulp-sass": "latest",
+    "gulp-coffee": "latest",
+    "gulp-uglify": "latest",
+    "gulp-concat": "latest",
+    "gulp-connect": "latest"
   }
 }
