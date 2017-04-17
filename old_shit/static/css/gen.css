@@ -68,22 +68,29 @@
     }
 
     .fadeMe{
-      -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
-         -moz-animation: fadein 1s; /* Firefox < 16 */
-          -ms-animation: fadein 1s; /* Internet Explorer */
-           -o-animation: fadein 1s; /* Opera < 12.1 */
+      -webkit-animation: fadein 1s;
+         -moz-animation: fadein 1s;
+          -ms-animation: fadein 1s;
+           -o-animation: fadein 1s;
               animation: fadein 1s;
     }
     .fadeMeFast{
-      -webkit-animation: fadein 0.25s; /* Safari, Chrome and Opera > 12.1 */
-         -moz-animation: fadein 0.25s; /* Firefox < 16 */
-          -ms-animation: fadein 0.25s; /* Internet Explorer */
-           -o-animation: fadein 0.25s; /* Opera < 12.1 */
+      -webkit-animation: fadein 0.25s;
+         -moz-animation: fadein 0.25s;
+          -ms-animation: fadein 0.25s;
+           -o-animation: fadein 0.25s;
               animation: fadein 0.25s;
     }
     @keyframes fadein {
         from { opacity: 0; }
         to   { opacity: 1; }
+    }
+
+    .gen__loadingNum{
+      background-color: #444;
+      padding: 2px 4px;
+      margin: 0 4px; 
+      font-family: Courier;
     }
 
 
