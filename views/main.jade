@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    meta(content="text/html; charset=UTF-8" http-equiv="content-type")
+    link(rel="stylesheet" href="/static/template.css")
+  body
+    #calendar__header #[span.calendar__header--bold µ]Schedule
+      #calendar__subheader Course planning is now super easy.
+    #calendar__wrap
+      #calendar__left
+        include comps/calendar__main
+      #calendar__right
+        include comps/calendar__control

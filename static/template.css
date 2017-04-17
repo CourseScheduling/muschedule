@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500');
+
+body{
+  background-color: #f2f2f2;
+  text-align: center;
+}
+
+/** Header stuff on the Calendar */
+#calendar__header{
+  font-family: Montserrat;
+  font-size: 35px;
+  width: 900px;
+  margin: auto;
+  text-align: left;
+  padding: 30px;
+  color: #444;
+  font-weight: 100;
+}
+  .calendar__header--bold{
+    font-weight:300;
+    color: #FFF;
+    background-color: #D2527F;
+    padding: 0 3px;
+    margin-right: 2px;
+  }
+#calendar__subheader{
+  color: #888;
+  font-size: 11px;
+  font-weight: 300;
+  margin-left: 3px;
+  margin-top: 5px;
+}
+
+/** Main stuff on the Calendar */
+#calendar__wrap{
+  width: 1000px;
+  margin: auto;
+  min-height: 30px;
+}
+  #calendar__left{
+    width: 60%;
+    height: 100%;
+    float: left;
+  }
+  #calendar__right{
+    width: 30%;
+    height: 100%;
+    float: right;
+  }
+
+.material{
+  background-color: #FFF;
+  box-shadow: 0px 1px 2px #BBB;
+  border-radius: 3px;
+}
