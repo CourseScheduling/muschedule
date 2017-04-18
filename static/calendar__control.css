@@ -1,4 +1,38 @@
-#control{
+#control__search{
   width: 100%;
-  height: 30px;
+  display: inline-block;
+}
+  #searchInp{
+    padding-left: 40px;
+    width: 100%;
+    border: 0;
+    font-family: Montserrat;
+    height: 40px;
+    background: url(./img/glass.png) center left 7.5px no-repeat;
+    background-size: 25px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    outline: 0;
+    font-size: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+  }
+  .result__wrap{
+    display: inline-block;
+    height: 40px;
+    background-color: #FFF;
+    border-top: 1px solid #EEE;
+  }
+
+#generateBtn{
+  padding: 10px 0;
+  margin: 0 50px;
+  margin-top: 20px;
+  width: 100px;
+  font-family: Montserrat;
+  font-size: 10px;
+  letter-spacing: 1px;
+  background-color: #D2527F;
+  color: #FFF;
+  display: inline-block;
 }
