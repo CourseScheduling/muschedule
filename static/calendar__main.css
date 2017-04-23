@@ -9,7 +9,7 @@
     float: left;
     border-bottom: 1px solid #f9f9f9;
     color: #000;
-    background-color: #EEE;
+    background-color: #DDD;
   }
     .cal__day{
       width: calc(92% / 5);
@@ -40,7 +40,7 @@
     color: #000;
   }
     .cal__rowTime{
-      background-color: #EEE;
+      background-color: #DDD;
       border-right: 1px solid #FFF;
       width: 8%;
       text-align: center;

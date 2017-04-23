@@ -1,6 +1,9 @@
 link(rel="stylesheet" href="/static/calendar__control.css")
-#control__search.material
-  input(type="text" placeholder="FIND ALL YOUR COURSES")#searchInp
-  .result__wrap
-
+#control__wrap
+  #control__search.material
+    input(type="text" placeholder="FIND ALL YOUR COURSES" v-model="query" @keydown="logDown()" @keyup="logUp(),search()")#searchInp
+    .result__wrap
+      .search__result(v-for="result in results")
+        .search__resultHead {{result.course}}
+        .search__resultBody {{result.description}}
 #generateBtn.material AUTO GEN

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500');
 
 body{
-  background-color: #f2f2f2;
+  background-color: #EEE;
   text-align: center;
 }
 
@@ -19,7 +19,7 @@ body{
   .calendar__header--bold{
     font-weight:300;
     color: #FFF;
-    background-color: #D2527F;
+    background-color: #8E44AD;
     padding: 0 3px;
     margin-right: 2px;
   }

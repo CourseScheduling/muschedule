@@ -11,3 +11,9 @@ link(rel="stylesheet" href="/static/calendar__main.css")
         div.cal__rowTime #{hour}:00
       else
         div.cal__rowTime &nbsp;#{hour}:00
+
+
+  #calendar__blockWrap
+    // This is where we can begin view modification.
+    div(v-for="group in groups")
+      div(v-for)
