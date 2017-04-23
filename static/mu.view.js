@@ -62,7 +62,7 @@ View.Selector = new Vue({
 View.Selector.logUp = function () {
   
   setTimeout(function () {
-    this.typing = 
+    this.typing = false
   }, 200)
 }
 
@@ -75,6 +75,11 @@ View.Selector.logDown = function () {
 
 
 View.Selector.search = function () {
+  var query = this.query.trim()
+  
+  if (!query) {
+    this.results = []
+  }
   // Calculate every 500ms or when the person stops typing. Whichever comes first.
   
 

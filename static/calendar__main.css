@@ -3,19 +3,19 @@
   position: relative;
   display: inline-block;
   overflow: hidden;
-  background-color: #e0e0e0;
+  background-color: #fafafa;
 }
   .cal__dayWrap{
     width: 100%;
     float: left;
-    border-bottom: 1px solid #D6D6D6;
+    border-bottom: 1px solid #EEE;
     color: #000;
-    background-color: #D0D0D0;
+    background-color: #FFF;
   }
     .cal__day{
       width: calc(92% / 5);
       display: inline-block;
-      border-left: 1px solid #D6D6D6;
+      border-left: 1px solid #EEE;
       box-sizing: border-box;
       padding: 10px;
       font-family: Montserrat;
@@ -30,7 +30,7 @@
 
   .cal__row{
     width: 100%;
-    border-bottom: 1px solid #D6D6D6;
+    border-bottom: 1px solid #EEE;
     height: 40px;
     line-height: 40px;
     float: left;
@@ -41,8 +41,8 @@
     color: #000;
   }
     .cal__rowTime{
-      background-color: #D0D0D0;
-      border-right: 1px solid #D6D6D6;
+      background-color: #FFF;
+      border-right: 1px solid #EEE;
       width: 8%;
       text-align: center;
     }
