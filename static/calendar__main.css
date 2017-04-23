@@ -9,14 +9,14 @@
     float: left;
     border-bottom: 1px solid #f9f9f9;
     color: #000;
-    background-color: #DDD;
+    background-color: #f4f4f4;
   }
     .cal__day{
       width: calc(92% / 5);
       display: inline-block;
       border-left: 1px solid #f9f9f9;
       box-sizing: border-box;
-      padding: 5px;
+      padding: 10px;
       font-family: Montserrat;
       font-size: 10px;
       font-weight: 400;
@@ -40,7 +40,7 @@
     color: #000;
   }
     .cal__rowTime{
-      background-color: #DDD;
+      background-color: #f4f4f4;
       border-right: 1px solid #FFF;
       width: 8%;
       text-align: center;
