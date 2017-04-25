@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500');
 
 body{
-  background: #232526;  
-  height:100%;
+  background: url(/static/img/background.png) #232526;  
+  background-size: 20%;
+  height: 100%;
   text-align: center;
 }
 
@@ -51,6 +52,6 @@ body{
 
 .material{
   background-color: #ddd;
-  border-radius: 3px;
   overflow: hidden;
+  border-radius: 3px;
 }
