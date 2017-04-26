@@ -66,28 +66,43 @@ View.Selector.logUp = function () {
   }, 200)
 }
 
-
 View.Selector.logDown = function () {
   var self = this
   this.typing = true
 }
 
-
-
 View.Selector.search = function () {
   var query = this.query.trim()
   
+  console.log(query )
   if (!query) {
     this.results = []
+    return
   }
+
   // Calculate every 500ms or when the person stops typing. Whichever comes first.
-  
-
-
-  this.results = (this.query + "000000").split('').slice(0,5).map((i) => {
+  this.results = (this.query).split('').slice(0,5).map((i) => {
     return {
       course: i,
       description: `${i} is the best course ever`
     }
   })
 }
+
+View.Selector.showGenerator = function () {
+  View.Generator.show()
+}
+
+
+//////////////////////////////////////////
+// View Logic for the Generator Loading //
+//////////////////////////////////////////
+
+View.Generator = new Vue({
+  el: '#gen__wrap',
+  data: {
+    visible: false,
+    loading: false,
+    number: 100000
+  }
+})

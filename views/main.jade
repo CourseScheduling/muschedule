@@ -3,6 +3,7 @@ html
   head
     meta(content="text/html; charset=UTF-8" http-equiv="content-type")
     link(rel="stylesheet" href="/static/template.css")
+    link(rel="stylesheet" href="/static/schedule.css")
   body
     #calendar__header #[span.calendar__header--bold µ]Schedule
       #calendar__subheader Course planning is now super easy.
@@ -11,6 +12,7 @@ html
         include comps/calendar__main
       #calendar__right
         include comps/calendar__control
-
+    div#gen__wrap(v-show="visible")
+      include comps/schedule__loading
     script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.min.js")
     script(src="/static/mu.view.js")

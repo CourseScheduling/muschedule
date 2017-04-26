@@ -1,4 +1,4 @@
-style.
+
   @import url('https://fonts.googleapis.com/css?family=Montserrat:100,300,400');
 
   #gen__wrap{
@@ -95,19 +95,6 @@ style.
       }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   .schedule{
     height: 600px;
     width: 600px;
@@ -121,16 +108,3 @@ style.
       width: 100%;
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-
-div#gen__wrap
-  div#gen__center
-    div#gen__loading
-      div.gen__loadingText Generating Schedules
-      div#loading__container
-        div.loading__dot
-        div.loading__dot
-        div.loading__dot
-      div.gen__loadingSubText.fadeMe.
-        Looking Through
-        #[label.gen__loadingNum 1,123,743,238]
-        Potential Schedules

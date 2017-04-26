@@ -72,3 +72,19 @@
   display: inline-block;
   cursor: pointer;
 }
+
+
+.control__courseWrap{
+  background-color: #FFF; 
+  margin-top: 10px;
+}
+  .control__header{
+    font-family: Montserrat;
+    font-size: 8px;
+    width: 100%;
+    text-align: left;
+    padding: 5px;
+    color: #888;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
