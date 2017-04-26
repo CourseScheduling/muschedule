@@ -1,7 +1,9 @@
 link(rel="stylesheet" href="/static/calendar__control.css")
 
 #control__wrap
-  .material Term1 | Term2
+  .material 
+    .term__item.term__item--one.term__item--active &nbsp;&nbsp;Term1&nbsp;&nbsp;
+    .term__item &nbsp;&nbsp;Term2&nbsp;&nbsp;
   br
   #control__search.material
     input(type="text" placeholder="ENTER ALL YOUR COURSES" v-model="query" @keydown="logDown()" @keyup="logUp(),search()")#searchInp

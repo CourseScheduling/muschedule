@@ -12,7 +12,7 @@ html
         include comps/calendar__main
       #calendar__right
         include comps/calendar__control
-    div#gen__wrap(v-show="visible")
+    div#gen__wrap(v-show="visible").fadeMeFast
       include comps/schedule__loading
     script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.min.js")
     script(src="/static/mu.view.js")

@@ -106,3 +106,8 @@ View.Generator = new Vue({
     number: 100000
   }
 })
+
+View.Generator.show = function () {
+  this.visible = true
+  this.loading = true
+}

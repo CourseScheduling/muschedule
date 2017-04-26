@@ -83,8 +83,33 @@
     font-size: 8px;
     width: 100%;
     text-align: left;
-    padding: 5px;
+    padding: 7.5px;
     color: #888;
     font-weight: 300;
     letter-spacing: 1px;
+  }
+
+
+.term__item{
+  font-family: Montserrat;
+  font-size: 8px;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 7.5px 5px;
+  width: 40%;
+  text-align: center;
+  margin: auto;
+  font-weight: 300;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+  .term__item--one{
+    border-right: 1px solid rgba(0,0,0,0.15);
+  }
+  .term__item--active{
+    color: 500;
+    text-decoration: underline;
+  }
+  .term__item:hover{
+    background-color: rgba(0,0,0,0.1);
   }
