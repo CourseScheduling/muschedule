@@ -77,6 +77,7 @@
 .control__courseWrap{
   background-color: #FFF; 
   margin-top: 10px;
+  padding: 0 5px 5px 5px;
 }
   .control__header{
     font-family: Montserrat;
@@ -88,7 +89,27 @@
     font-weight: 300;
     letter-spacing: 1px;
   }
-
+  .control__course{
+    font-family: Montserrat;
+    font-size: 10px;
+    display: inline-block;
+    min-width: 60px;
+    color: #FFF;
+    border-radius: 3px;
+    background-color: #446CB3;
+    padding: 5px;
+    margin: 5px 5px 0 0;
+  }
+    .control__courseDel{
+      background: url(/static/img/x.png)  center left no-repeat;
+      background-size: 100%;
+      float: left;
+      height: 15px;
+      width: 15px;
+    }
+    .control__courseLabel{
+      float: right;
+    }
 
 .term__item{
   font-family: Montserrat;

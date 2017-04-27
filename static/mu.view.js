@@ -48,19 +48,25 @@ View.Selector = new Vue({
   data: {
     query: "",
     results: [],
+    courses: JSON.parse(localStorage['Courses']||'[]'),
     afterTyping: null,
-    typing: false
+    typing: false,
+    term: 1,
   },
   methods: {
+    swapTerm: null,
     search: null,
     logUp: null,
-    logDown: null
+    logDown: null,
+    addCourse: null
   }
 })
 
+View.Selector.setTerm = function (num) {
+  this.term = num
+}
 
 View.Selector.logUp = function () {
-  
   setTimeout(function () {
     this.typing = false
   }, 200)
@@ -83,8 +89,8 @@ View.Selector.search = function () {
   // Calculate every 500ms or when the person stops typing. Whichever comes first.
   this.results = (this.query).split('').slice(0,5).map((i) => {
     return {
-      course: i,
-      description: `${i} is the best course ever`
+      code: i,
+      name: `${i} is the best course ever`
     }
   })
 }
@@ -93,6 +99,16 @@ View.Selector.showGenerator = function () {
   View.Generator.show()
 }
 
+View.Selector.addCourse = function (course) {
+  for (var i = this.courses.length; i--;) {
+    if (this.courses[i].code == course.code) {
+      return
+    }
+  }
+
+  this.courses.push(course)
+  localStorage['Courses'] = JSON.stringify(this.courses)
+}
 
 //////////////////////////////////////////
 // View Logic for the Generator Loading //
