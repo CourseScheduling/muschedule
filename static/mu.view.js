@@ -1,3 +1,5 @@
+// This is a mutable 'constant'
+var COLORS = ['#1BA1E2', '#E51400', '#393', '#F09609', '#A200FF', '#E671B8', '#FF0097', '#8CBF26', '#00ABA9']
 // View is gonna be a singleton anyway.
 var View = {}
 
@@ -105,7 +107,7 @@ View.Selector.addCourse = function (course) {
       return
     }
   }
-
+  course.color = COLORS.pop()
   this.courses.push(course)
   localStorage['Courses'] = JSON.stringify(this.courses)
 }

@@ -21,6 +21,7 @@ var Course =
 }
 
 
+
 var Section = 
 {
   "uniq": "CPSC 110 101",

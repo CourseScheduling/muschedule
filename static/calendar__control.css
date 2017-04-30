@@ -1,10 +1,36 @@
+.wrap__header{
+  font-family: Montserrat;
+  font-weight: 400;
+  width: 100%;
+  text-align: left;
+  margin: 5px;
+  font-size: 10px;
+  color: #999;
+  padding-left: 10px;
+  margin-top: 10px;
+  letter-spacing: 1px;
+}
+
+.control__wrap{
+  display: inline-block;
+  background-color: #EEE;
+    border-radius: 2px;
+  overflow: hidden;
+  width: 300px;
+}
+  .control__wrap--seperate{
+    margin-top: -5px;
+  }
+
+
 #control__search{
   width: 100%;
   display: inline-block;
+  overflow: visible;
 }
   #searchInp{
     padding-left: 40px;
-    width: 100%;
+    width: calc(100% - 8px);
     border: 0;
     font-family: Montserrat;
     height: 40px;
@@ -17,14 +43,17 @@
     box-sizing: border-box;
     float: left;
     background-color: #FFF;
+    border: 1px solid #EEE;
+    border-radius: 5px;
+    margin: 4px;
   }
 
   /** Styling for the results.. */
   .result__wrap{
     display: inline-block;
-    min-height: 0px;
     background-color: #FFF;
     border-top: 1px solid #EEE;
+    padding: 0;
     width: 100%;
     float: left;
   }
@@ -57,80 +86,21 @@
         cursor: pointer;
       }
 
-
-
-#generateBtn{
-  padding: 10px 0;
-  margin: 0 50px;
-  margin-top: 20px;
-  width: 100px;
+.course__container{
+  text-align: center;
+  margin-bottom: 10px;
+}
+.course {
+  display: inline-block;
+  margin: 2.5px;
   font-family: Montserrat;
   font-size: 10px;
   letter-spacing: 1px;
-  background-color: #8E44AD;
+  background-color: #AAA;
   color: #FFF;
-  display: inline-block;
+  padding: 7.6px;
+  border-radius: 4px;
   cursor: pointer;
+  width: 70px;
+  box-shadow: 0px 1px 1px #DDD;
 }
-
-
-.control__courseWrap{
-  background-color: #FFF; 
-  margin-top: 10px;
-  padding: 0 5px 5px 5px;
-}
-  .control__header{
-    font-family: Montserrat;
-    font-size: 8px;
-    width: 100%;
-    text-align: left;
-    padding: 7.5px;
-    color: #888;
-    font-weight: 300;
-    letter-spacing: 1px;
-  }
-  .control__course{
-    font-family: Montserrat;
-    font-size: 10px;
-    display: inline-block;
-    min-width: 60px;
-    color: #FFF;
-    border-radius: 3px;
-    background-color: #446CB3;
-    padding: 5px;
-    margin: 5px 5px 0 0;
-  }
-    .control__courseDel{
-      background: url(/static/img/x.png)  center left no-repeat;
-      background-size: 100%;
-      float: left;
-      height: 15px;
-      width: 15px;
-    }
-    .control__courseLabel{
-      float: right;
-    }
-
-.term__item{
-  font-family: Montserrat;
-  font-size: 8px;
-  text-transform: uppercase;
-  display: inline-block;
-  padding: 7.5px 5px;
-  width: 40%;
-  text-align: center;
-  margin: auto;
-  font-weight: 300;
-  letter-spacing: 2px;
-  cursor: pointer;
-}
-  .term__item--one{
-    border-right: 1px solid rgba(0,0,0,0.15);
-  }
-  .term__item--active{
-    color: 500;
-    text-decoration: underline;
-  }
-  .term__item:hover{
-    background-color: rgba(0,0,0,0.1);
-  }

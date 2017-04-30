@@ -1,19 +1,13 @@
 link(rel="stylesheet" href="/static/calendar__control.css")
 
 #control__wrap
-  .material 
-    .term__item.term__item--one(@click="setTerm(1)" v-bind:class="{'term__item--active': (term == 1)}") &nbsp;&nbsp;Term1&nbsp;&nbsp;
-    .term__item(@click="setTerm(2)" v-bind:class="{'term__item--active': (term == 2)}") &nbsp;&nbsp;Term2&nbsp;&nbsp;
-  br
-  #control__search.material
-    input(type="text" placeholder="ENTER ALL YOUR COURSES" v-model="query" @keydown="logDown()" @keyup="logUp(),search()")#searchInp
-    .result__wrap
-      .search__result(v-for="result in results" @click="addCourse(result)")
-        .search__resultHead {{result.code}}
-        .search__resultBody {{result.name}}
-  .control__courseWrap.material
-    .control__header YOUR COURSES
-    .control__course(v-for="course in courses") 
-      .control__courseDel
-      .control__courseLabel {{course.code}}
-  #generateBtn.material(@click="showGenerator()") AUTO GEN
+  .control__wrap
+    #control__search
+      input(type="text" placeholder="ENTER ALL YOUR COURSES" v-model="query" @keydown="logDown()" @keyup="logUp(),search()")#searchInp
+      .result__wrap
+        .search__result(v-for="result in results" @click="addCourse(result)")
+          .search__resultHead {{result.code}}
+          .search__resultBody {{result.name}}
+    .wrap__header :: COURSES ::
+    .course__container
+      .course(v-for="c in courses" v-bind:style="{backgroundColor: c.color}") {{c.code.repeat(7)}}
