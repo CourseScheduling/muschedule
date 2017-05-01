@@ -98,9 +98,36 @@
   letter-spacing: 1px;
   background-color: #AAA;
   color: #FFF;
-  padding: 7.6px;
+  padding: 7.5px;
   border-radius: 4px;
   cursor: pointer;
-  width: 70px;
+  width: 80px;
+  box-sizing: border-box;
   box-shadow: 0px 1px 1px #DDD;
+  transition: width .25s;
 }
+  .course--active{
+    width: 250px;
+    min-height: 100px;
+    transition: width .25s;
+  }
+
+.control__btn{
+  padding: 10px;
+  border-radius: 3px;
+  background-color: #DDD;
+  box-shadow: 0px 1px 1px rgba(0,0,0,0.4);
+  display: inline-block;
+  font-family: Montserrat;
+  font-size: 11px;
+  cursor: pointer;
+  margin: 5px;
+}
+  .control__btn:active{
+    box-shadow: none;
+  }
+  .control__btn--gen{
+    background: url(/static/img/lightning.png) #DDD center left 5px no-repeat;
+    background-size: 20px;
+    padding-left: 30px;
+  }

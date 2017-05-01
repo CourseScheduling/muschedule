@@ -3,11 +3,14 @@ link(rel="stylesheet" href="/static/calendar__control.css")
 #control__wrap
   .control__wrap
     #control__search
-      input(type="text" placeholder="ENTER ALL YOUR COURSES" v-model="query" @keydown="logDown()" @keyup="logUp(),search()")#searchInp
+      input(type="text" placeholder="ENTER YOUR COURSES e.g. CPSC 110" v-model="query" @keydown="logDown()" @keyup="logUp(),search()")#searchInp
       .result__wrap
         .search__result(v-for="result in results" @click="addCourse(result)")
           .search__resultHead {{result.code}}
           .search__resultBody {{result.name}}
     .wrap__header :: COURSES ::
     .course__container
-      .course(v-for="c in courses" v-bind:style="{backgroundColor: c.color}") {{c.code.repeat(7)}}
+      .course(v-for="c in courses" @click="activate(c)" v-bind:style="{backgroundColor: c.color}" v-bind:class="{'course--active':c.active}") {{c.code.repeat(7)}}
+  .control__wrap
+    .control__btn.control__btn--gen AUTO GEN
+    .control__btn ADD BREAK

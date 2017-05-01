@@ -4,6 +4,11 @@ var COLORS = ['#1BA1E2', '#E51400', '#393', '#F09609', '#A200FF', '#E671B8', '#F
 var View = {}
 
 
+document.body.addEventListener('click', function () {
+  View.Selector.courses.forEach(c => {
+    c.active = false
+  })
+})
 //////////////////////////////////////////////
 // View Logic for the main scheduling thing //
 //////////////////////////////////////////////
@@ -108,8 +113,13 @@ View.Selector.addCourse = function (course) {
     }
   }
   course.color = COLORS.pop()
+  course.active = false
   this.courses.push(course)
   localStorage['Courses'] = JSON.stringify(this.courses)
+}
+
+View.Selector.activate = function (course) {
+  course.active = true
 }
 
 //////////////////////////////////////////
