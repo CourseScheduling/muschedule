@@ -1,6 +1,4 @@
 
-
-
 function Model () {
   this.courses = []
   this.sections = []
