@@ -22,7 +22,7 @@
     margin-top: -5px;
   }
 
-
+/** Search Styling.. */
 #control__search{
   width: 100%;
   display: inline-block;
@@ -46,6 +46,13 @@
     border: 1px solid #EEE;
     border-radius: 5px;
     margin: 4px;
+  }
+
+  .search__loading{
+    width: 100%;
+    height: 50px;
+    background: url(./img/ring.gif) center center no-repeat;
+    background-size: 30px;
   }
 
   /** Styling for the results.. */

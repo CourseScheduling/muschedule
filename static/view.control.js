@@ -5,9 +5,29 @@ var Control = new Vue({
   data: {
     query: "",
     results: [],
-    courses: []
+    courses: [],
+    searchTimeout: null,
+    loading: false
   }
 })
+
+Control.search = function () {
+  var self = this
+
+  // This is soo that if people are typing.
+  // We only need make a request 200ms after they're done.
+  this.loading = true
+
+  clearTimeout(this.searchTimeout)
+  this.searchTimeout = setTimeout(function () {
+    Mu.Model.searchCourses(self.query).then(function (results) {
+      self.loading = false
+      self.results = results
+    }, function () {
+      self.loading = false
+    })
+  }, 400)
+}
 
 Control.generate = function () {
   View.Generate.start()
