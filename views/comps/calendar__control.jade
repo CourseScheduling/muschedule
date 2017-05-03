@@ -12,5 +12,5 @@ link(rel="stylesheet" href="/static/calendar__control.css")
     .course__container
       .course(v-for="c in courses" @click="activate(c)" v-bind:style="{backgroundColor: c.color}" v-bind:class="{'course--active':c.active}") {{c.code.repeat(7)}}
   .control__wrap
-    .control__btn.control__btn--gen AUTO GEN
+    .control__btn.control__btn--gen(@click="generate()") AUTO GEN
     .control__btn ADD BREAK

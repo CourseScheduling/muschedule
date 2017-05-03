@@ -20,9 +20,18 @@ Controller.prototype.schedule = function () {
   function GoGoRecurse (m,t,w,r,f, state, counter) {
     // Terminating cond.
     if (counter >= course_length) {
-      return
+      return true
     }
+
+    // Grab next course map.
+    // 
+
   }
+
+
+
+
+
 
   var start = performance.now()
   for(var s = courses[0].length; s--;) {
@@ -44,31 +53,3 @@ Controller.prototype.getCourses = function () {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Singleton ftw.
-Controller = new Controller()
