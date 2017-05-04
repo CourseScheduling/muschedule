@@ -1,4 +1,6 @@
 
+const API_URL = ''
+
 function Model () {
   this.courses = []
   this.sections = []
@@ -9,13 +11,63 @@ function Model () {
   - Grab courses from the API.
   @return Promise
 */
-Model.prototype.getCourses = function () {}
+Model.prototype.getCourse = function (c) {
+  return this._makeRequest({
+    type: 'GET',
+    url: '/courses?c=' + course
+  })
+}
 
 /** 
   - Search for courses from the API
   @return Promise
 */
-Model.prototype.searchCourses = function () {}
+Model.prototype.searchCourses = function (query) {
+  return this._makeRequest({
+    type: 'GET',
+    url: '/search?q=' + encodeURI(query)
+  })
+}
+
+
+/**
+ * A promisified request function. To be used internally.
+ * @param  {JSON} opts - {
+ *                         type : {String} - The type of request, defaults to 'GET',
+ *                         url  : {String} - The URL to make a request to
+ *                         data : {JSON}   - a JSON data to send. For post requests
+ *                       }
+ * @return {Promise}
+ */
+Model.prototype._request = function (opts) {
+  var data = ""
+  for (var key in opts.data) {
+    data += (key + '=' + encodeURI(opts.data[key]))
+  }
+
+
+  return new Promise(function (resolve, reject) {
+    var xhr = new XMLHttpRequest()
+    xhr.open(opts.type || 'GET', opts.url, true)
+    xhr.onload = function () {
+      if (this.status >= 200 && this.status < 300) {
+        resolve(xhr.response)
+      } else {
+        reject({
+          status: this.status,
+          statusText: xhr.statusText
+        })
+      }
+    }
+    xhr.onerror = function () {
+      reject({
+        status: this.status,
+        statusText: xhr.statusText
+      })
+    }
+    xhr.send()
+  })
+}
 
 
 /** 

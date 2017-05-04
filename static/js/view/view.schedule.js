@@ -2,7 +2,7 @@ var Schedule = new Vue({
   el: '#calendar',
   data: {
     days: [
-      [{time: 0, sections: []}],
+      [],
       [],
       [],
       [],
@@ -15,7 +15,7 @@ var Schedule = new Vue({
 Schedule.addSection = function (section) {
   var time = Mu.Model.timeMap[section.schedule]
 
-  :NextDay
+  NextDay:
   for (var i = 0; i < 5; i++) {
     if (!time[i]) {
       continue

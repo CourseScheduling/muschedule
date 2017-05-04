@@ -46,3 +46,22 @@
       width: 8%;
       text-align: center;
     }
+
+  #calendar__blockWrap{
+    position: absolute;
+    top: 34px;
+    left: 49px;
+    width: calc(100% - 49px);
+    height: calc(100% - 34px);
+  }
+
+    .block__dayCol{
+      width: calc(100% / 5);
+      display: inline-block;
+      height: 100%;
+    }
+    .block__dayGroup{
+      width: 100%;
+      display: inline-block;
+      background-color: rgba(0,0,0,0.1);
+    }
