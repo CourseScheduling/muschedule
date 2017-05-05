@@ -7,11 +7,11 @@ link(rel="stylesheet" href="/static/calendar__control.css")
       .result__wrap
         .search__loading(v-show="loading")
         .search__result(v-for="result in results" @click="addCourse(result)")
-          .search__resultHead {{result.code}}
-          .search__resultBody {{result.name}}
+          .search__resultHead {{result[0]}}
+          .search__resultBody {{result[1]}}
     .wrap__header :: COURSES ::
     .course__container
-      .course(v-for="c in courses" @click="activate(c)" v-bind:style="{backgroundColor: c.color}" v-bind:class="{'course--active':c.active}") {{c.code.repeat(7)}}
+      .course(v-for="c in courses" @click="activate(c)" v-bind:style="{backgroundColor: c.color}" v-bind:class="{'course--active':c.active}") {{c.code}}
   .control__wrap
     .control__btn.control__btn--gen(@click="generate()") AUTO GEN
     .control__btn ADD BREAK

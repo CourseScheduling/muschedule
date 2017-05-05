@@ -11,10 +11,10 @@ function Model () {
   - Grab courses from the API.
   @return Promise
 */
-Model.prototype.getCourse = function (c) {
+Model.prototype.getCourse = function (course) {
   return this._request({
     type: 'GET',
-    url: '/courses?c=' + course
+    url: '/courses/' + course.replace(' ','_')
   })
 }
 
