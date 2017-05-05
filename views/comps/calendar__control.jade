@@ -11,7 +11,11 @@ link(rel="stylesheet" href="/static/calendar__control.css")
           .search__resultBody {{result[1]}}
     .wrap__header :: COURSES ::
     .course__container
-      .course(v-for="c in courses" @click="activate(c)" v-bind:style="{backgroundColor: c.color}" v-bind:class="{'course--active':c.active}") {{c.code}}
+      .course(v-for="c in courses" @click="activeToggle(c)" v-bind:style="{backgroundColor: c.color}" v-bind:class="{'course--active':c.active}")
+        .course__code {{c.code}}
+        .course__description {{c.description}}
+        .course__typeHeader(v-for="type in c.typeArr") {{type}}
+          .course__section(v-for="section in c.secMap[type]") {{section.section}}
   .control__wrap
     .control__btn.control__btn--gen(@click="generate()") AUTO GEN
     .control__btn ADD BREAK
