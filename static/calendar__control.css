@@ -1,4 +1,7 @@
-.wrap__header{
+body{
+  overflow-y: scroll;
+}
+  .wrap__header{
   font-family: Montserrat;
   font-weight: 400;
   width: 100%;
@@ -138,3 +141,31 @@
     background-size: 20px;
     padding-left: 30px;
   }
+
+
+
+.course__typeBox{
+  width: 100%;
+  float: left;
+  text-align: left;
+}
+  .course__typeHeader{
+    width: 100%;
+    text-align: left;
+  }
+  .course__section{
+    padding: 5px;
+    color: #000;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 2.5px;
+    background-color: #FFF;
+    border: 1px solid transparent;
+    transition: background-color .25s;
+  }
+    .course__section:hover{
+      background-color: transparent;
+      color: #FFF;
+      border-color: #FFF;
+      transition: background-color .25s;
+    }

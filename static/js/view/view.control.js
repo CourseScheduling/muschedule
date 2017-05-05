@@ -83,4 +83,13 @@ Control.wrangle = function (course) {
   }
 }
 
+
+Control.showTemp = function (section, course) {
+  Mu.View.Schedule.add(course.schedules[section.schedule])
+}
+
+Control.removeTemp = function (section, course) {
+  Mu.View.Schedule.remove(course.schedules[section.schedule])
+}
+
 View.Control = Control

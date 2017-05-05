@@ -7,6 +7,13 @@ var Schedule = new Vue({
       [],
       [],
       []
+    ],
+    tempDays: [
+      [],
+      [],
+      [],
+      [],
+      []
     ]
   }
 })
@@ -37,3 +44,33 @@ Schedule.addSection = function (section) {
     }) 
   }
 }
+
+
+
+Schedule.add = function (time) {
+  for (var day = 0; day < 7; day++) {
+    var curDay = this.tempDays[day]
+    var dayObj = {}
+
+    // If there's a day item, add it. 
+    if (time[day]) {
+      // Find the starting position
+      dayObj.start = 0
+      for (var i = 0; i < 32; i++) {
+        if ((time[day] >> i) & 1) break
+      }
+      dayObj.start = i
+
+      for (i; i < 32; i++) {
+        if ((time[day] >> i) & 1) break
+      }
+      dayObj.end = i
+      dayObj.height = (dayObj.end - dayObj.start)
+
+      curDay.push(dayObj)
+    }
+  }
+}
+
+
+View.Schedule = Schedule
