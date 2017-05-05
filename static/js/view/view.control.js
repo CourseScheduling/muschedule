@@ -20,6 +20,9 @@ Control.search = function () {
 
   clearTimeout(this.searchTimeout)
   this.searchTimeout = setTimeout(function () {
+    if (!self.query.trim())
+      return
+    
     Mu.Model.searchCourses(self.query).then(function (results) {
       self.loading = false
       self.results = results

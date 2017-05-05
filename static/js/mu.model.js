@@ -1,5 +1,5 @@
 
-const API_URL = ''
+const API_URL = 'http://schedulerserver.azurewebsites.net/api/v1/ubc'
 
 function Model () {
   this.courses = []
@@ -12,7 +12,7 @@ function Model () {
   @return Promise
 */
 Model.prototype.getCourse = function (c) {
-  return this._makeRequest({
+  return this._request({
     type: 'GET',
     url: '/courses?c=' + course
   })
@@ -23,9 +23,9 @@ Model.prototype.getCourse = function (c) {
   @return Promise
 */
 Model.prototype.searchCourses = function (query) {
-  return this._makeRequest({
+  return this._request({
     type: 'GET',
-    url: '/search?q=' + encodeURI(query)
+    url: '/courseList/search/' + encodeURI(query)
   })
 }
 
@@ -48,7 +48,7 @@ Model.prototype._request = function (opts) {
 
   return new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest()
-    xhr.open(opts.type || 'GET', opts.url, true)
+    xhr.open(opts.type || 'GET', API_URL + opts.url, true)
     xhr.onload = function () {
       if (this.status >= 200 && this.status < 300) {
         resolve(xhr.response)
