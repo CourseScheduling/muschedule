@@ -95,7 +95,9 @@ body{
         background-color: #F2f2F2;
         cursor: pointer;
       }
-
+      .search__result--active{
+        background-color: #6BB9F0;
+      }
 .course__container{
   text-align: center;
   margin-bottom: 10px;

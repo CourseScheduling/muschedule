@@ -3,10 +3,10 @@ link(rel="stylesheet" href="/static/calendar__control.css")
 #control__wrap
   .control__wrap
     #control__search
-      input(type="text" placeholder="ENTER YOUR COURSES e.g. CPSC 110" v-model="query" @keyup="search()")#searchInp
+      input(type="text" placeholder="ENTER YOUR COURSES e.g. CPSC 110" v-model="query" @keyup="search($event)")#searchInp
       .result__wrap
         .search__loading(v-show="loading")
-        .search__result(v-for="result in results" @click="addCourse(result)")
+        .search__result(v-for="(result, index) in results" @click="addCourse(result)" v-bind:class="{'search__result--active':(index == current)}")
           .search__resultHead {{result[0]}}
           .search__resultBody {{result[1]}}
     .wrap__header :: COURSES ::

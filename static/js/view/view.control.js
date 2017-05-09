@@ -1,3 +1,6 @@
+const UP = 38
+const DOWN = 40
+const ENTER = 13
 
 /* The control panel is on the right. */
 var Control = new Vue({
@@ -7,12 +10,26 @@ var Control = new Vue({
     results: [],
     courses: [],
     searchTimeout: null,
-    loading: false
+    loading: false,
+    current: -1
   }
 })
 
-Control.search = function () {
+Control.search = function (e) {
   var self = this
+
+  switch (e.keyCode) {
+    case ENTER:
+    case UP:
+      if (this.results.length) this.current += 1
+    case DOWN:
+      if (this.results.length) this.current -= 1
+
+      clearTimeout(this.searchTimeout) 
+      this.loading = false
+      e.preventDefault()
+      return
+  }
 
   // This is soo that if people are typing.
   // We only need make a request 200ms after they're done.
@@ -23,14 +40,17 @@ Control.search = function () {
     if (!self.query.trim()) {
       self.loading = false
       self.results = []
+      self.current = -1
       return
     }
     
     Mu.Model.searchCourses(self.query).then(function (results) {
       self.loading = false
       self.results = JSON.parse(results).slice(0,5)
+      self.current = -1
     }, function () {
       self.loading = false
+
     })
   }, 400)
 }
