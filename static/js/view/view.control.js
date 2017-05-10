@@ -18,12 +18,12 @@ var Control = new Vue({
 Control.search = function (e) {
   var self = this
 
+  // Do this to make the blue hover thing go up and down.
   switch (e.keyCode) {
     case ENTER:
     case UP:
-      if (this.results.length) this.current += 1
     case DOWN:
-      if (this.results.length) this.current -= 1
+      this.current = (this.current + (e.keyCode == UP? -1: 1)) % this.results.length
 
       clearTimeout(this.searchTimeout) 
       this.loading = false
