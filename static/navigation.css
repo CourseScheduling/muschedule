@@ -1,0 +1,18 @@
+#arrow__wrap {
+  position: absolute;
+  margin: auto;
+  top: 0; left: 0; bottom: 0; right: 0;
+  height: 40px;
+}
+  .arrow {
+    display: inline-block;
+  }
+    .arrow__left {
+      position: relative;
+      left: -325px;
+
+    }
+    .arrow__right {
+      position: relative;
+      right: -325px;
+    }

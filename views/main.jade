@@ -4,6 +4,7 @@ html
     meta(content="text/html; charset=UTF-8" http-equiv="content-type")
     link(rel="stylesheet" href="/static/template.css")
     link(rel="stylesheet" href="/static/schedule.css")
+    link(rel='stylesheet', href="https://fonts.googleapis.com/icon?family=Material+Icons")
     title µSchedule
   body
     #calendar__header #[span.calendar__header--bold µ]Schedule
@@ -16,6 +17,7 @@ html
     #gen__wrap(v-show="visible").fadeMeFast
       #gen__exit(@click="halt()")
       include comps/schedule__loading
+
     script(src="/static/js/vue.js")
     script(src="/static/js/mu.main.js")
     script(src="/static/js/mu.model.js")

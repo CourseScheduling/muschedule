@@ -1,0 +1,7 @@
+#gen__calendar{
+  width: 600px;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  background-color: #fafafa;
+}

@@ -1,4 +1,3 @@
-
 var Generate = new Vue({
   el: '#gen__wrap',
   data: {
@@ -6,7 +5,21 @@ var Generate = new Vue({
     loading: true,
     schedules: [],
     courseMap: {},
-    maxNumber: ""
+    maxNumber: "",
+    days: [
+      [],
+      [],
+      [],
+      [],
+      []
+    ],
+    tempDays: [
+      [],
+      [],
+      [],
+      [],
+      []
+    ]
   },
   methods: {
     start: null,

@@ -1,8 +1,6 @@
-link(rel="stylesheet" href="/static/calendar__main.css")
-link(rel="stylesheet" href="/static/navigation.css")
+link(rel="stylesheet" href="/static/calendar__gen.css")
 
-#calendar.material
-  include navigation
+#gen__calendar.material
   div.cal__dayWrap
     div.cal__day.cal__day--leftest
     each day in ['Mon','Tue','Wed','Thu','Fri']
@@ -14,11 +12,8 @@ link(rel="stylesheet" href="/static/navigation.css")
       else
         div.cal__rowTime &nbsp;#{hour}:00
 
-
   #calendar__blockWrap
     // This is where we can begin view modification.
     div(v-for="day in [0,1,2,3,4,5,6]").block__dayCol
       div(v-for="group in days[day]" v-bind:style="{top: group.start}").block__dayGroup
       div(v-for="group in tempDays[day]" v-bind:style="{top: group.start, height: group.height}" style="background-color: #999;width: 100%;")
-
-

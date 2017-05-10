@@ -15,6 +15,10 @@ var Schedule = new Vue({
       [],
       []
     ]
+  },
+  methods: {
+    displayPrevious: null,
+    displayNext: null
   }
 })
 
@@ -72,5 +76,11 @@ Schedule.add = function (time) {
   }
 }
 
+Schedule.displayPrevious = function() {
+  console.log("displayPrevious")
+}
 
+Schedule.displayNext = function() {
+  console.log("displayNext")
+}
 View.Schedule = Schedule
