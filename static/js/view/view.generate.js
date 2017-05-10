@@ -23,7 +23,9 @@ var Generate = new Vue({
   },
   methods: {
     start: null,
-    halt:  null
+    halt:  null,
+    displayPrevious: null,
+    displayNext: null
   }
 })
 
@@ -46,6 +48,12 @@ Generate.start = function () {
 Generate.halt = function () {
   this.visible = false
 }
+Generate.displayNext = function() {
+  console.log("displaynext in Generate")
+}
 
+Generate.displayPrevious = function() {
+  console.log("displayPrevious in Generate")
+}
 
 View.Generate = Generate

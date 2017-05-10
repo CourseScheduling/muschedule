@@ -77,10 +77,10 @@ Schedule.add = function (time) {
 }
 
 Schedule.displayPrevious = function() {
-  console.log("displayPrevious")
+  console.log("displayPrevious in main schedule")
 }
 
 Schedule.displayNext = function() {
-  console.log("displayNext")
+  console.log("displayNex in main schedule")
 }
 View.Schedule = Schedule

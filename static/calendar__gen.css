@@ -2,6 +2,6 @@
   width: 600px;
   position: relative;
   display: inline-block;
-  overflow: hidden;
+  overflow: visible;
   background-color: #fafafa;
 }
