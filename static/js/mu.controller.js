@@ -65,6 +65,33 @@ Controller.prototype.schedule_1 = function () {
   console.info('Scheduling took: ' + (performance.now() - start) + 'ms')
 }
 
+//Takes the stateMap in tree form and converts it to an array [sch, sec]
+Controller.prototype.convertToArray = function () {
+  validSchedules = this.validSchedules;
+  stateMap = this.stateMap;
+
+  function recursiveHelper(stateObject, acc) {
+    if (stateObject.children.length === 0) {      
+      accCopy = acc.slice();
+      accCopy.push([stateObject.sch, stateObject.sec]);
+      validSchedules.push(accCopy);
+      return;
+    }
+
+    acc.push([stateObject.sch, stateObject.sec])
+    for (var i = 0; i < stateObject.children; i++) {      
+      recursiveHelper(stateObject.children[i], acc);
+    } 
+    acc.pop()
+  }
+
+  for (var i = 0; i < stateMap.length; i++) {
+    var acc = [];
+    recursiveHelper(stateMap[i], acc);
+  }
+
+  console.log(validSchedules);
+}
 
 
 // Tryna keep the controller stateless
