@@ -1,6 +1,7 @@
 
 function Controller () {
   this.stateMap = []
+  this.validSchedules = [];
 }
 
 
@@ -9,22 +10,30 @@ Controller.prototype.schedule_1 = function () {
 
   var start = performance.now()
 
-  var sections = this.getSectionMap()
+  //var sections = this.getSectionMap()
   //var timeMap  = this.getTimeMap()
+  var termToSchedule = this.getTermToSchedule();
+  var sections = this.getSections(termToSchedule);
+  var schedules = this.getSchedules(termToSchedule);
+
+
+  console.log(sections);
+  console.log(schedules);
 
   var maxLength = sections.length
   var state = this.stateMap
-
+  console.log(maxLength);
 
   console.info('Scheduling prep took: ' + (performance.now() - start) + 'ms')
   
   function GoGoRecurse(m,t,w,r,f,count,state) {
     if (count == maxLength) {
+      //console.log("maxLength");
       return 1
-    }
-    var count = 0
-    var newSec = sections[count]
+    }    
+    var newSec = schedules[count]
 
+    //console.log(state);
     for(var i = newSec.length; i--;) {
       // Skip all the collisions
       var time = newSec[i]
@@ -41,7 +50,7 @@ Controller.prototype.schedule_1 = function () {
 
       var good = GoGoRecurse(time[0]|m, time[1]|t, time[2]|w, time[3]|r, time[4]|f, count + 1, children)
 
-      if (!good) {
+      if (!good) {              
         state.pop()
       } else {
         count = 1
@@ -52,18 +61,51 @@ Controller.prototype.schedule_1 = function () {
   }
 
   GoGoRecurse(0,0,0,0,0,0,state);
-
+  console.info(state);
   console.info('Scheduling took: ' + (performance.now() - start) + 'ms')
 }
+
+
 
 // Tryna keep the controller stateless
 Controller.prototype.getSectionMap = function () {
   return Mu.Model.sections
 }
 
+Controller.prototype.getSections = function(termToSchedule) {
+  switch(termToSchedule) {
+    case 't1':
+      return Mu.Model.t1Sections;
+      break;
+    case 't2':
+      return Mu.Model.t2Sections;
+      break;
+    case 't3':
+      //TODO
+      break;
+  }
+}
 
+Controller.prototype.getSchedules = function(termToSchedule) {
+  switch(termToSchedule) {
+    case 't1':
+      return Mu.Model.t1SectionSchedules;
+      break;
+    case 't2':
+      return Mu.Model.t2SectionSchedules;
+      break;
+    case 't3':
+      //TODO
+      break;
+  }
+}
 
+Controller.prototype.getTermToSchedule = function() {
+  return View.Control.term;
+}
 
+// Yet another Singleton
+Mu.Controller = Controller = new Controller()
 // 
 // 
 // 

@@ -35,7 +35,8 @@ Generate.start = function () {
 
   if (!this.schedules.length) {
     this.loading = true
-    Mu.Controller.schedule()
+    Mu.Controller.schedule_1()
+    Mu.Controller.convertToArray();
   }
 
 

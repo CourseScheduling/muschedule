@@ -89,10 +89,19 @@ Model.prototype._addCourse_1 = function(course) {
 
   //Removing waiting list from course object
   for (var term in course.terms) {
-    delete course.terms[term].sections['Waiting List'];
-    delete course.terms[term].schedules['Waiting List'];
+    if (course.terms[term].types.length > 0) {
+      delete course.terms[term].sections['Waiting List'];
+      delete course.terms[term].schedules['Waiting List'];
+    }
+    
+
+
     types = course.terms[term].types;
     index = types.indexOf('Waiting List');
+    if (index > -1) {
+      types.splice(index, 1);
+    }
+    index = types.indexOf('Workshop');
     if (index > -1) {
       types.splice(index, 1);
     }
