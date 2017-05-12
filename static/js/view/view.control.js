@@ -60,7 +60,7 @@ Control.addCourse = function (course) {
   var self = this
 
   Mu.Model.getCourse(course[0]).then(function (course) {
-    course = JSON.parse(course)[0]
+    //course = JSON.parse(course)[0]
     course.active = true
     //self.wrangle(course)
     self.flushCourses()

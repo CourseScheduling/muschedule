@@ -3,8 +3,10 @@ const API_URL = 'http://schedulerserver.azurewebsites.net/api/v1/ubc'
 
 function Model () {
   this.courses = []
-  this.sections = []
-  this.timeMap = []
+  this.t1SectionSchedules = []
+  this.t1Sections = []
+  this.t2SectionSchedules = []
+  this.t2Sections = []
 }
 
 /** 
@@ -12,9 +14,12 @@ function Model () {
   @return Promise
 */
 Model.prototype.getCourse = function (course) {
+  var self = this;
   return this._request({
     type: 'GET',
     url: '/courses/' + course.replace(' ','_')
+  }).then(function(course) {
+    return self._addCourse_1(course);
   })
 }
 
@@ -69,6 +74,38 @@ Model.prototype._request = function (opts) {
   })
 }
 
+
+Model.prototype._addCourse_1 = function(course) {
+  function addScheduleSections(course, term, sectionSchedules, sections) {
+    types = course.terms[term].types;
+    for (var i = 0; i < types.length; i ++) {
+      sections.push(course.terms[term].sections[types[i]]);
+      sectionSchedules.push(course.terms[term].schedules[types[i]])
+    }
+  } 
+
+
+  course = JSON.parse(course)[0];
+
+  //Removing waiting list from course object
+  for (var term in course.terms) {
+    delete course.terms[term].sections['Waiting List'];
+    delete course.terms[term].schedules['Waiting List'];
+    types = course.terms[term].types;
+    index = types.indexOf('Waiting List');
+    if (index > -1) {
+      types.splice(index, 1);
+    }
+  }
+
+  //Adding schedules and sections to Model (used for scheduling)
+  addScheduleSections(course, 't1', this.t1SectionSchedules, this.t1Sections);
+  addScheduleSections(course, 't2', this.t2SectionSchedules, this.t2Sections);
+
+    
+  console.log(this); 
+  return course;
+}
 
 /** 
   - To be called internally whenever a course is added to the list.

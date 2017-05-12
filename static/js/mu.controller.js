@@ -10,7 +10,7 @@ Controller.prototype.schedule_1 = function () {
   var start = performance.now()
 
   var sections = this.getSectionMap()
-  var timeMap  = this.getTimeMap()
+  //var timeMap  = this.getTimeMap()
 
   var maxLength = sections.length
   var state = this.stateMap
@@ -57,7 +57,7 @@ Controller.prototype.schedule_1 = function () {
 }
 
 // Tryna keep the controller stateless
-Controller.prototype.getCourses = function () {
+Controller.prototype.getSectionMap = function () {
   return Mu.Model.sections
 }
 
