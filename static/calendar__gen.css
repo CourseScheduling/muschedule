@@ -1,7 +1,23 @@
-#gen__calendar{
-  width: 600px;
-  position: relative;
-  display: inline-block;
-  overflow: visible;
-  background-color: #fafafa;
+#gen_schedule {
+  margin-top: 100px;
 }
+  #gen__calendar{
+    margin-top: 50px;
+    width: 600px;
+    position: relative;
+    display: inline-block;
+    overflow: visible;
+    background-color: #fafafa;
+    margin-left: auto;
+    margin-right: auto;
+
+  }
+
+
+#gen__index__wrap {
+  margin-top: 25px;
+}
+  #gen__index__wrap span {
+    color: white;
+    margin: 5px;
+  }

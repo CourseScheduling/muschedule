@@ -1,5 +1,6 @@
 link(rel="stylesheet" href="/static/calendar__gen.css")
 
+div.gen__loadingText Generated Schedules
 #gen__calendar.material
   include navigation
   div.cal__dayWrap
@@ -18,3 +19,7 @@ link(rel="stylesheet" href="/static/calendar__gen.css")
     div(v-for="day in [0,1,2,3,4,5,6]").block__dayCol
       div(v-for="group in days[day]" v-bind:style="{top: group.start}").block__dayGroup
       div(v-for="group in tempDays[day]" v-bind:style="{top: group.start, height: group.height}" style="background-color: #999;width: 100%;")
+#gen__index__wrap
+  span#gen__index 1
+  span /
+  span#gen__maxIndex 1
