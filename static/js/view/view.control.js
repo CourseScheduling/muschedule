@@ -11,7 +11,8 @@ var Control = new Vue({
     courses: [],
     searchTimeout: null,
     loading: false,
-    current: -1
+    current: -1,
+    term: 't1'
   }
 })
 
@@ -61,7 +62,7 @@ Control.addCourse = function (course) {
   Mu.Model.getCourse(course[0]).then(function (course) {
     course = JSON.parse(course)[0]
     course.active = true
-    self.wrangle(course)
+    //self.wrangle(course)
     self.flushCourses()
     self.courses.push(course)
   })
@@ -105,11 +106,25 @@ Control.wrangle = function (course) {
 
 
 Control.showTemp = function (section, course) {
-  Mu.View.Schedule.add(course.schedules[section.schedule])
+  //Mu.View.Schedule.add(course.terms[this.term].schedules[section.activity_type][section.schedule])
 }
 
 Control.removeTemp = function (section, course) {
-  Mu.View.Schedule.remove(course.schedules[section.schedule])
+  //Mu.View.Schedule.remove(course.terms[this.term].schedules[section.activity_type][section.schedule])
 }
 
+Control.changeTerm = function(term) {
+  switch (term) {
+    case 1:
+      term = 't1';
+      break;
+    case 2:
+      term = 't2';
+      break;
+    case 3:
+      break;
+  }
+  this.term = term;
+  //Toggle highlight
+}
 View.Control = Control

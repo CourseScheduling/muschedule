@@ -9,15 +9,20 @@ link(rel="stylesheet" href="/static/calendar__control.css")
         .search__result(v-for="(result, index) in results" @click="addCourse(result)" v-bind:class="{'search__result--active':(index == current)}")
           .search__resultHead {{result[0]}}
           .search__resultBody {{result[1]}}
+    .wrap__header :: TERM ::
+    .term__wrap
+      .control__btn.control__btn--term1(@click="changeTerm(1)") One
+      .control__btn.control__btn--term1(@click="changeTerm(2)") Two
+      .control__btn.control__btn--term1(@click="changeTerm(3)") Both
     .wrap__header :: COURSES ::
     .course__container
       .course(v-for="c in courses" @click="activeToggle(c)" v-bind:style="{backgroundColor: c.color}" v-bind:class="{'course--active':c.active}")
         .course__code {{c.code}}
         .course__extra(v-show="c.active")
           .course__description {{c.description}}
-          .course__typeBox(v-for="type in c.typeArr") 
+          .course__typeBox(v-for="type in c.terms[term].types") 
             .course__typeHeader {{type}}
-            .course__section(v-for="section in c.secMap[type]"
+            .course__section(v-for="section in c.terms[term].sections[type]"
               @mouseover="showTemp(section,c)" 
               @mouseout="removeTemp(section,c)") {{section.section}}
   .control__wrap

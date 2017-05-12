@@ -35,11 +35,10 @@ Generate.start = function () {
 
   if (!this.schedules.length) {
     this.loading = true
-    Controller.schedule()
+    Mu.Controller.schedule()
   }
 
-  this.courseMap = Controller.genCourseMap()
-  this.schedules = Controller.grabTen()
+
 
   this.loading = false
 }

@@ -15,6 +15,7 @@ Controller.prototype.schedule_1 = function () {
   var maxLength = sections.length
   var state = this.stateMap
 
+
   console.info('Scheduling prep took: ' + (performance.now() - start) + 'ms')
   
   function GoGoRecurse(m,t,w,r,f,count,state) {
@@ -50,6 +51,7 @@ Controller.prototype.schedule_1 = function () {
     return count
   }
 
+  GoGoRecurse(0,0,0,0,0,0,state);
 
   console.info('Scheduling took: ' + (performance.now() - start) + 'ms')
 }
