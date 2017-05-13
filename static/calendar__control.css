@@ -155,7 +155,7 @@ body{
     width: 100%;
     text-align: left;
   }
-  .course__section{
+  .control__selectionBtn{
     padding: 5px;
     color: #000;
     border-radius: 4px;
@@ -165,9 +165,15 @@ body{
     border: 1px solid transparent;
     transition: background-color .25s;
   }
-    .course__section:hover{
-      background-color: transparent;
+    .control__selectionBtn:hover{
+      background-color: #AAA;
       color: #FFF;
       border-color: #FFF;
       transition: background-color .25s;
+    }
+    .control__selectionBtn--term {
+      font-family: Montserrat;
+      font-size: 10px;
+      letter-spacing: 1px;
+      cursor: pointer;
     }
