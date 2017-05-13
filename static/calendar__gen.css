@@ -7,6 +7,7 @@
     margin-right: auto;
     margin-top: 50px;
     display: inline-block;
+    position: relative;
   }
     #gen__calendar{      
       width: 600px;    
@@ -14,10 +15,6 @@
       font-family: Montserrat;
       color: #000;
     }
-
-#gen__calendar__blockWrap {
-  
-}
 
 
 #gen__index__wrap {
