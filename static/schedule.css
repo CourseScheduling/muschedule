@@ -112,10 +112,10 @@
 
 .calendar__blockWrap {
   width: 100%;
-  height: 100%;
+  height: 0px;
   position: absolute;
   left:0;
-  top:0;
+  top:25px;
 }
   .block__dayCol {
     width: calc(92%/5);

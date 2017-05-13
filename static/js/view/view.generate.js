@@ -68,7 +68,7 @@ Generate._updateDays = function(scheduleToRender, schedules, sections) {
 
         start = getStart(sectionSchedule[ii]);
         height = getHeight(sectionSchedule[ii], start) * Mu.View.blockHeight;
-        start = start * Mu.View.blockHeight + 25;
+        start = start * Mu.View.blockHeight;
         this.days[ii].push({
           sectionCode: section.uniq,
           courseCode: courseCode,
