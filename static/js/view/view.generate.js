@@ -32,6 +32,7 @@ var Generate = new Vue({
 })
 
 
+
 //Returns the starting index, 0 being 8, in 30 minute blocks
 function getStart(scheduleInt) {
   for (var i = 0; i < 32; i++) {
@@ -62,8 +63,8 @@ Generate._updateDays = function(scheduleToRender, schedules, sections) {
     for (var ii = sectionSchedule.length; ii--;) {
       if (sectionSchedule[ii]) {
         courseCode = section.uniq.split(" ").slice(0, 2).join(" ");
-        start = getStart(sectionSchedule[ii]);
-        height = getHeight(sectionSchedule[ii], start);
+        start = getStart(sectionSchedule[ii]) * Mu.View.blockHeight;
+        height = getHeight(sectionSchedule[ii], start) * Mu.View.blockHeight;
 
         this.days[ii].push({
           sectionCode: section.uniq,

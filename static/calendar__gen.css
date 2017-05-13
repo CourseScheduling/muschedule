@@ -1,18 +1,23 @@
-#gen_schedule {
+#gen__schedule {
   margin-top: 100px;
   position: relative;
 }
-  #gen__calendar{
-    margin-top: 50px;
-    width: 600px;
-    position: relative;
-    display: inline-block;
-    overflow: visible;
-    background-color: #fafafa;
+  #gen__calendarWrap {
     margin-left: auto;
     margin-right: auto;
-
+    margin-top: 50px;
+    display: inline-block;
   }
+    #gen__calendar{      
+      width: 600px;    
+      overflow: visible;
+      font-family: Montserrat;
+      color: #000;
+    }
+
+#gen__calendar__blockWrap {
+  
+}
 
 
 #gen__index__wrap {

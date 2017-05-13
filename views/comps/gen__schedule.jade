@@ -1,29 +1,29 @@
 link(rel="stylesheet" href="/static/calendar__gen.css")
 
 div.gen__loadingText Generated Schedules
-table#gen__calendar.material
+#gen__scheduleWrap
   include navigation
-  tbody.cal__rowWrap
-    tr.cal__row.cal__row--days
-      td.cal__block.cal__block--time
-      each day in ['Mon','Tue','Wed','Thu','Fri']
-        td.cal__block.cal__block--day=day
-    each hour in [8, 85,9, 95,10, 105,11,115,12, 125,1, 15,2, 25,3, 35,4, 45,5, 55,6, 65,7, 75,8, 85,9, 95]
-      tr.cal__row
-        if ((hour >= 10) && (hour < 13)) 
-          td.cal__block.cal__block--time(rowspan="2") #{hour}:00
-        else if hour < 13
-          td.cal__block.cal__block--time(rowspan="2") &nbsp;#{hour}:00
-        each day in [0, 1, 2, 3, 4]
-          td.cal__block(data-time=hour, data-day=day)
-
-
-
-  #calendar__blockWrap
+  #gen__calendarWrap
+    table#gen__calendar.material  
+      tbody.cal__rowWrap
+        tr.cal__row.cal__row--days
+          td.cal__block.cal__block--time
+          each day in ['Mon','Tue','Wed','Thu','Fri']
+            td.cal__block.cal__block--day=day
+        each hour in [8, 85,9, 95,10, 105,11,115,12, 125,1, 15,2, 25,3, 35,4, 45,5, 55,6, 65,7, 75,8, 85,9, 95]
+          tr.cal__row
+            if ((hour >= 10) && (hour < 13)) 
+              td.cal__block.cal__block--time(rowspan="2") #{hour}:00
+            else if hour < 13
+              td.cal__block.cal__block--time(rowspan="2") &nbsp;#{hour}:00
+            each day in [0, 1, 2, 3, 4]
+              td.cal__block(data-time=hour, data-day=day)
+    .gen__calendar__blockWrap
+  #gen__calendar__blockWrap
     // This is where we can begin view modification.
-    div(v-for="day in [0,1,2,3,4,5,6]").block__dayCol
-      div(v-for="group in days[day]" v-bind:style="{top: group.start}").block__dayGroup
-      div(v-for="group in tempDays[day]" v-bind:style="{top: group.start, height: group.height}" style="background-color: #999;width: 100%;")
+    div(v-for="day in [0,1,2,3,4]").block__dayCol
+      div(v-for="group in days[day]" v-bind:style="{top: group.start, height: group.height}" style="background-color: #999;width: 100%;").block__dayGroup
+      //- div(v-for="group in tempDays[day]" v-bind:style="{top: group.start, height: group.height}" style="background-color: #999;width: 100%;")
 
 #gen__index__wrap
   span#gen__index 1
