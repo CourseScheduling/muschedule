@@ -21,7 +21,14 @@ var Generate = new Vue({
       []
     ],
     index: 0,
-    maxIndex: 0
+    maxIndex: 0,
+    breakTable: [
+      [],
+      [],
+      [],
+      [],
+      []
+    ]
   },
   
   methods: {
