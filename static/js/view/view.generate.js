@@ -108,8 +108,6 @@ Generate.start = function () {
     this.draw(this.index);    
   }
 
-
-
   this.loading = false
 }
 
@@ -136,7 +134,9 @@ Generate.displayPrevious = function() {
 }
 
 Generate.select = function() {
-
+  console.log("Generate select clicked");
+  View.Schedule.displayGenerated(this.days);
+  this.halt();
 }
 
 View.Generate = Generate

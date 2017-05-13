@@ -1,5 +1,5 @@
 var Schedule = new Vue({
-  el: '#main__scheduleWrap',
+  el: '#calendar__left',
   data: {
     days: [
       [],
@@ -76,6 +76,10 @@ Schedule.add = function (time) {
       curDay.push(dayObj)
     }
   }
+}
+
+Schedule.displayGenerated = function(days) {
+  this.days = days;
 }
 
 Schedule.displayPrevious = function() {
