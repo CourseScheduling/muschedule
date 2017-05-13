@@ -26,7 +26,7 @@ Controller.prototype.schedule_1 = function () {
 
   console.info('Scheduling prep took: ' + (performance.now() - start) + 'ms')
   
-  function GoGoRecurse(m,t,w,r,f,count,state) {
+  function GoGoRecurse(m,t,w,r,f,count, acc) {
     if (count == maxLength) {
       //console.log("maxLength");
       return 1
@@ -65,33 +65,48 @@ Controller.prototype.schedule_1 = function () {
   console.info('Scheduling took: ' + (performance.now() - start) + 'ms')
 }
 
-//Takes the stateMap in tree form and converts it to an array [sch, sec]
-Controller.prototype.convertToArray = function () {
-  validSchedules = this.validSchedules;
-  stateMap = this.stateMap;
 
-  function recursiveHelper(stateObject, acc) {
-    if (stateObject.children.length === 0) {      
-      accCopy = acc.slice();
-      accCopy.push([stateObject.sch, stateObject.sec]);
-      validSchedules.push(accCopy);
-      return;
+Controller.prototype.schedule_2 = function () {
+  var start = performance.now();
+  var self = this;
+  var termToSchedule = this.getTermToSchedule();
+  var schedules = this.getSchedules(termToSchedule);
+
+  var maxLength = schedules.length;
+  var numSchedules = 0;
+  function recursiveSchedule(m, t, w, r, f, count, acc) {
+    if (count == maxLength) {
+      self.validSchedules.push(acc.slice());
+      numSchedules++;
+      if (numSchedules == 1000) {
+        return 0;
+      }
+      return 1;
     }
 
-    acc.push([stateObject.sch, stateObject.sec])
-    for (var i = 0; i < stateObject.children; i++) {      
-      recursiveHelper(stateObject.children[i], acc);
-    } 
-    acc.pop()
+    var newSec = schedules[count];
+    
+
+    for (var i = newSec.length; i--;) {
+      
+      var time = newSec[i];
+      if (time[0]&m || time[1]&t || time[2]&w || time[3]&r || time[4]&f) {
+        continue
+      }   
+      acc.push([count, i]);   
+      if (!recursiveSchedule(time[0]|m, time[1]|t, time[2]|w, time[3]|r, time[4]|f, count+1, acc)) return 0;
+      acc.pop();
+    }  
+    return 1; 
   }
 
-  for (var i = 0; i < stateMap.length; i++) {
-    var acc = [];
-    recursiveHelper(stateMap[i], acc);
-  }
 
-  console.log(validSchedules);
+  var acc = [];
+  recursiveSchedule(0,0,0,0,0,0,acc);
+  console.info('Scheduling took: ' + (performance.now() - start) + 'ms')
+  console.log(self.validSchedules);
 }
+
 
 
 // Tryna keep the controller stateless
