@@ -151,6 +151,36 @@ Model.prototype._addCourse = function (course) {
   } 
 }
 
+Model.prototype.getSchedules = function() {
+  var termToSchedule = View.Control.term;
+
+  switch(termToSchedule) {
+    case 't1':
+      return Mu.Model.t1SectionSchedules;
+      break;
+    case 't2':
+      return Mu.Model.t2SectionSchedules;
+      break;
+    case 't3':
+      //TODO
+      break;
+  }
+}
+
+Model.prototype.getSections = function() {
+  var termToSchedule = View.Control.term;
+  switch(termToSchedule) {
+    case 't1':
+      return Mu.Model.t1Sections;
+      break;
+    case 't2':
+      return Mu.Model.t2Sections;
+      break;
+    case 't3':
+      //TODO
+      break;
+  }
+}
 
 // Yet another Singleton
 Mu.Model = Model = new Model()

@@ -127,4 +127,7 @@ Control.changeTerm = function(term) {
   this.term = term;
   //Toggle highlight
 }
+
+
+
 View.Control = Control

@@ -69,8 +69,7 @@ Controller.prototype.schedule_1 = function () {
 Controller.prototype.schedule_2 = function () {
   var start = performance.now();
   var self = this;
-  var termToSchedule = this.getTermToSchedule();
-  var schedules = this.getSchedules(termToSchedule);
+  var schedules = Mu.Model.getSchedules();
 
   var maxLength = schedules.length;
   var numSchedules = 0;
@@ -114,36 +113,8 @@ Controller.prototype.getSectionMap = function () {
   return Mu.Model.sections
 }
 
-Controller.prototype.getSections = function(termToSchedule) {
-  switch(termToSchedule) {
-    case 't1':
-      return Mu.Model.t1Sections;
-      break;
-    case 't2':
-      return Mu.Model.t2Sections;
-      break;
-    case 't3':
-      //TODO
-      break;
-  }
-}
-
-Controller.prototype.getSchedules = function(termToSchedule) {
-  switch(termToSchedule) {
-    case 't1':
-      return Mu.Model.t1SectionSchedules;
-      break;
-    case 't2':
-      return Mu.Model.t2SectionSchedules;
-      break;
-    case 't3':
-      //TODO
-      break;
-  }
-}
-
-Controller.prototype.getTermToSchedule = function() {
-  return View.Control.term;
+Controller.prototype.getSchedule = function(index) {
+  return this.validSchedules[index];
 }
 
 // Yet another Singleton

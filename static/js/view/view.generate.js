@@ -31,6 +31,53 @@ var Generate = new Vue({
   }
 })
 
+
+//Returns the starting index, 0 being 8, in 30 minute blocks
+function getStart(scheduleInt) {
+  for (var i = 0; i < 32; i++) {
+    if ((scheduleInt >> i) & 1) {
+      return i;
+    }
+  }
+}
+
+//Returns the size of the blocks (number of 30 minute blocks)
+function getHeight(scheduleInt, startPos) {
+  for (var i = startPos; i < 32; i++) {
+    if (!((scheduleInt >> i) & 1)) {
+      return i - startPos;
+    }
+  }
+}
+
+
+/** Adds sections to data.days */
+Generate._updateDays = function(scheduleToRender, schedules, sections) {
+  for (var i = 0; i < scheduleToRender.length; i++) {
+    groupingNumber = scheduleToRender[i][0];
+    sectionNumber = scheduleToRender[i][1];
+    sectionSchedule = schedules[groupingNumber][sectionNumber];
+    section = sections[groupingNumber][sectionNumber];
+
+    for (var ii = sectionSchedule.length; ii--;) {
+      if (sectionSchedule[ii]) {
+        courseCode = section.uniq.split(" ").slice(0, 2).join(" ");
+        start = getStart(sectionSchedule[ii]);
+        height = getHeight(sectionSchedule[ii], start);
+
+        this.days[ii].push({
+          sectionCode: section.uniq,
+          courseCode: courseCode,
+          start: start,
+          height: height
+        });
+      }
+    }
+
+  }
+};
+
+
 /** Simply turns the generator screen on. Also checks for scheduling. */
 Generate.start = function () {
   this.visible = true
@@ -38,7 +85,13 @@ Generate.start = function () {
   if (!this.schedules.length) {
     this.loading = true
     Mu.Controller.schedule_2()
-
+    var scheduleToRender = Mu.Controller.getSchedule(index);
+    var schedules = Mu.Model.getSchedules();
+    var sections = Mu.Model.getSections();
+    console.log(scheduleToRender);
+    console.log(schedules);
+    console.log(sections);
+    this._updateDays(scheduleToRender, schedules, sections);
   }
 
 
