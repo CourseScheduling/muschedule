@@ -1,5 +1,5 @@
 var Schedule = new Vue({
-  el: '#calendar',
+  el: '#main__scheduleWrap',
   data: {
     days: [
       [],
@@ -14,7 +14,9 @@ var Schedule = new Vue({
       [],
       [],
       []
-    ]
+    ],
+    index: 0,
+    maxIndex: 1
   },
   methods: {
     displayPrevious: null,

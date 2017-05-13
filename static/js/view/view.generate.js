@@ -28,7 +28,8 @@ var Generate = new Vue({
     start: null,
     halt:  null,
     displayPrevious: null,
-    displayNext: null
+    displayNext: null,
+    select: null
   }
 })
 
@@ -128,11 +129,14 @@ Generate.displayPrevious = function() {
   console.log("displayPrevious in Generate")
   index = this.index;
   maxIndex = this.maxIndex;
-
   index = (index - 1) % maxIndex;
   if (index == -1) index = maxIndex - 1;
   this.index = index;
   this.draw(index);
+}
+
+Generate.select = function() {
+
 }
 
 View.Generate = Generate

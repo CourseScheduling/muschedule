@@ -135,3 +135,14 @@
       width: 100%;
       left: 0px;
     }
+.index__wrap {
+  margin-top: 25px;
+}
+  .index__wrap span {
+    color: white;
+    margin: 10px;
+  }
+
+.gen__btn {
+  display: inline-block;
+}
