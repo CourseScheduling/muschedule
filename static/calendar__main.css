@@ -1,67 +1,25 @@
-#calendar{
+#calendar {  
   width: 600px;
-  position: relative;
-  display: inline-block;
   overflow: visible;
-  background-color: #fafafa;
+  font-family: Montserrat;
+  color: #000;
 }
-  .cal__dayWrap{
-    width: 100%;
-    float: left;
-    border-bottom: 1px solid #EEE;
-    color: #000;
-    background-color: #FFF;
+  .cal__rowWrap {
   }
-    .cal__day{
-      width: calc(92% / 5);
-      display: inline-block;
-      border-left: 1px solid #EEE;
-      box-sizing: border-box;
-      padding: 10px;
-      font-family: Montserrat;
-      font-size: 10px;
+    .cal__row {
       font-weight: 400;
-      text-transform: uppercase;
+      font-size: 10px;
     }
-      .cal__day--leftest{
-        border-left: 0;
+      .cal__row--days {
+        height: 25px;
+        text-transform: uppercase;
+      }
+      .cal__block {
+        width: calc(92% / 5);
+        height: 10px;
+        padding: 5px;
+        background-color: #FFF;
+      }
+      .cal__block--time {
         width: 8%;
       }
-
-  .cal__row{
-    width: 100%;
-    border-bottom: 1px solid #EEE;
-    height: 40px;
-    line-height: 40px;
-    float: left;
-    font-family: Montserrat;
-    font-weight: 400;
-    font-size: 10px;
-    text-align: left;
-    color: #000;
-  }
-    .cal__rowTime{
-      background-color: #FFF;
-      border-right: 1px solid #EEE;
-      width: 8%;
-      text-align: center;
-    }
-
-  #calendar__blockWrap{
-    position: absolute;
-    top: 34px;
-    left: 49px;
-    width: calc(100% - 49px);
-    height: calc(100% - 34px);
-  }
-
-    .block__dayCol{
-      width: calc(100% / 5);
-      display: inline-block;
-      height: 100%;
-    }
-    .block__dayGroup{
-      width: 100%;
-      display: inline-block;
-      background-color: rgba(0,0,0,0.1);
-    }
