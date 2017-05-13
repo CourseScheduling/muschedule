@@ -12,14 +12,16 @@ div.gen__loadingText Generated Schedules
           td.cal__block.cal__block--time
           each day in ['Mon','Tue','Wed','Thu','Fri']
             td.cal__block.cal__block--day=day
-        template(v-for="hour in [[8,0], [85,1], [9,2], [95,3], [10,4], [105,5], [11,6], [115,7], [12,8], [125,9], [1,10], [15, 11], [2, 12], [25, 13], [3,14], [35,15], [4, 16], [45, 17], [5,18], [55,19], [6, 20], [65, 21], [7,22], [75,23],[8,24], [85,25],[9,26], [95,27]]")        
+        - var count = 0;
+        each hour in [8, 85,9, 95,10, 105,11,115,12, 125,1, 15,2, 25,3, 35,4, 45,5, 55,6, 65,7, 75,8, 85,9, 95]
           tr.cal__row
-            template(v-if="(hour[0] >= 10) && (hour[0] < 13)")            
-              td.cal__block.cal__block--time(rowspan="2") {{hour[0]}}:00
-            template(v-else-if="hour[0] < 13")            
-              td.cal__block.cal__block--time(rowspan="2") &nbsp;{{hour[0]}}:00
-            template(v-for="day in [0, 1, 2, 3, 4]")            
-              td.cal__block.cal__block--data(v-bind:data-time="hour[1]", v-bind:data-day="day", v-bind:class="{'cal__block--highlighted':breakTable[hour[1]][day]}")    
+            if ((hour >= 10) && (hour < 13)) 
+              td.cal__block.cal__block--time(rowspan="2") #{hour}:00
+            else if hour < 13
+              td.cal__block.cal__block--time(rowspan="2") &nbsp;#{hour}:00
+            each day in [0, 1, 2, 3, 4]
+              td.cal__block.cal__block--data(data-time=count, data-day=day, v-bind:class="{'cal__block--highlighted':breakTable[count][day]}")
+          - count++
     .calendar__blockWrap#gen__calendar__blockWrap
       // This is where we can begin view modification.
       div.block__timeCol

@@ -1,3 +1,7 @@
+var breakTable = [];
+for (var i = 0; i < 28; i++) {
+  this.breakTable.push([true, false, false, false, false]);
+}
 var Generate = new Vue({
   el: '#gen__wrap',
   data: {
@@ -22,14 +26,10 @@ var Generate = new Vue({
     ],
     index: 0,
     maxIndex: 0,
-    breakTable: [
-      [],
-      [],
-      [],
-      [],
-      []
-    ]
+    breakTable: breakTable,
+    breaks: [0,0,0,0,0]
   },
+  
   
   methods: {
     start: null,
@@ -39,7 +39,7 @@ var Generate = new Vue({
     select: null
   }
 })
-
+var mousedown = false; 
 
 
 //Returns the starting index, 0 being 8, in 30 minute blocks
@@ -89,6 +89,41 @@ Generate._updateDays = function(scheduleToRender, schedules, sections) {
 
   }
 };
+
+Generate.listenToBreaks = function() {  
+  var self = this;
+  function handleTrigger(target) {
+    attributes = target.attributes;
+    dataTime = attributes["data-time"].value;
+    dataDay = attributes["data-day"].value;
+
+    breakTableData = self.breakTable[dataTime][dataDay];
+    breakTableData ? breakTableData = false : breakTableData = true;
+
+    mask = 1 << dataTime;
+    self.breaks[dataDay] ^= mask;
+  }
+
+  document.onmousedown = function(event) {
+    if (event.target.className == "cal__block cal__block--data") {
+      handleTrigger(event.target);
+    }
+    mousedown = true;
+  }
+
+  document.onmouseup = function() {
+    mousedown = false;
+  }
+
+  dataBlocks = document.getElementsByClassName('cal__block--data');
+  for (var i = dataBlocks.length; i--; ) {
+    dataBlocks[i].onmouseover = function(event) {
+      if (mousedown) {
+        handleTrigger(event.target);
+      }
+    }
+  }
+}
 
 Generate.draw = function(index) {
   this.days = [
@@ -146,4 +181,5 @@ Generate.select = function() {
   this.halt();
 }
 
-View.Generate = Generate
+View.Generate = Generate;
+View.Generate.listenToBreaks();
