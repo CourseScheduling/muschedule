@@ -20,9 +20,10 @@ var Generate = new Vue({
       [],
       []
     ],
-    index: 0
+    index: 0,
+    maxIndex: 0
   },
-
+  
   methods: {
     start: null,
     halt:  null,
@@ -63,14 +64,17 @@ Generate._updateDays = function(scheduleToRender, schedules, sections) {
     for (var ii = sectionSchedule.length; ii--;) {
       if (sectionSchedule[ii]) {
         courseCode = section.uniq.split(" ").slice(0, 2).join(" ");
-        start = getStart(sectionSchedule[ii]) * Mu.View.blockHeight;
-        height = getHeight(sectionSchedule[ii], start) * Mu.View.blockHeight;
 
+        start = getStart(sectionSchedule[ii]);
+        height = getHeight(sectionSchedule[ii], start) * Mu.View.blockHeight;
+        start = start * Mu.View.blockHeight + 25;
         this.days[ii].push({
           sectionCode: section.uniq,
           courseCode: courseCode,
-          start: start,
-          height: height
+          styleObject: {
+            top: start + 'px',
+            height: height + 'px'
+          }
         });
       }
     }
@@ -78,6 +82,20 @@ Generate._updateDays = function(scheduleToRender, schedules, sections) {
   }
 };
 
+Generate.draw = function(index) {
+  this.days = [
+      [],
+      [],
+      [],
+      [],
+      []
+    ];
+  var scheduleToRender = Mu.Controller.getSchedule(this.index);
+    var schedules = Mu.Model.getSchedules();
+    var sections = Mu.Model.getSections();
+    this._updateDays(scheduleToRender, schedules, sections);
+    this.maxIndex = Mu.Controller.validSchedules.length;
+}
 
 /** Simply turns the generator screen on. Also checks for scheduling. */
 Generate.start = function () {
@@ -86,13 +104,7 @@ Generate.start = function () {
   if (!this.schedules.length) {
     this.loading = true
     Mu.Controller.schedule_2()
-    var scheduleToRender = Mu.Controller.getSchedule(index);
-    var schedules = Mu.Model.getSchedules();
-    var sections = Mu.Model.getSections();
-    console.log(scheduleToRender);
-    console.log(schedules);
-    console.log(sections);
-    this._updateDays(scheduleToRender, schedules, sections);
+    this.draw(this.index);    
   }
 
 
@@ -106,10 +118,21 @@ Generate.halt = function () {
 }
 Generate.displayNext = function() {
   console.log("displaynext in Generate")
+  index = this.index;
+  maxIndex = this.maxIndex;
+  this.index = (index + 1) % maxIndex;
+  this.draw(index);
 }
 
 Generate.displayPrevious = function() {
   console.log("displayPrevious in Generate")
+  index = this.index;
+  maxIndex = this.maxIndex;
+
+  index = (index - 1) % maxIndex;
+  if (index == -1) index = maxIndex - 1;
+  this.index = index;
+  this.draw(index);
 }
 
 View.Generate = Generate

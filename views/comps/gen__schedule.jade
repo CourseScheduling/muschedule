@@ -21,11 +21,10 @@ div.gen__loadingText Generated Schedules
     .calendar__blockWrap#gen__calendar__blockWrap
       // This is where we can begin view modification.
       div.block__timeCol
-      div(v-for="day in [0,1,2,3,4]").block__dayCol
-        div(v-for="group in days[day]" v-bind:style="{top: group.start, height: group.height}" style="background-color: #999;width: 100%;").block__dayGroup
-        //- div(v-for="group in tempDays[day]" v-bind:style="{top: group.start, height: group.height}" style="background-color: #999;width: 100%;")
+      div(v-for="day in [0,1,2,3,4]").block__dayCol      
+        div(v-for="section in days[day]" v-bind:style="section.styleObject").block__dayGroup {{section.sectionCode}}
 
 #gen__index__wrap
-  span#gen__index 1
+  span#gen__index(v-text="index + 1")
   span /
-  span#gen__maxIndex 1
+  span#gen__maxIndex(v-text="maxIndex")

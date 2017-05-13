@@ -121,9 +121,17 @@
     width: calc(92%/5);
     height: 100%;
     display: inline-block;
+    position: relative;
   }
   .block__timeCol {
     width: 8%;
     height: 100%;
     display: inline-block;
   }
+    .block__dayGroup {
+      position: absolute;
+      display: inline-block;
+      background-color: #999;
+      width: 100%;
+      left: 0px;
+    }
