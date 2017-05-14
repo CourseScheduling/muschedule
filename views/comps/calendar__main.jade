@@ -16,7 +16,5 @@ link(rel="stylesheet" href="/static/calendar__main.css")
   #calendar__blockWrap
     // This is where we can begin view modification.
     div(v-for="day in [0,1,2,3,4,5,6]").block__dayCol
-      div(v-for="group in days[day]" v-bind:style="{top: group.start}").block__dayGroup
-      div(v-for="group in tempDays[day]" v-bind:style="{top: group.start, height: group.height}" style="background-color: #999;width: 100%;")
-        div(v-for="block in group.groups")
-          div(v-for="roll in block") {{roll.section}}
+      div(v-for="group in days[day]").block__dayGroup
+      div(v-if="temp[day]") {{temp[day].section.section}}

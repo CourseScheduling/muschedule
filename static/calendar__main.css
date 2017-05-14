@@ -64,4 +64,14 @@
       width: 100%;
       display: inline-block;
       background-color: rgba(0,0,0,0.1);
+      position: relative;
     }
+      .block__section{
+        color: #FFF;
+        border-radius: 5px;
+        width: 99%;
+        left: 0.5%;
+        font-family: Montserrat;
+        font-size: 11px;
+        position: absolute;
+      }

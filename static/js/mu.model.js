@@ -5,7 +5,9 @@ function Model () {
   this.courses = []
   this.sections = []
   
-  this.timeMap = []
+  this.timeMap = {}
+  this.timeArr = []
+
   this.oldTime = []
 }
 
@@ -77,68 +79,70 @@ Model.prototype._request = function (opts) {
 */
 
 Model.prototype.addCourse = function (course) {
+  var self = this
+
   this.courses.push(course)
-  
-  // This map transitions things from the local course schedule arr to a bigger one.
   var _transMap = {}
 
-  // Adding stuff to the timeMap.
-  OuterLoop:
-  for(var i = course.schedules.length; i--;) {
-    var schedule = course.schedules[i]
-    var scheduleStr = schedule.join('.')
+  // Aggregate schedules.
+  course.schedules.forEach(function (schedule) {
+    time = self.timeMap[schedule.join('.')]
+    if (!time) {
+      self.timeMap[schedule.join('.')] = self.timeArr.length
+      _transMap[schedule.join('.')] = self.timeArr.length
 
-    // Try to find this schedule in the timeMap
-    for (var t = this.timeMap.length; t--;) {
-      if (this.timeMap[t].join('.') == scheduleStr) {
-        _transMap[i] = t
-        continue OuterLoop
+      self.timeArr.push(schedule)
+    } else {
+      _transMap[schedule.join('.')] = time 
+    }
+  })
+
+  // Change the section schedule values to the timeArr values.
+  for(var term in course.terms) {
+    var tSections = course.terms[term]
+    for(var section in tSections) {
+
+      // Go through each section in a term.
+      tSections[section].forEach(function (sectionOfType) {
+        // Go through each section in a Lab/ Lecture
+        sectionOfType.forEach(function (section) {
+          if (section) {
+            section.schedule = _transMap[course.schedules[section.schedule].join('.')]
+          }
+        })
+      })
+    }
+  }
+
+  this.updateOld()
+}
+
+
+Model.prototype.updateOld = function () {
+  var _convertOld = function (arr) {
+    var oldTime = []
+    for(var i = 0; i < 5; i++) {
+      if (arr[i]) {
+        var start = arr[i].toString(2).indexOf("1")
+        var end = arr[i].toString(2).lastIndexOf("1")
+
+        oldTime.push({
+          day: i,
+          start: (start * 30) + 480,
+          end: (end * 30) + 480,
+          length: ((end - start) * 30)
+        })
       }
     }
 
-    // Add this schedule cuz it currently doesn't exist.
-    _transMap[i] = this.timeMap.length
-    this._addSchedule(schedule)
+    return oldTime
   }
 
-  // Update all the sections in this course.
-  for(var term in course.terms) {
-    for(var i = course.terms[term].sections.length; i--;) {
-      var section = course.terms[term].sections[i]
-      // Update his section's schedule
-      section.schedule = _transMap[section.schedule]
-    }
+
+  for(var i = this.oldTime.length; i < this.timeArr.length; i++) {
+    this.oldTime.push(_convertOld(this.timeArr[i]))
   }
 }
-
-/**
- * Only called by the addCourse thing as a helper.
- * OldTime is essentially {start: 0, end: 0, duration: 0}
- */
-Model.prototype._addSchedule = function (schedule) {
-  // Go through each week day and grab the schedule day
-  var _oldTimeSchedule = []
-  for (var day = 0; day < 5; day++) {
-    var dayTime = schedule[day]
-
-    var dayObj = {}
-    for (var i = 0; i < 32; i++) {
-      if ((time[day] >> i) & 1) break
-    }
-    dayObj.start = (i * 30) + 480
-
-    for (i; i < 32; i++) {
-      if ((time[day] >> i) & 1) break
-    }
-    dayObj.end = (i * 30) + 480
-    dayObj.length = (dayObj.end - dayObj.end)
-    _oldTimeSchedule.push(dayObj)
-  }
-
-  // Add this old time schedule to the model as a transitioner
-  this.oldTime.push(_oldTimeSchedule)
-}
-
 
 // Yet another Singleton
 Mu.Model = Model = new Model()

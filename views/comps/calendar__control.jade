@@ -11,12 +11,12 @@ link(rel="stylesheet" href="/static/calendar__control.css")
           .search__resultBody {{result[1]}}
     .wrap__header :: COURSES ::
     .course__container
-      .course(v-for="(c, code) in courses" @click="activeToggle(c)" v-bind:style="{backgroundColor: c.color}" v-bind:class="{'course--active':c.active}")
+      .course(v-for="c in courses" @click="activeToggle(c)" v-bind:style="{backgroundColor: c.color}" v-bind:class="{'course--active':c.active}")
         .course__code {{c.code}}
         .course__extra(v-show="c.active")
           .course__description {{c.description}}
-          .course__typeBox(v-for="(sections, type) in c.terms[term].sections")
-            .course__typeHeader {{type}}
+          .course__typeBox(v-for="(sections, index) in c.terms[term].sections")
+            .course__typeHeader {{c.types[index]}}
             .course__section(v-for="section in sections"
               @mouseover="showTemp(section)" 
               @mouseout="removeTemp(section)") {{section.section}}
