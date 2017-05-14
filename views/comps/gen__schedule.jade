@@ -1,7 +1,7 @@
 link(rel="stylesheet" href="/static/calendar__gen.css")
 
 div.gen__loadingText Generated Schedules
-#gen__scheduleWrap
+#gen__scheduleWrap(v-show="!loading")
   include navigation
   .gen__btnWrap(@click="select()")
     .btn.gen__btn Select

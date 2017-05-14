@@ -6,70 +6,12 @@ function Controller () {
 
 
 
-Controller.prototype.schedule_1 = function () {
-
-  var start = performance.now()
-
-  //var sections = this.getSectionMap()
-  //var timeMap  = this.getTimeMap()
-  var termToSchedule = this.getTermToSchedule();
-  var sections = this.getSections(termToSchedule);
-  var schedules = this.getSchedules(termToSchedule);
-
-
-  console.log(sections);
-  console.log(schedules);
-
-  var maxLength = sections.length
-  var state = this.stateMap
-  console.log(maxLength);
-
-  console.info('Scheduling prep took: ' + (performance.now() - start) + 'ms')
-  
-  function GoGoRecurse(m,t,w,r,f,count, acc) {
-    if (count == maxLength) {
-      //console.log("maxLength");
-      return 1
-    }    
-    var newSec = schedules[count]
-
-    //console.log(state);
-    for(var i = newSec.length; i--;) {
-      // Skip all the collisions
-      var time = newSec[i]
-      if (time[0]&m || time[1]&t || time[2]&w || time[3]&r || time[4]&f) {
-        continue
-      }
-
-      var children = []
-      state.push({
-        sec: count,
-        sch: i,
-        children: children
-      })
-
-      var good = GoGoRecurse(time[0]|m, time[1]|t, time[2]|w, time[3]|r, time[4]|f, count + 1, children)
-
-      if (!good) {              
-        state.pop()
-      } else {
-        count = 1
-      }
-    }
-
-    return count
-  }
-
-  GoGoRecurse(0,0,0,0,0,0,state);
-  console.info(state);
-  console.info('Scheduling took: ' + (performance.now() - start) + 'ms')
-}
-
-
 Controller.prototype.schedule_2 = function () {
   var start = performance.now();
   var self = this;
   var schedules = Mu.Model.getSchedules();
+  this.validSchedules = [];
+  var breaks = View.Generate.breaks;
 
   var maxLength = schedules.length;
   var numSchedules = 0;
@@ -101,7 +43,8 @@ Controller.prototype.schedule_2 = function () {
 
 
   var acc = [];
-  recursiveSchedule(0,0,0,0,0,0,acc);
+  console.log("breaks",breaks);
+  recursiveSchedule(breaks[0],breaks[1],breaks[2],breaks[3],breaks[4],0,acc);
   console.info('Scheduling took: ' + (performance.now() - start) + 'ms')
   console.log(self.validSchedules);
 }

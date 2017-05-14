@@ -99,21 +99,22 @@ Generate._updateDays = function(scheduleToRender, schedules, sections) {
 
 Generate.listenToBreaks = function() {  
   var self = this;
+  var rescheduleTimeout;
 
   function handleTrigger(target) {
     attributes = target.attributes;
     dataTime = attributes["data-time"].value;
-    dataDay = attributes["data-day"].value;
-    
+    dataDay = attributes["data-day"].value;   
 
-    self.breakTable[dataTime][dataDay] = addBreaks;
-    console.log(self.breakTable);
+    self.breakTable[dataTime][dataDay] = addBreaks;    
     mask = 1 << dataTime;
     self.breaks[dataDay] ^= mask;
   }
 
+
   document.onmousedown = function(event) {
     if (event.target.className.includes("cal__block--data")) {
+      clearTimeout(rescheduleTimeout);
       attributes = event.target.attributes;
       dataTime = attributes["data-time"].value;
       dataDay = attributes["data-day"].value;
@@ -126,7 +127,8 @@ Generate.listenToBreaks = function() {
   }
 
   document.onmouseup = function() {
-    mousedown = false;
+    if (mousedown == true) rescheduleTimeout = setTimeout(self.restart.bind(self), 1000);
+    mousedown = false;    
   }
 
   dataBlocks = document.getElementsByClassName('cal__block--data');
@@ -166,6 +168,12 @@ Generate.start = function () {
 
   this.loading = false
 }
+
+Generate.restart = function() {
+  this.index = 0;
+  this.start();
+}
+
 
 /** Simply stops the entire generator. Also does other stuff. */
 Generate.halt = function () {

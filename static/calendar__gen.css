@@ -9,16 +9,19 @@
     display: inline-block;
     position: relative;
   }
-    #gen__calendar{      
-      width: 600px;    
-      overflow: visible;
-      font-family: Montserrat;
-      color: #000;
+    #gen__calendarWrap * {
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
     }
+    #gen__calendar{      
+      width: 600px;    
+      overflow: visible;
+      font-family: Montserrat;
+      color: #000;
+    }
+
     .cal__block--highlighted {
       background-color: #A9A9A9;
     }
