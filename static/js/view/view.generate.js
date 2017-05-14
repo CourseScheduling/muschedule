@@ -71,15 +71,37 @@ function getHeight(scheduleInt, startPos) {
 
 
 Generate.listenToLocks = function() {
+  var self = this;
+  var lockedSections = this.lockedSections;
   sectionBlockElements = document.getElementsByClassName('block__dayGroup');
+  console.log(sectionBlockElements.length);
   for (var i = sectionBlockElements.length; i--;) {
-    sectionBlockElements[i].onmousedown = function(event) {
-      if (event.which === 3) {
+    console.log("binding onmousedown to section block");
+    document.oncontextmenu = function(event) {
+      if (event.target.className.includes("block__dayGroup")) {
         console.log("Locking section");
         sch = event.target.getAttribute("data-sch");
-        sec = event.target.getAttribute("data-sec");        
+        sec = event.target.getAttribute("data-sec"); 
+        isLocked = event.target.className.includes("section__block--locked");
+        
+        if (isLocked) {
+          for (var i = lockedSections.length; i--;) {
+            if (lockedSections[i][0] == sch && lockedSections[i][1] == sec) {
+              lockedSections.splice(i, 1);
+              break;
+            }
+          }
+        } else {
+          lockedSections.push([sch, sec]);
+        }     
+        self.restart();
+        return false;
+        //Toggle data to toggle class 
+      } else {
+        return true;
       }
     }
+
     sectionBlockElements[i].onmouseover = function(event) {
 
     }
@@ -100,10 +122,10 @@ Generate.listenToBreaks = function() {
     self.breaks[dataDay] ^= mask;
   }
 
-
-  document.onmousedown = function(event) {
-    if (event.which !== 1) return;
-    if (event.target.className.includes("cal__block--data")) {
+  calBlockElements = document.getElementsByClassName("cal__block--data");
+  for (var i = calBlockElements.length; i--;) {
+    calBlockElements[i].onmousedown = function(event) {
+      if (event.which !== 1) return;
       clearTimeout(rescheduleTimeout);
       attributes = event.target.attributes;
       dataTime = attributes["data-time"].value;
@@ -113,8 +135,8 @@ Generate.listenToBreaks = function() {
       handleTrigger(event.target);
       mousedown = true;
     }
-    
   }
+
 
   document.onmouseup = function() {
     if (mousedown == true) rescheduleTimeout = setTimeout(self.restart.bind(self), 1000);
@@ -225,6 +247,12 @@ Generate.select = function() {
   this.halt();
 }
 
+
+
+
+
 View.Generate = Generate;
 View.Generate.listenToBreaks();
 View.Generate.listenToLocks();
+
+

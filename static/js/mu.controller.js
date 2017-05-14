@@ -10,10 +10,14 @@ Controller.prototype.schedule_2 = function () {
   var start = performance.now();
   var self = this;
   var schedules = Mu.Model.getSchedules();
+
+  var lockedSections = View.Generate.lockedSections;
+
+
   this.validSchedules = [];
   var breaks = View.Generate.breaks;
 
-  var maxLength = schedules.length;
+  var maxLength = filteredSchedules.length;
   var numSchedules = 0;
   function recursiveSchedule(m, t, w, r, f, count, acc) {
     if (count == maxLength) {
@@ -47,6 +51,8 @@ Controller.prototype.schedule_2 = function () {
   recursiveSchedule(breaks[0],breaks[1],breaks[2],breaks[3],breaks[4],0,acc);
   console.info('Scheduling took: ' + (performance.now() - start) + 'ms')
   console.log(self.validSchedules);
+
+
 }
 
 
