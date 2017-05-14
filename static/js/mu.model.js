@@ -73,36 +73,40 @@ Model.prototype._request = function (opts) {
 /** 
   - To be called internally whenever a course is added to the list.
 */
-Model.prototype._addCourse = function (course) {
-  // Add to list.
+
+Model.prototype.addCourse = function (course) {
   this.courses.push(course)
   
+  // This map transitions things from the local course schedule arr to a bigger one.
   var _transMap = {}
 
-  // Add the course's schedule to the timeMap
-  CourseLoop:
-  for (var i = 0, ii = course.schedules.length; i < ii; i++) {
+  // Adding stuff to the timeMap.
+  OuterLoop:
+  for(var i = course.schedules.length; i--;) {
     var schedule = course.schedules[i]
     var scheduleStr = schedule.join('.')
 
-    // Look to find a match, continue, if bad.
-    for (var s = this.timeMap.length;s--;) { 
-      if (this.timeMap[s].join('.') == scheduleStr) {
-        _transMap[i] = s
-        continue CourseLoop
+    // Try to find this schedule in the timeMap
+    for (var t = this.timeMap.length; t--;) {
+      if (this.timeMap[t].join('.') == scheduleStr) {
+        _transMap[i] = t
+        continue OuterLoop
       }
     }
 
+    // Add this schedule cuz it currently doesn't exist.
     _transMap[i] = this.timeMap.length
     this.timeMap.push(schedule)
   }
 
-  // Go through this course's sections and update times.
-  for (var t = course.sections.length;t--;) {
-    for (var s = course.sections[t].length;s--;) {
-      course.sections[t][s].time = _transMap[course.sections[t][s].time] 
+  // Update all the sections in this course.
+  for(var term in course.terms) {
+    for(var i = course.terms[term].sections.length; i--;) {
+      var section = course.terms[term].sections[i]
+      // Update his section's schedule
+      section.schedule = _transMap[section.schedule]
     }
-  } 
+  }
 }
 
 

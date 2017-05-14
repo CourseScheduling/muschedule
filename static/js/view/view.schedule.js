@@ -23,16 +23,16 @@ var Schedule = new Vue({
 Schedule.addSection = function (section) {
   var time = Mu.Model.timeMap[section.schedule]
 
-  for (var i = 0; i < 5; i++) {
-    if (!time[i]) {
-      continue
-    }
+  for (var day = 0; day < 5; day++) {
 
-    // No interesect, make a new group.
-    Schedule.days[i].push({
-      time: time[i],
-      sections: [section]
-    }) 
+  }
+}
+
+Schedule.removeSection = function (section) {
+  var time = Mu.Model.timeMap[section.schedule]
+
+  for (var day = 0; day < 5; day++) {
+
   }
 }
 

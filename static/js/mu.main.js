@@ -1,3 +1,5 @@
+var TERM = 't1'
+
 var Mu = {}
 
 // Placeholders for the MVC Framework

@@ -64,6 +64,9 @@ Control.addCourse = function (course) {
 
   Mu.Model.getCourse(course[0]).then(function (course) {
     course = JSON.parse(course)[0]
+
+    // Process the course
+    Mu.Model.addCourse(course)
     course.active = true
     self.flushCourses()
     self.courses[course.code] = course
@@ -90,9 +93,11 @@ Control.activeToggle = function (c) {
 }
 
 Control.showTemp = function (section, course) {
+  Mu.View.Schedule.addSection(section)
 }
 
 Control.removeTemp = function (section, course) {
+  Mu.View.Schedule.removeSection(section)
 }
 
 View.Control = Control
