@@ -28,9 +28,9 @@ var Generate = new Vue({
     index: 0,
     maxIndex: 0,
     breakTable: breakTable,
-    breaks: [0,0,0,0,0]
-  },  
-  
+    breaks: [0,0,0,0,0],
+    lockedSections: []
+  },    
   methods: {
     start: null,
     halt:  null,
@@ -68,34 +68,23 @@ function getHeight(scheduleInt, startPos) {
 }
 
 
-/** Adds sections to data.days */
-Generate._updateDays = function(scheduleToRender, schedules, sections) {
-  for (var i = 0; i < scheduleToRender.length; i++) {
-    groupingNumber = scheduleToRender[i][0];
-    sectionNumber = scheduleToRender[i][1];
-    sectionSchedule = schedules[groupingNumber][sectionNumber];
-    section = sections[groupingNumber][sectionNumber];
 
-    for (var ii = sectionSchedule.length; ii--;) {
-      if (sectionSchedule[ii]) {
-        courseCode = section.uniq.split(" ").slice(0, 2).join(" ");
 
-        start = getStart(sectionSchedule[ii]);
-        height = getHeight(sectionSchedule[ii], start) * Mu.View.blockHeight;
-        start = start * Mu.View.blockHeight;
-        this.days[ii].push({
-          sectionCode: section.uniq,
-          courseCode: courseCode,
-          styleObject: {
-            top: start + 'px',
-            height: height + 'px'
-          }
-        });
+Generate.listenToLocks = function() {
+  sectionBlockElements = document.getElementsByClassName('block__dayGroup');
+  for (var i = sectionBlockElements.length; i--;) {
+    sectionBlockElements[i].onmousedown = function(event) {
+      if (event.which === 3) {
+        console.log("Locking section");
+        sch = event.target.getAttribute("data-sch");
+        sec = event.target.getAttribute("data-sec");        
       }
     }
+    sectionBlockElements[i].onmouseover = function(event) {
 
+    }
   }
-};
+}
 
 Generate.listenToBreaks = function() {  
   var self = this;
@@ -113,6 +102,7 @@ Generate.listenToBreaks = function() {
 
 
   document.onmousedown = function(event) {
+    if (event.which !== 1) return;
     if (event.target.className.includes("cal__block--data")) {
       clearTimeout(rescheduleTimeout);
       attributes = event.target.attributes;
@@ -140,6 +130,38 @@ Generate.listenToBreaks = function() {
     }
   }
 }
+
+
+/** Adds sections to data.days */
+Generate._updateDays = function(scheduleToRender, schedules, sections) {
+  for (var i = 0; i < scheduleToRender.length; i++) {
+    groupingNumber = scheduleToRender[i][0];
+    sectionNumber = scheduleToRender[i][1];
+    sectionSchedule = schedules[groupingNumber][sectionNumber];
+    section = sections[groupingNumber][sectionNumber];
+
+    for (var ii = sectionSchedule.length; ii--;) {
+      if (sectionSchedule[ii]) {
+        courseCode = section.uniq.split(" ").slice(0, 2).join(" ");
+
+        start = getStart(sectionSchedule[ii]);
+        height = getHeight(sectionSchedule[ii], start) * Mu.View.blockHeight;
+        start = start * Mu.View.blockHeight;
+        this.days[ii].push({
+          sectionCode: section.uniq,
+          courseCode: courseCode,
+          styleObject: {
+            top: start + 'px',
+            height: height + 'px'
+          },
+          sch: groupingNumber,
+          sec: sectionNumber
+        });
+      }
+    }
+  }
+};
+
 
 Generate.draw = function(index) {
   this.days = [
@@ -205,3 +227,4 @@ Generate.select = function() {
 
 View.Generate = Generate;
 View.Generate.listenToBreaks();
+View.Generate.listenToLocks();

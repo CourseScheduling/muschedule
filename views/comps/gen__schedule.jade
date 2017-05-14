@@ -24,7 +24,7 @@ div.gen__loadingText Generated Schedules
       // This is where we can begin view modification.
       div.block__timeCol
       div(v-for="day in [0,1,2,3,4]").block__dayCol      
-        div(v-for="section in days[day]" v-bind:style="section.styleObject").block__dayGroup {{section.sectionCode}}
+        div(v-for="section in days[day]" v-bind:style="section.styleObject" v-bind:data-sch="section.sch" v-bind:data-sec="section.sec").block__dayGroup {{section.sectionCode}}
 
 .index__wrap
   span#gen__index(v-text="index + 1")
