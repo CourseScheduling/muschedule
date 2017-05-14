@@ -4,6 +4,7 @@ const API_URL = 'http://schedulerserver.azurewebsites.net/api/v1/ubc'
 function Model () {
   this.courses = []
   this.sections = []
+  
   this.timeMap = []
   this.oldTime = []
 }

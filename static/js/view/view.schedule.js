@@ -21,17 +21,59 @@ var Schedule = new Vue({
 
 
 Schedule.addSection = function (section) {
-  var time = Mu.Model.timeMap[section.schedule]
+  var time = Mu.Model.oldTime[section.schedule]
+  var timeInt = Mu.Model.timeMap[section.section]
 
+  DayLoop:
   for (var day = 0; day < 5; day++) {
+    if(!time[day]) {
+      continue
+    }
+
+    // Search for intersecting group.
+    for(var i = tempDays[day].length;i--;) {
+      var group = tempDays[day][i]
+      if(group.int & time[day]) {
+        group.int |= time[day]
+        group.groups.push({
+          time: time,
+          section: section
+        })
+        continue DayLoop
+      }
+    }
+
+    // Since there's no intersection make a new group.
+    tempDays[day].push({
+      groups: [{
+        time: time,
+        section: section
+      }],
+      int: time[day]
+    })
 
   }
 }
 
 Schedule.removeSection = function (section) {
-  var time = Mu.Model.timeMap[section.schedule]
+  var time = Mu.Model.oldTime[section.schedule]
+  var timeInt = Mu.Model.timeMap[section.section]
 
+  DayLoop:
   for (var day = 0; day < 5; day++) {
+    if(!time[day]) {
+      continue
+    }
+
+    // Search for intersecting group.
+    for(var i = tempDays[day].length;i--;) {
+      var group = tempDays[day][i]
+      if(group.int & time[day]) {
+        group.int |= time[day]
+        group.section.push(section)
+        continue DayLoop
+      }
+    }
 
   }
 }
