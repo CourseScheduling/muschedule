@@ -93,11 +93,11 @@ Control.activeToggle = function (c) {
 }
 
 Control.showTemp = function (section, course) {
-  Mu.View.Schedule.addSection(section)
+  Mu.View.Schedule.addSection(section, 0)
 }
 
 Control.removeTemp = function (section, course) {
-  Mu.View.Schedule.removeSection(section)
+  Mu.View.Schedule.removeSection(section, 0)
 }
 
 View.Control = Control
