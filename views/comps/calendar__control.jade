@@ -15,7 +15,7 @@ link(rel="stylesheet" href="/static/calendar__control.css")
         .course__code {{c.code}}
         .course__extra(v-show="c.active")
           .course__description {{c.description}}
-          .course__typeBox(v-for="(sections, type) in c.terms[term].sections") 
+          .course__typeBox(v-for="(sections, type) in c.terms[term].sections")
             .course__typeHeader {{type}}
             .course__section(v-for="section in sections"
               @mouseover="showTemp(section)" 

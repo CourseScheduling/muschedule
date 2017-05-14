@@ -5,6 +5,7 @@ function Model () {
   this.courses = []
   this.sections = []
   this.timeMap = []
+  this.oldTime = []
 }
 
 /** 
@@ -96,7 +97,7 @@ Model.prototype.addCourse = function (course) {
 
     // Add this schedule cuz it currently doesn't exist.
     _transMap[i] = this.timeMap.length
-    this.timeMap.push(schedule)
+    this._addSchedule(schedule)
   }
 
   // Update all the sections in this course.
@@ -107,6 +108,34 @@ Model.prototype.addCourse = function (course) {
       section.schedule = _transMap[section.schedule]
     }
   }
+}
+
+/**
+ * Only called by the addCourse thing as a helper.
+ * OldTime is essentially {start: 0, end: 0, duration: 0}
+ */
+Model.prototype._addSchedule = function (schedule) {
+  // Go through each week day and grab the schedule day
+  var _oldTimeSchedule = []
+  for (var day = 0; day < 5; day++) {
+    var dayTime = schedule[day]
+
+    var dayObj = {}
+    for (var i = 0; i < 32; i++) {
+      if ((time[day] >> i) & 1) break
+    }
+    dayObj.start = (i * 30) + 480
+
+    for (i; i < 32; i++) {
+      if ((time[day] >> i) & 1) break
+    }
+    dayObj.end = (i * 30) + 480
+    dayObj.length = (dayObj.end - dayObj.end)
+    _oldTimeSchedule.push(dayObj)
+  }
+
+  // Add this old time schedule to the model as a transitioner
+  this.oldTime.push(_oldTimeSchedule)
 }
 
 
