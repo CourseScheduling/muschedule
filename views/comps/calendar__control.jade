@@ -9,6 +9,8 @@ link(rel="stylesheet" href="/static/calendar__control.css")
         .search__result(v-for="(result, index) in results" @click="addCourse(result)" v-bind:class="{'search__result--active':(index == current)}")
           .search__resultHead {{result[0]}}
           .search__resultBody {{result[1]}}
+    #term__wrap
+      button
     .wrap__header :: COURSES ::
     .course__container
       .course(v-for="c in courses" @click="activeToggle(c)" v-bind:style="{backgroundColor: c.color}" v-bind:class="{'course--active':c.active}")
