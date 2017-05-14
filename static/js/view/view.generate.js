@@ -1,7 +1,8 @@
 var breakTable = [];
 for (var i = 0; i < 28; i++) {
-  this.breakTable.push([true, false, false, false, false]);
+  this.breakTable.push({"0":false, "1":false, "2":false, "3":false, "4":false});
 }
+
 var Generate = new Vue({
   el: '#gen__wrap',
   data: {
@@ -28,8 +29,7 @@ var Generate = new Vue({
     maxIndex: 0,
     breakTable: breakTable,
     breaks: [0,0,0,0,0]
-  },
-  
+  },  
   
   methods: {
     start: null,
@@ -37,10 +37,17 @@ var Generate = new Vue({
     displayPrevious: null,
     displayNext: null,
     select: null
+  },
+  watch: {
+    breakTable: {
+      handler: function(after, before) {
+      },
+      deep: true
+    }
   }
 })
 var mousedown = false; 
-
+var addBreaks = false;
 
 //Returns the starting index, 0 being 8, in 30 minute blocks
 function getStart(scheduleInt) {
@@ -92,23 +99,30 @@ Generate._updateDays = function(scheduleToRender, schedules, sections) {
 
 Generate.listenToBreaks = function() {  
   var self = this;
+
   function handleTrigger(target) {
     attributes = target.attributes;
     dataTime = attributes["data-time"].value;
     dataDay = attributes["data-day"].value;
+    
 
-    breakTableData = self.breakTable[dataTime][dataDay];
-    breakTableData ? breakTableData = false : breakTableData = true;
-
+    self.breakTable[dataTime][dataDay] = addBreaks;
+    console.log(self.breakTable);
     mask = 1 << dataTime;
     self.breaks[dataDay] ^= mask;
   }
 
   document.onmousedown = function(event) {
-    if (event.target.className == "cal__block cal__block--data") {
+    if (event.target.className.includes("cal__block--data")) {
+      attributes = event.target.attributes;
+      dataTime = attributes["data-time"].value;
+      dataDay = attributes["data-day"].value;
+      breakTableData = self.breakTable[dataTime][dataDay]; 
+      breakTableData ? addBreaks = false : addBreaks = true;
       handleTrigger(event.target);
+      mousedown = true;
     }
-    mousedown = true;
+    
   }
 
   document.onmouseup = function() {
