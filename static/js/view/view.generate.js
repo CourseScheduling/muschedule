@@ -2,6 +2,7 @@
 var Generate = new Vue({
   el: '#gen__wrap',
   data: {
+    term: TERM,
     visible: false,
     loading: true,
     schedules: [],
@@ -20,6 +21,10 @@ Generate.start = function () {
 
   if (!this.schedules.length) {
     this.loading = true
+    /////////////////////////////
+    // TODO: REMOVE THIS LATER //
+    /////////////////////////////
+    return
     Controller.schedule()
   }
 

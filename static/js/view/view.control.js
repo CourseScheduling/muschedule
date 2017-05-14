@@ -6,9 +6,10 @@ const ENTER = 13
 var Control = new Vue({
   el: '#calendar__right',
   data: {
+    term: TERM,
     query: "",
     results: [],
-    courses: [],
+    courses: {},
     searchTimeout: null,
     loading: false,
     current: -1
@@ -21,6 +22,9 @@ Control.search = function (e) {
   // Do this to make the blue hover thing go up and down.
   switch (e.keyCode) {
     case ENTER:
+      if (this.current >= 0 && this.current < this.results.length) {
+        this.addCourse(this.results[this.current])
+      }
     case UP:
     case DOWN:
       this.current = (this.current + (e.keyCode == UP? -1: 1)) % this.results.length
@@ -61,15 +65,17 @@ Control.addCourse = function (course) {
   Mu.Model.getCourse(course[0]).then(function (course) {
     course = JSON.parse(course)[0]
     course.active = true
-    self.wrangle(course)
     self.flushCourses()
-    self.courses.push(course)
+    self.courses[course.code] = course
+
+    // Vue can't auto-update maps.
+    self.$forceUpdate()
   })
 }
 
 Control.flushCourses = function () {
-  for (var i = this.courses.length; i--;){
-    this.courses[i].active = false
+  for (var course in this.courses){
+    this.courses[course].active = false
   }
 }
 
@@ -78,38 +84,15 @@ Control.generate = function () {
 }
 
 Control.activeToggle = function (c) {
-  console.log(c)
   c.active = !c.active
+  // Vue can't auto-update maps.
+  this.$forceUpdate()
 }
-
-Control.wrangle = function (course) {
-  // We gotta do some deduping here
-  // Should be done server side...
-  var typeArr = course.types.filter(function(item, pos, self) {
-    return self.indexOf(item) == pos;
-  })
-  course.typeArr = typeArr
-  course.secMap = {}
-  // Create a set object with all the sections..
-  for(var i = 0, ii = typeArr.length; i < ii; i++) {
-    var secType = typeArr[i]
-    course.secMap[secType] = []
-  }
-
-  // Go through all the sections and update the map
-  for(var i = 0; i < course.sections.length; i++) {
-    var section = course.sections[i]
-    course.secMap[section.activity_type].push(section)
-  }
-}
-
 
 Control.showTemp = function (section, course) {
-  Mu.View.Schedule.add(course.schedules[section.schedule])
 }
 
 Control.removeTemp = function (section, course) {
-  Mu.View.Schedule.remove(course.schedules[section.schedule])
 }
 
 View.Control = Control
