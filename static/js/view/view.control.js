@@ -2,6 +2,7 @@ const UP = 38
 const DOWN = 40
 const ENTER = 13
 
+
 /* The control panel is on the right. */
 var Control = new Vue({
   el: '#calendar__right',
@@ -78,9 +79,9 @@ Control.search = function (e) {
 
 Control.addCourse = function (course) {
   var self = this
-
   Mu.Model.getCourse(course[0]).then(function (course) {
     course = JSON.parse(course)[0]
+    course.colour = ColourGen.add(course.code)
     console.log(course)
     // Process the course
     Mu.Model.addCourse(course)
@@ -93,6 +94,7 @@ Control.addCourse = function (course) {
 }
 
 Control.flushCourses = function () {
+  var self = this
   for (var course in this.courses[self.term]){
     this.courses[self.term][course].active = false
   }
@@ -128,6 +130,11 @@ Control.select = function(section) {
   if (!section.added) View.Schedule.addSection(section, 1);
   section.selected = true;
   section.added = true; 
+}
+
+Control.delete = function (course) {
+  console.log(course)
+  delete this.courses[this.term][course.code]
 }
 
 View.Control = Control

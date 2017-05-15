@@ -193,3 +193,13 @@ body{
 .term__btn--active{
   background-color: #f9f9f9; 
 }
+
+
+
+.course__delete{
+  height: 20px;
+  width: 20px;
+  background: url(/static/img/x.png) center center no-repeat;
+  background-size: 100%;
+  float: left;
+}

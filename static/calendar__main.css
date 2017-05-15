@@ -59,12 +59,12 @@
       width: calc(100% / 5);
       display: inline-block;
       height: 100%;
+      position: relative;
     }
     .block__dayGroup{
       width: 100%;
       display: inline-block;
       background-color: rgba(0,0,0,0.1);
-      position: relative;
     }
       .block__section{
         color: #FFF;

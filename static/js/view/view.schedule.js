@@ -20,7 +20,7 @@ Schedule.addSection = function (section, perm) {
   section.temporary = !perm
   console.log("Adding section");
   var time = Mu.Model.timeArr[section.schedule]
-
+  var color = ColourGen.get(section.uniq)
   Outer:
   for (var i = 0; i < 5; i++) {
     if(!time[i]) {continue}
@@ -43,7 +43,8 @@ Schedule.addSection = function (section, perm) {
       top: top + "px",
       height: height + "px",
       left: 0 + "%",
-      width: 100 + "%"
+      width: 100 + "%",
+      backgroundColor: color
     };
     console.log(time);
     console.log(style);
