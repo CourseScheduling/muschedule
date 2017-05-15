@@ -23,11 +23,10 @@ Schedule.addSection = function (section, perm) {
   for (var i = 0; i < 5; i++) {
     if(!time[i]) {continue}
 
-
     //CREATING A STYLE OBJECT FOR SECTION
     //Getting the top value
     var top = 0;
-    for (var top = 0; top < 32; i++) {
+    for (var top = 0; top < 32; top++) {
       if ((time[i] >> top) & 1) break
     }
     height = top;
@@ -44,14 +43,13 @@ Schedule.addSection = function (section, perm) {
       left: 0,
       width: 100
     };
-
     //ADDING {time:[], blocks:[]} TO DAYS, MODIFYING STYLES OF EXISTING BLOCKS IF NECESSARY
     for (var s = 0; s < this.days[i].length; s++) { //s : sectionblock
       var d = this.days[i][s]
       var dt = d.time;
       if (dt[0] & time[0] || dt[1] & time[1] || dt[2] & time[2] || dt[3] & time[3] || dt[4] & time[4])  {
         // | each day in time
-        for (var t = 0; t < dt.length; i++) {
+        for (var t = 0; t < 5; t++) {
           dt[t] |= time[t];
         }
         // Update the width and left of each style object 

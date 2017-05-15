@@ -81,13 +81,12 @@ Control.addCourse = function (course) {
 
   Mu.Model.getCourse(course[0]).then(function (course) {
     course = JSON.parse(course)[0]
-
+    console.log(course)
     // Process the course
     Mu.Model.addCourse(course)
     course.active = true
     self.flushCourses()
     self.courses[self.term][course.code] = course
-
     // Vue can't auto-update maps.
     self.$forceUpdate()
   })
