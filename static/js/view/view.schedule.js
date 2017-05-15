@@ -2,21 +2,7 @@ var Schedule = new Vue({
   el: '#calendar__left',
   data: {
     days: [
-      [{
-        time: [0,1,1,2,3]
-        blocks: [
-          {
-            style: {},
-            section: Section
-          },
-          {
-
-          }
-        ]
-      },
-      {
-
-      }],
+      [],
       [],
       [],
       [],
@@ -30,7 +16,8 @@ var Schedule = new Vue({
 
 Schedule.addSection = function (section, perm) {
   section.temporary = !perm
-  var time = Mu.Model.timeMap[section.schedule]
+
+  var time = Mu.Model.timeArr[section.schedule]
 
   Outer:
   for (var i = 0; i < 5; i++) {
@@ -70,7 +57,7 @@ Schedule.addSection = function (section, perm) {
         // Update the width and left of each style object 
         var numOverlappingSchedules = d.blocks.length;
         var width = 100 / (numOverlappingSchedules + 1); // width in % (adding 1 because we're going to add another sectionblock)
-        for (var sb = 0; sb < numOverlappingSchedules; i++) {
+        for (var sb = 0; sb < numOverlappingSchedules; sb++) {
           d.blocks[sb].style.width = width;
           d.blocks[sb].style.left = sb * width;
         }
@@ -95,7 +82,9 @@ Schedule.addSection = function (section, perm) {
   }
 }
 
-
+Schedule.removeSection = function (section, perm) {
+  console.log("removing section", section);
+}
 View.Schedule = Schedule
 
 
@@ -129,3 +118,21 @@ Schedule.add = function (time) {
 }
 
  */
+
+/*
+{
+        time: [0,1,1,2,3]
+        blocks: [
+          {
+            style: {},
+            section: Section
+          },
+          {
+
+          }
+        ]
+      },
+      {
+
+      }
+*/

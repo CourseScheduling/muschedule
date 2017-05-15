@@ -121,7 +121,7 @@ Control.select = function(section) {
   console.log("Section selected", section);
   section.selected = true;
 
-  View.Schedule.addSection(section, 1);
+  //View.Schedule.addSection(section, 1);
 }
 
 View.Control = Control
