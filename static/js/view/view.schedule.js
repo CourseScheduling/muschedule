@@ -16,7 +16,7 @@ var Schedule = new Vue({
 
 Schedule.addSection = function (section, perm) {
   section.temporary = !perm
-
+  console.log("Adding section");
   var time = Mu.Model.timeArr[section.schedule]
 
   Outer:
@@ -32,7 +32,7 @@ Schedule.addSection = function (section, perm) {
     height = top;
     //Getting the height value
     for (height; height < 32; height++) {
-      if ((time[i] >> height) & 1) break
+      if (!(time[i] >> height) & 1) break
     }
     height = height - top;
     var style = {
@@ -41,11 +41,15 @@ Schedule.addSection = function (section, perm) {
       left: 0,
       width: 100
     };
+    console.log(time);
+    console.log(style);
+    console.log(this.days[i]);
     //ADDING {time:[], blocks:[]} TO DAYS, MODIFYING STYLES OF EXISTING BLOCKS IF NECESSARY
     for (var s = 0; s < this.days[i].length; s++) { //s : sectionblock
       var d = this.days[i][s]
       var dt = d.time;
-      if (dt[0] & time[0] || dt[1] & time[1] || dt[2] & time[2] || dt[3] & time[3] || dt[4] & time[4])  {
+      if (dt[i] & time[i])  {
+        console.log("Intersection found");
         // | each day in time
         for (var t = 0; t < 5; t++) {
           dt[t] |= time[t];
@@ -60,21 +64,23 @@ Schedule.addSection = function (section, perm) {
         //Add section and add the {style, section} to blocks
         style.left = numOverlappingSchedules * width;
         style.width = width;
-
+        console.log("Pushing section to block aggregate");
         d.blocks.push({
           style: style,
           section: section
         })
         continue Outer
-      } else {
-        //Add new {time:[], blocks:[]} object
-        d.blocks.push({
-          time: time,
-          blocks: [style]
-        })
-      }
+      } 
     }
-
+    //Add new {time:[], blocks:[]} object
+    console.log("Pushing section to new block");
+    this.days[i].push({
+      time: time,
+      blocks: [{
+        style: style,
+        section: section 
+      }]
+    })
   }
 }
 
@@ -132,3 +138,5 @@ Schedule.add = function (time) {
 
       }
 */
+
+//CPSC 210 103 MWF 2-3 and STAT 200 103 MWT 2-3 overlap

@@ -109,21 +109,25 @@ Control.activeToggle = function (c) {
 }
 
 Control.showTemp = function (section, course) {
-  section.added = true;
-  View.Schedule.addSection(section, 0)
+  if (section.selected == false) {
+    section.added = true;
+    View.Schedule.addSection(section, 0)
+  }  
 }
 
 Control.removeTemp = function (section, course) {
-  section.added = false;
-  View.Schedule.removeSection(section, 0)
+  if (section.selected == false) {
+    section.added = false;
+    View.Schedule.removeSection(section, 0)
+  } 
 }
 
 Control.select = function(section) {
   console.log("Section selected", section);
+  if (section.selected == true) return;
+  if (!section.added) View.Schedule.addSection(section, 1);
   section.selected = true;
-  section.added = true;
-
-  View.Schedule.addSection(section, 1);
+  section.added = true; 
 }
 
 View.Control = Control
