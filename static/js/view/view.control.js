@@ -15,7 +15,8 @@ var Control = new Vue({
     current: -1
   },
   methods: {
-    toggleTerm: null
+    toggleTerm: null,
+    select: null
   }
 })
 
@@ -106,11 +107,18 @@ Control.activeToggle = function (c) {
 }
 
 Control.showTemp = function (section, course) {
-  Mu.View.Schedule.addSection(section, 0)
+  View.Schedule.addSection(section, 0)
 }
 
 Control.removeTemp = function (section, course) {
-  Mu.View.Schedule.removeSection(section, 0)
+  View.Schedule.removeSection(section, 0)
+}
+
+Control.select = function(section) {
+  console.log("Section selected", section);
+  section.selected = true;
+
+  View.Schedule.addSection(section, 1);
 }
 
 View.Control = Control
