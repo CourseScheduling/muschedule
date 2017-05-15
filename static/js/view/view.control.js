@@ -13,11 +13,16 @@ var Control = new Vue({
     searchTimeout: null,
     loading: false,
     current: -1
+  },
+  methods: {
+    toggleTerm: null
   }
 })
 
 Control.toggleTerm = function (term) {
-  TEMR = term
+  TERM = term
+  this.term = term
+  this.$forceUpdate()
 }
 
 Control.search = function (e) {
