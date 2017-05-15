@@ -35,8 +35,6 @@ Schedule.addSection = function (section, perm) {
       if ((time[i] >> height) & 1) break
     }
     height = height - top;
-    top *= cellHeight;
-    height *= cellHeight;
     var style = {
       top: top,
       height: height,

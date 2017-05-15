@@ -109,18 +109,21 @@ Control.activeToggle = function (c) {
 }
 
 Control.showTemp = function (section, course) {
+  section.added = true;
   View.Schedule.addSection(section, 0)
 }
 
 Control.removeTemp = function (section, course) {
+  section.added = false;
   View.Schedule.removeSection(section, 0)
 }
 
 Control.select = function(section) {
   console.log("Section selected", section);
   section.selected = true;
+  section.added = true;
 
-  //View.Schedule.addSection(section, 1);
+  View.Schedule.addSection(section, 1);
 }
 
 View.Control = Control
