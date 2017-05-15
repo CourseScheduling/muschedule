@@ -172,3 +172,24 @@ body{
       transition: background-color .25s;
     }
 
+
+
+
+.term__btn{
+  width: 48%;
+  border: 0;
+  font-family: Montserrat;
+  font-size: 11px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #EEE;
+  cursor: pointer;
+  outline: 0;
+}
+
+.term__btn--left{
+  border-right: 1px solid #EEE;
+}
+.term__btn--active{
+  background-color: #f9f9f9; 
+}

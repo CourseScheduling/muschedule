@@ -16,6 +16,10 @@ var Control = new Vue({
   }
 })
 
+Control.toggleTerm = function (term) {
+  TEMR = term
+}
+
 Control.search = function (e) {
   var self = this
 
