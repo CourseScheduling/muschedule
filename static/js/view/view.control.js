@@ -106,6 +106,7 @@ Control.generate = function () {
 
 Control.activeToggle = function (c) {
   c.active = !c.active
+  this.$forceUpdate()
   // Vue can't auto-update maps.
   //this.$forceUpdate()
 }
