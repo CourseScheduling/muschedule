@@ -9,7 +9,10 @@ var Control = new Vue({
     term: TERM,
     query: "",
     results: [],
-    courses: {},
+    courses: {
+      t1: {},
+      t2: {}
+    },
     searchTimeout: null,
     loading: false,
     current: -1
@@ -82,7 +85,7 @@ Control.addCourse = function (course) {
     Mu.Model.addCourse(course)
     course.active = true
     self.flushCourses()
-    self.courses[course.code] = course
+    self.courses[self.term][course.code] = course
 
     // Vue can't auto-update maps.
     self.$forceUpdate()
@@ -90,8 +93,8 @@ Control.addCourse = function (course) {
 }
 
 Control.flushCourses = function () {
-  for (var course in this.courses){
-    this.courses[course].active = false
+  for (var course in this.courses[self.term]){
+    this.courses[self.term][course].active = false
   }
 }
 
