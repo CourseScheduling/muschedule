@@ -69,9 +69,10 @@
       .block__section{
         color: #FFF;
         border-radius: 5px;
-        width: 99%;
-        left: 0.5%;
         font-family: Montserrat;
         font-size: 11px;
+        background-color: #999;
         position: absolute;
+        padding: 2px;
+        box-sizing: border-box;
       }
