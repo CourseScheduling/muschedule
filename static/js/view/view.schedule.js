@@ -1,3 +1,5 @@
+var BLOCK_HEIGHT = 20;
+
 var Schedule = new Vue({
   el: '#calendar__left',
   data: {
@@ -35,11 +37,13 @@ Schedule.addSection = function (section, perm) {
       if (!(time[i] >> height) & 1) break
     }
     height = height - top;
+    height *= BLOCK_HEIGHT;
+    top *= BLOCK_HEIGHT;
     var style = {
-      top: top,
-      height: height,
-      left: 0,
-      width: 100
+      top: top + "px",
+      height: height + "px",
+      left: 0 + "%",
+      width: 100 + "%"
     };
     console.log(time);
     console.log(style);
@@ -58,12 +62,12 @@ Schedule.addSection = function (section, perm) {
         var numOverlappingSchedules = d.blocks.length;
         var width = 100 / (numOverlappingSchedules + 1); // width in % (adding 1 because we're going to add another sectionblock)
         for (var sb = 0; sb < numOverlappingSchedules; sb++) {
-          d.blocks[sb].style.width = width;
-          d.blocks[sb].style.left = sb * width;
+          d.blocks[sb].style.width = width + "%";
+          d.blocks[sb].style.left = (sb * width) + "%";
         }
         //Add section and add the {style, section} to blocks
-        style.left = numOverlappingSchedules * width;
-        style.width = width;
+        style.left = (numOverlappingSchedules * width) + "%";
+        style.width = width + "%";
         console.log("Pushing section to block aggregate");
         d.blocks.push({
           style: style,
