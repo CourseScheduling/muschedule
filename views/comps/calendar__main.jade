@@ -17,3 +17,4 @@ link(rel="stylesheet" href="/static/calendar__main.css")
     div(v-for="day in days").block__dayCol
       div(v-for="group in day")
         div(v-for="block in group.blocks" v-bind:style="block.style" v-bind:class="{'block__section--temp':block.section.temporary}").block__section {{block.section.uniq}}
+  
