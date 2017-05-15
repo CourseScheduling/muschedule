@@ -28,6 +28,10 @@ Control.search = function (e) {
     case ENTER:
       if (this.current >= 0 && this.current < this.results.length) {
         this.addCourse(this.results[this.current])
+        this.query = "";
+        this.results = [];
+        this.current = -1;
+        this.loading = false;
       }
     case UP:
     case DOWN:
