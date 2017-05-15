@@ -2,54 +2,55 @@ var Schedule = new Vue({
   el: '#calendar__left',
   data: {
     days: [
-      [],
+      [{
+        time: [0,1,1,2,3]
+        blocks: [
+          {
+            style: {},
+            section: Section
+          },
+          {
+
+          }
+        ]
+      },
+      {
+
+      }],
       [],
       [],
       [],
       []
-    ],
-    tempDays: [
-      [],
-      [],
-      [],
-      [],
-      []
-    ],
-    index: 0,
-    maxIndex: 1
+    ]
   },
   methods: {
-    displayPrevious: null,
-    displayNext: null
+
   }
 })
 
-
-Schedule.addSection = function (section, isPermanent) {
+Schedule.addSection = function (section, perm) {
+  section.temporary = !perm
   var time = Mu.Model.timeMap[section.schedule]
 
-  NextDay:
+  Outer:
   for (var i = 0; i < 5; i++) {
-    if (!time[i]) {
-      continue
-    }
+    if(!time[i]) {continue}
 
-    // If there's a interesect, add to it.
-    for (var g = Schedule.days[i]; g--;) {
-      var nT = Schedule.days[i].time
-      if (nT & time[i]) {
-        Schedule.days[i].time |= time[i]
-        Schedule.days[i].sections.push(section)
-        continue NextDay
+    for (var t = 0; t < this.days[i].length; t++) {
+      var d = this.days[i][t]
+      if (d[0] & time[0] || d[1] & time[1] || d[2] & time[2] || d[3] & time[3] || d[4] & time[4])  {
+        
+        continue Outer
       }
     }
-    // No interesect, make a new group.
-    Schedule.days[i].push({
-      time: time[i],
-      sections: [section]
-    }) 
   }
 }
+
+
+View.Schedule = Schedule
+
+
+/*
 
 
 
@@ -72,21 +73,10 @@ Schedule.add = function (time) {
       }
       dayObj.end = i
       dayObj.height = (dayObj.end - dayObj.start)
-
+  
       curDay.push(dayObj)
     }
   }
 }
 
-Schedule.displayGenerated = function(days) {
-  this.days = days;
-}
-
-Schedule.displayPrevious = function() {
-  console.log("displayPrevious in main schedule")
-}
-
-Schedule.displayNext = function() {
-  console.log("displayNex in main schedule")
-}
-View.Schedule = Schedule
+ */
