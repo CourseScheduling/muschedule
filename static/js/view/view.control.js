@@ -107,18 +107,18 @@ Control.generate = function () {
 Control.activeToggle = function (c) {
   c.active = !c.active
   // Vue can't auto-update maps.
-  this.$forceUpdate()
+  //this.$forceUpdate()
 }
 
 Control.showTemp = function (section, course) {
-  if (section.selected == false) {
+  if (!section.selected) {
     section.added = true;
     View.Schedule.addSection(section, 0)
   }  
 }
 
 Control.removeTemp = function (section, course) {
-  if (section.selected == false) {
+  if (!section.selected) {
     section.added = false;
     View.Schedule.removeSection(section, 0)
   } 
@@ -130,6 +130,7 @@ Control.select = function(section) {
   if (!section.added) View.Schedule.addSection(section, 1);
   section.selected = true;
   section.added = true; 
+  section.temporary = false
 }
 
 Control.delete = function (course) {

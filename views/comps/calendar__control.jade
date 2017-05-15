@@ -15,7 +15,6 @@ link(rel="stylesheet" href="/static/calendar__control.css")
     .wrap__header :: COURSES ::
     .course__container(v-for="(val, t) in courses")
       .course(v-for="c in courses[t]" @click="activeToggle(c)" v-bind:style="{backgroundColor: c.colour}" v-bind:class="{'course--active':c.active}")
-        .course__delete(@click="delete(c)")
         .course__code {{c.code}}
         .course__extra(v-show="c.active")
           .course__description {{c.description}}

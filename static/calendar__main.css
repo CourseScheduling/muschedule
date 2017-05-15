@@ -76,3 +76,6 @@
         padding: 2px;
         box-sizing: border-box;
       }
+        .block__section--temp{
+          opacity: 0.3;
+        }

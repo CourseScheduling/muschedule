@@ -17,7 +17,9 @@ var Schedule = new Vue({
 })
 
 Schedule.addSection = function (section, perm) {
+  console.log('Hover')
   section.temporary = !perm
+  section.active = true
   console.log("Adding section");
   var time = Mu.Model.timeArr[section.schedule]
   var color = ColourGen.get(section.uniq)
@@ -87,10 +89,36 @@ Schedule.addSection = function (section, perm) {
       }]
     })
   }
+
+  this.$forceUpdate()
 }
 
 Schedule.removeSection = function (section, perm) {
-  console.log("removing section", section);
+  // Go through all the days
+  for (var i = 0; i < 5; i++) {
+    // Go through all the groups.
+    for (var s = this.days[i].length; s--;){
+      // Go through all the blocks in a group.
+      for (var n = this.days[i][s].blocks.length; n--;) {
+        // If there is a collision, remove it. and recalculate the remaining blocks
+        if (this.days[i][s].blocks[n].section.uniq == section.uniq) {
+          this.days[i][s].blocks.splice(n,1)
+          var d = this.days[i][s]
+          console.log(d)
+            // Update the width and left of each style object 
+          var numOverlappingSchedules = d.blocks.length;
+          var width = 100 / (numOverlappingSchedules + 1); // width in % (adding 1 because we're going to add another sectionblock)
+          for (var sb = 0; sb < numOverlappingSchedules; sb++) {
+            d.blocks[sb].style.width = width + "%";
+            d.blocks[sb].style.left = (sb * width) + "%";
+          }
+        }
+      }
+    }
+  }
+  this.$forceUpdate()
+
+
 }
 View.Schedule = Schedule
 
