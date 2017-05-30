@@ -16,3 +16,10 @@
       position: relative;
       right: -325px;
     }
+.index__wrap {
+  margin-top: 25px;
+}
+  .index__wrap span {
+    color: white;
+    margin: 10px;
+  }

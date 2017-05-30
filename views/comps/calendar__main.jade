@@ -1,11 +1,11 @@
-link(rel="stylesheet" href="/static/calendar__main.css")
+link(rel="stylesheet" href="/static/calendar.css")
 link(rel="stylesheet" href="/static/navigation.css")
 
 
 #main__scheduleWrap
   include navigation
   #main__calendarWrap
-    table#calendar.material
+    table#calendar.material.calendar
       tbody.cal__rowWrap
         tr.cal__row.cal__row--days
           td.cal__block.cal__block--time
@@ -21,7 +21,6 @@ link(rel="stylesheet" href="/static/navigation.css")
               td.cal__block(data-time=hour, data-day=day)
     .calendar__blockWrap#main__calendar__blockWrap
       // This is where we can begin view modification.
-      div.block__timeCol
       div(v-for="day in [0,1,2,3,4]").block__dayCol      
         div(v-for="section in days[day]" v-bind:style="section.styleObject").block__dayGroup {{section.sectionCode}}
 
