@@ -1,20 +1,34 @@
 const UP = 38
 const DOWN = 40
 const ENTER = 13
+var TERM = 't1'
 
 /* The control panel is on the right. */
 var Control = new Vue({
   el: '#calendar__right',
   data: {
+    term: TERM,
     query: "",
     results: [],
-    courses: [],
+    courses: {
+      t1: {},
+      t2: {}
+    },
     searchTimeout: null,
     loading: false,
-    current: -1,
-    term: 't1'
+    current: -1
+  },
+  methods: {
+    toggleTerm: null,
+    select: null
   }
 })
+
+Control.toggleTerm = function (term) {
+  TERM = term
+  this.term = term
+  this.$forceUpdate()
+}
 
 Control.search = function (e) {
   var self = this
@@ -22,6 +36,13 @@ Control.search = function (e) {
   // Do this to make the blue hover thing go up and down.
   switch (e.keyCode) {
     case ENTER:
+      if (this.current >= 0 && this.current < this.results.length) {
+        this.addCourse(this.results[this.current])
+        this.query = "";
+        this.results = [];
+        this.current = -1;
+        this.loading = false;
+      }
     case UP:
     case DOWN:
       this.current = (this.current + (e.keyCode == UP? -1: 1)) % this.results.length
@@ -58,19 +79,24 @@ Control.search = function (e) {
 
 Control.addCourse = function (course) {
   var self = this
-
   Mu.Model.getCourse(course[0]).then(function (course) {
-    //course = JSON.parse(course)[0]
+    course = JSON.parse(course)[0]
+    course.colour = ColourGen.add(course.code)
+    console.log(course)
+    // Process the course
+    Mu.Model.addCourse(course)
     course.active = true
-    //self.wrangle(course)
     self.flushCourses()
-    self.courses.push(course)
+    self.courses[self.term][course.code] = course
+    // Vue can't auto-update maps.
+    self.$forceUpdate()
   })
 }
 
 Control.flushCourses = function () {
-  for (var i = this.courses.length; i--;){
-    this.courses[i].active = false
+  var self = this
+  for (var course in this.courses[self.term]){
+    this.courses[self.term][course].active = false
   }
 }
 
@@ -79,55 +105,38 @@ Control.generate = function () {
 }
 
 Control.activeToggle = function (c) {
-  console.log(c)
   c.active = !c.active
+  this.$forceUpdate()
+  // Vue can't auto-update maps.
+  //this.$forceUpdate()
 }
-
-Control.wrangle = function (course) {
-  // We gotta do some deduping here
-  // Should be done server side...
-  var typeArr = course.types.filter(function(item, pos, self) {
-    return self.indexOf(item) == pos;
-  })
-  course.typeArr = typeArr
-  course.secMap = {}
-  // Create a set object with all the sections..
-  for(var i = 0, ii = typeArr.length; i < ii; i++) {
-    var secType = typeArr[i]
-    course.secMap[secType] = []
-  }
-
-  // Go through all the sections and update the map
-  for(var i = 0; i < course.sections.length; i++) {
-    var section = course.sections[i]
-    course.secMap[section.activity_type].push(section)
-  }
-}
-
 
 Control.showTemp = function (section, course) {
-  //Mu.View.Schedule.add(course.terms[this.term].schedules[section.activity_type][section.schedule])
+  if (!section.selected) {
+    section.added = true;
+    View.Schedule.addSection(section, 0)
+  }  
 }
 
 Control.removeTemp = function (section, course) {
-  //Mu.View.Schedule.remove(course.terms[this.term].schedules[section.activity_type][section.schedule])
+  if (!section.selected) {
+    section.added = false;
+    View.Schedule.removeSection(section, 0)
+  } 
 }
 
-Control.changeTerm = function(term) {
-  switch (term) {
-    case 1:
-      term = 't1';
-      break;
-    case 2:
-      term = 't2';
-      break;
-    case 3:
-      break;
-  }
-  this.term = term;
-  //Toggle highlight
+Control.select = function(section) {
+  console.log("Section selected", section);
+  if (section.selected == true) return;
+  if (!section.added) View.Schedule.addSection(section, 1);
+  section.selected = true;
+  section.added = true; 
+  section.temporary = false
 }
 
-
+Control.delete = function (course) {
+  console.log(course)
+  delete this.courses[this.term][course.code]
+}
 
 View.Control = Control

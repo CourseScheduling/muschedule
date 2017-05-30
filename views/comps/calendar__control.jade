@@ -9,22 +9,27 @@ link(rel="stylesheet" href="/static/calendar__control.css")
         .search__result(v-for="(result, index) in results" @click="addCourse(result)" v-bind:class="{'search__result--active':(index == current)}")
           .search__resultHead {{result[0]}}
           .search__resultBody {{result[1]}}
-    .wrap__header :: TERM ::
-    .term__wrap
-      .control__selectionBtn.control__selectionBtn--term(@click="changeTerm(1)") One
-      .control__selectionBtn.control__selectionBtn--term(@click="changeTerm(2)") Two
-      .control__selectionBtn.control__selectionBtn--term(@click="changeTerm(3)") Both
+    #term__wrap
+      button(v-on:click="toggleTerm('t1')" v-bind:class="{'term__btn--active': (term == 't1')}").term__btn.term__btn--left TERM 1
+      button(v-on:click="toggleTerm('t2')" v-bind:class="{'term__btn--active': (term == 't2')}").term__btn TERM 2
     .wrap__header :: COURSES ::
-    .course__container
-      .course(v-for="c in courses" @click="activeToggle(c)" v-bind:style="{backgroundColor: c.color}" v-bind:class="{'course--active':c.active}")
+    .course__container(v-for="(val, t) in courses")
+      .course(v-for="c in courses[t]" @click="activeToggle(c)" v-bind:style="{backgroundColor: c.colour}" v-bind:class="{'course--active':c.active}")
         .course__code {{c.code}}
         .course__extra(v-show="c.active")
           .course__description {{c.description}}
-          .course__typeBox(v-for="type in c.terms[term].types") 
-            .course__typeHeader {{type}}
-            .control__selectionBtn(v-for="section in c.terms[term].sections[type]"
-              @mouseover="showTemp(section,c)" 
-              @mouseout="removeTemp(section,c)") {{section.section}}
-  .control__wrap
-    .control__btn.control__btn--gen(@click="generate()") AUTO GEN
-    .control__btn ADD BREAK
+          .course__typeBox(v-for="(sections, index) in c.terms[term].sections")
+            .course__typeHeader {{c.types[index]}}
+            .course__section(v-for="section in sections"
+              @mouseover="showTemp(section)" 
+              @mouseout="removeTemp(section)"
+              @click="select(section)"
+              v-bind:class="{'course__section--selected': section.selected}") {{ section && section.section}}
+    .control__wrap
+      .control__btn.control__btn--gen(@click="generate()") AUTO GEN
+      .control__btn ADD BREAK
+
+
+
+
+
