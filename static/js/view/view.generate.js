@@ -2,23 +2,15 @@ var breakTable = [];
 for (var i = 0; i < 28; i++) {
   this.breakTable.push({"0":false, "1":false, "2":false, "3":false, "4":false});
 }
+var mousedown = false; 
+var addBreaks = false;
 
 var Generate = new Vue({
   el: '#gen__wrap',
   data: {
     visible: false,
     loading: true,
-    schedules: [],
-    courseMap: {},
-    maxNumber: "",
     days: [
-      [],
-      [],
-      [],
-      [],
-      []
-    ],
-    tempDays: [
       [],
       [],
       [],
@@ -46,25 +38,16 @@ var Generate = new Vue({
     }
   }
 })
-var mousedown = false; 
-var addBreaks = false;
+
 
 //Returns the starting index, 0 being 8, in 30 minute blocks
 function getStart(scheduleInt) {
-  for (var i = 0; i < 32; i++) {
-    if ((scheduleInt >> i) & 1) {
-      return i;
-    }
-  }
+
 }
 
 //Returns the size of the blocks (number of 30 minute blocks)
 function getHeight(scheduleInt, startPos) {
-  for (var i = startPos; i < 32; i++) {
-    if (!((scheduleInt >> i) & 1)) {
-      return i - startPos;
-    }
-  }
+
 }
 
 
@@ -166,9 +149,9 @@ Generate._updateDays = function(scheduleToRender, schedules, sections) {
       if (sectionSchedule[ii]) {
         courseCode = section.uniq.split(" ").slice(0, 2).join(" ");
 
-        start = getStart(sectionSchedule[ii]);
-        height = getHeight(sectionSchedule[ii], start) * Mu.View.blockHeight;
-        start = start * Mu.View.blockHeight;
+        start = UTILS.getStart(sectionSchedule[ii]);
+        height = UTILS.getHeight(sectionSchedule[ii], start) * Mu.View.BLOCK_HEIGHT;
+        start = start * Mu.View.BLOCK_HEIGHT;
         this.days[ii].push({
           sectionCode: section.uniq,
           courseCode: courseCode,
@@ -194,10 +177,10 @@ Generate.draw = function(index) {
       []
     ];
   var scheduleToRender = Mu.Controller.getSchedule(this.index);
-    var schedules = Mu.Model.getSchedules();
-    var sections = Mu.Model.getSections();
-    this._updateDays(scheduleToRender, schedules, sections);
-    this.maxIndex = Mu.Controller.validSchedules.length;
+  var schedules = Mu.Model.getSchedules();
+  var sections = Mu.Model.getSections();
+  this._updateDays(scheduleToRender, schedules, sections);
+  this.maxIndex = Mu.Controller.validSchedules.length;
 }
 
 /** Simply turns the generator screen on. Also checks for scheduling. */
@@ -206,11 +189,10 @@ Generate.start = function () {
 
   if (!this.schedules.length) {
     this.loading = true
-    this.loading = false;
+    this.loading = false; //TODO: remove later
     Mu.Controller.schedule_2()
     this.draw(this.index);    
   }
-
   this.loading = false
 }
 
@@ -224,19 +206,17 @@ Generate.restart = function() {
 Generate.halt = function () {
   this.visible = false
 }
+
+
 Generate.displayNext = function() {
   console.log("displaynext in Generate")
-  index = this.index;
-  maxIndex = this.maxIndex;
-  this.index = (index + 1) % maxIndex;
+  this.index = (this.index + 1) % this.maxIndex;
   this.draw(index);
 }
 
 Generate.displayPrevious = function() {
   console.log("displayPrevious in Generate")
-  index = this.index;
-  maxIndex = this.maxIndex;
-  index = (index - 1) % maxIndex;
+  index = (this.index - 1) % this.maxIndex;
   if (index == -1) index = maxIndex - 1;
   this.index = index;
   this.draw(index);
@@ -247,8 +227,6 @@ Generate.select = function() {
   View.Schedule.displayGenerated(this.days);
   this.halt();
 }
-
-
 
 
 

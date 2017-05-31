@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 var COLORS = [
   "#26A65B",
   "#1E824C",
@@ -50,7 +42,22 @@ var ColourGen = {
 
 
 
-
+var UTILS = {
+  getStart: function (scheduleInt) {
+    for (var i = 0; i < 32; i++) {
+      if ((scheduleInt >> i) & 1) {
+        return i;
+      }
+    }
+  },
+  getHeight: function (scheduleInt, start) {
+    for (var i = startPos; i < 32; i++) {
+      if (!((scheduleInt >> i) & 1)) {
+        return i - startPos;
+      }
+    }
+  }
+}
 
 
 

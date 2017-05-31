@@ -1,5 +1,5 @@
 var View = {}
 
-View.blockHeight = 20;
+View.BLOCK_HEIGHT = 20;
 
 Mu.View = View

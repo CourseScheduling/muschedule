@@ -2,12 +2,6 @@
 const API_URL = 'http://localhost:3000/api/v1/ubc'
 function Model () {
   this.courses = []
-  this.sections = []
-  
-  this.timeMap = {}
-  this.timeArr = []
-
-  this.oldTime = []
 }
 
 /** 
@@ -78,45 +72,11 @@ Model.prototype._request = function (opts) {
 */
 
 Model.prototype.addCourse = function (course) {
-  var self = this
-  
-  this.courses.push(course)
-  var _transMap = {}
-
-  // Aggregate schedules.
-  course.schedules.forEach(function (schedule) {
-    time = self.timeMap[schedule.join('.')]
-    if (!time) {
-      self.timeMap[schedule.join('.')] = self.timeArr.length
-      _transMap[schedule.join('.')] = self.timeArr.length
-
-      self.timeArr.push(schedule)
-    } else {
-      _transMap[schedule.join('.')] = time 
-    }
-  })
-  console.log("course", course)
-  // Change the section schedule values to the timeArr values.
-  for(var term in course.terms) {
-    var tSections = course.terms[term]
-    for(var section in tSections) {
-      console.log('tsections',tSections);
-      // Go through each section in a term.
-      tSections[section].forEach(function (sectionOfType) {
-        // Go through each section in a Lab/ Lecture
-        sectionOfType.forEach(function (section) {
-          if (section) {
-            section.schedule = _transMap[course.schedules[section.schedule].join('.')]
-          }
-        })
-      })
-    }
-  }
-
-  this.updateOld()
+  var self = this  
+  this.courses.push(course)  
 }
 
-
+//Move this logic to server?
 Model.prototype.updateOld = function () {
   var _convertOld = function (arr) {
     var oldTime = []
