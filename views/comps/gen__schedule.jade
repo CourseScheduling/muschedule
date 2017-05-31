@@ -2,9 +2,7 @@ link(rel="stylesheet" href="/static/calendar__gen.css")
 
 div.gen__loadingText Generated Schedules
 #gen__scheduleWrap(v-show="!loading")
-  include navigation
-  .gen__btnWrap(@click="select()")
-    .btn.gen__btn Select
+  include navigation  
   #gen__calendarWrap
     table.calendar#gen__calendar.material  
       tbody.cal__rowWrap
@@ -30,4 +28,7 @@ div.gen__loadingText Generated Schedules
   span#gen__index(v-text="index + 1")
   span /
   span#gen__maxIndex(v-text="maxIndex")
+
+.gen__btnWrap(@click="select()")
+    .btn.gen__btn Select
 

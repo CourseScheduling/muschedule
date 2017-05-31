@@ -206,6 +206,7 @@ Generate.start = function () {
 
   if (!this.schedules.length) {
     this.loading = true
+    this.loading = false;
     Mu.Controller.schedule_2()
     this.draw(this.index);    
   }

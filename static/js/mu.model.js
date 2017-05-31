@@ -1,12 +1,13 @@
-
-const API_URL = 'http://schedulerserver.azurewebsites.net/api/v1/ubc'
-
+//const API_URL = 'http://schedulerserver.azurewebsites.net/api/v1/ubc'
+const API_URL = 'http://localhost:3000/api/v1/ubc'
 function Model () {
   this.courses = []
-  this.t1SectionSchedules = []
-  this.t1Sections = []
-  this.t2SectionSchedules = []
-  this.t2Sections = []
+  this.sections = []
+  
+  this.timeMap = {}
+  this.timeArr = []
+
+  this.oldTime = []
 }
 
 /** 
@@ -14,12 +15,9 @@ function Model () {
   @return Promise
 */
 Model.prototype.getCourse = function (course) {
-  var self = this;
   return this._request({
     type: 'GET',
-    url: '/courses/' + course.replace(' ','_')
-  }).then(function(course) {
-    return self._addCourse_1(course);
+    url: '/course/' + course.replace(' ','_')
   })
 }
 
@@ -30,7 +28,7 @@ Model.prototype.getCourse = function (course) {
 Model.prototype.searchCourses = function (query) {
   return this._request({
     type: 'GET',
-    url: '/courseList/search/' + encodeURI(query)
+    url: '/search/' + encodeURI(query)
   })
 }
 
@@ -75,110 +73,73 @@ Model.prototype._request = function (opts) {
 }
 
 
-Model.prototype._addCourse_1 = function(course) {
-  function addScheduleSections(course, term, sectionSchedules, sections) {
-    types = course.terms[term].types;
-    for (var i = 0; i < types.length; i ++) {
-      sections.push(course.terms[term].sections[types[i]]);
-      sectionSchedules.push(course.terms[term].schedules[types[i]])
-    }
-  } 
-
-
-  course = JSON.parse(course)[0];
-
-  //Removing waiting list from course object
-  for (var term in course.terms) {
-    if (course.terms[term].types.length > 0) {
-      delete course.terms[term].sections['Waiting List'];
-      delete course.terms[term].schedules['Waiting List'];
-    }
-    
-
-
-    types = course.terms[term].types;
-    index = types.indexOf('Waiting List');
-    if (index > -1) {
-      types.splice(index, 1);
-    }
-    index = types.indexOf('Workshop');
-    if (index > -1) {
-      types.splice(index, 1);
-    }
-  }
-
-  //Adding schedules and sections to Model (used for scheduling)
-  addScheduleSections(course, 't1', this.t1SectionSchedules, this.t1Sections);
-  addScheduleSections(course, 't2', this.t2SectionSchedules, this.t2Sections);
-
-    
-  console.log(this); 
-  return course;
-}
-
 /** 
   - To be called internally whenever a course is added to the list.
 */
-Model.prototype._addCourse = function (course) {
-  // Add to list.
-  this.courses.push(course)
+
+Model.prototype.addCourse = function (course) {
+  var self = this
   
+  this.courses.push(course)
   var _transMap = {}
 
-  // Add the course's schedule to the timeMap
-  CourseLoop:
-  for (var i = 0, ii = course.schedules.length; i < ii; i++) {
-    var schedule = course.schedules[i]
-    var scheduleStr = schedule.join('.')
+  // Aggregate schedules.
+  course.schedules.forEach(function (schedule) {
+    time = self.timeMap[schedule.join('.')]
+    if (!time) {
+      self.timeMap[schedule.join('.')] = self.timeArr.length
+      _transMap[schedule.join('.')] = self.timeArr.length
 
-    // Look to find a match, continue, if bad.
-    for (var s = this.timeMap.length;s--;) { 
-      if (this.timeMap[s].join('.') == scheduleStr) {
-        _transMap[i] = s
-        continue CourseLoop
+      self.timeArr.push(schedule)
+    } else {
+      _transMap[schedule.join('.')] = time 
+    }
+  })
+  console.log("course", course)
+  // Change the section schedule values to the timeArr values.
+  for(var term in course.terms) {
+    var tSections = course.terms[term]
+    for(var section in tSections) {
+      console.log('tsections',tSections);
+      // Go through each section in a term.
+      tSections[section].forEach(function (sectionOfType) {
+        // Go through each section in a Lab/ Lecture
+        sectionOfType.forEach(function (section) {
+          if (section) {
+            section.schedule = _transMap[course.schedules[section.schedule].join('.')]
+          }
+        })
+      })
+    }
+  }
+
+  this.updateOld()
+}
+
+
+Model.prototype.updateOld = function () {
+  var _convertOld = function (arr) {
+    var oldTime = []
+    for(var i = 0; i < 5; i++) {
+      if (arr[i]) {
+        var start = arr[i].toString(2).indexOf("1")
+        var end = arr[i].toString(2).lastIndexOf("1")
+
+        oldTime.push({
+          day: i,
+          start: (start * 30) + 480,
+          end: (end * 30) + 480,
+          length: ((end - start) * 30)
+        })
       }
     }
 
-    _transMap[i] = this.timeMap.length
-    this.timeMap.push(schedule)
+    return oldTime
   }
 
-  // Go through this course's sections and update times.
-  for (var t = course.sections.length;t--;) {
-    for (var s = course.sections[t].length;s--;) {
-      course.sections[t][s].time = _transMap[course.sections[t][s].time] 
-    }
-  } 
-}
 
-Model.prototype.getSchedules = function() {
-  var termToSchedule = View.Control.term;
-
-  switch(termToSchedule) {
-    case 't1':
-      return Mu.Model.t1SectionSchedules;
-      break;
-    case 't2':
-      return Mu.Model.t2SectionSchedules;
-      break;
-    case 't3':
-      //TODO
-      break;
-  }
-}
-
-Model.prototype.getSections = function() {
-  var termToSchedule = View.Control.term;
-  switch(termToSchedule) {
-    case 't1':
-      return Mu.Model.t1Sections;
-      break;
-    case 't2':
-      return Mu.Model.t2Sections;
-      break;
-    case 't3':
-      //TODO
-      break;
+  for(var i = this.oldTime.length; i < this.timeArr.length; i++) {
+    this.oldTime.push(_convertOld(this.timeArr[i]))
   }
 }
 

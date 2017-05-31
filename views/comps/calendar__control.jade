@@ -7,8 +7,8 @@ link(rel="stylesheet" href="/static/calendar__control.css")
       .result__wrap
         .search__loading(v-show="loading")
         .search__result(v-for="(result, index) in results" @click="addCourse(result)" v-bind:class="{'search__result--active':(index == current)}")
-          .search__resultHead {{result[0]}}
-          .search__resultBody {{result[1]}}
+          .search__resultHead {{result.code}}
+          .search__resultBody {{result.name}}
     #term__wrap
       button(v-on:click="toggleTerm('t1')" v-bind:class="{'term__btn--active': (term == 't1')}").term__btn.term__btn--left TERM 1
       button(v-on:click="toggleTerm('t2')" v-bind:class="{'term__btn--active': (term == 't2')}").term__btn TERM 2

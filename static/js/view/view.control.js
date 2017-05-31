@@ -79,10 +79,9 @@ Control.search = function (e) {
 
 Control.addCourse = function (course) {
   var self = this
-  Mu.Model.getCourse(course[0]).then(function (course) {
-    course = JSON.parse(course)[0]
+  Mu.Model.getCourse(course.code).then(function (course) {
+    course = JSON.parse(course)
     course.colour = ColourGen.add(course.code)
-    console.log(course)
     // Process the course
     Mu.Model.addCourse(course)
     course.active = true
