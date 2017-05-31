@@ -18,13 +18,14 @@ link(rel="stylesheet" href="/static/calendar__control.css")
         .course__code {{c.code}}
         .course__extra(v-show="c.active")
           .course__description {{c.description}}
-          .course__typeBox(v-for="(sections, index) in c.terms[term].sections")
-            .course__typeHeader {{c.types[index]}}
-            .course__section(v-for="section in sections"
-              @mouseover="showTemp(section)" 
-              @mouseout="removeTemp(section)"
-              @click="select(section)"
-              v-bind:class="{'course__section--selected': section.selected}") {{ section && section.section}}
+          template(v-for="termObject in c.terms" v-if="'t'+termObject.name == term")            
+            .course__typeBox(v-for="sectionsByActivity in termObject.sectionMap")
+              .course__typeHeader {{sectionsByActivity.activity}}
+              .course__section(v-for="index in sectionsByActivity.indices"
+                @mouseover="showTemp(termObject.sections[index])" 
+                @mouseout="removeTemp(termObject.sections[index])"
+                @click="select(termObject.sections[index])"
+                v-bind:class="{'course__section--selected': termObject.sections[index].selected}") {{ termObject.sections[index].section}}
     .control__wrap
       .control__btn.control__btn--gen(@click="generate()") AUTO GEN
       .control__btn ADD BREAK

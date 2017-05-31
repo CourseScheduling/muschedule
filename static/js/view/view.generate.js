@@ -10,6 +10,7 @@ var Generate = new Vue({
   data: {
     visible: false,
     loading: true,
+    maxNumber: "",
     days: [
       [],
       [],

@@ -138,12 +138,6 @@ body{
   .control__btn:active{
     box-shadow: none;
   }
-  .control__btn:hover {
-    background-color: #AAA;
-    color: #FFF;
-    border-color: #FFF;
-    transition: background-color .25s;
-  }
   .control__btn--gen{
     background: url(/static/img/lightning.png) #DDD center left 5px no-repeat;
     background-size: 20px;
@@ -161,6 +155,24 @@ body{
     width: 100%;
     text-align: left;
   }
+  .course__section{
+    padding: 5px;
+    color: #000;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 2.5px;
+    background-color: #FFF;
+    border: 1px solid transparent;
+    transition: background-color .25s;
+  }
+    .course__section:hover{
+      background-color: transparent;
+      color: #FFF;
+      border-color: #FFF;
+      transition: background-color .25s;
+    }
+
+
 
 
 .term__btn{
@@ -174,12 +186,13 @@ body{
   cursor: pointer;
   outline: 0;
 }
-  .term__btn--left{
-    border-right: 1px solid #EEE;
-  }
-  .term__btn--active{
-    background-color: #f9f9f9; 
-  }
+
+.term__btn--left{
+  border-right: 1px solid #EEE;
+}
+.term__btn--active{
+  background-color: #f9f9f9; 
+}
 
 
 
