@@ -8,13 +8,6 @@ var Schedule = new Vue({
       [],
       []
     ],
-    tempDays: [
-      [],
-      [],
-      [],
-      [],
-      []
-    ],
     index: 0,
     maxIndex: 1
   },
@@ -25,57 +18,108 @@ var Schedule = new Vue({
 })
 
 
-Schedule.addSection = function (section) {
-  var time = Mu.Model.timeMap[section.schedule]
-
-  NextDay:
+Schedule.addSection = function (section, course, perm) {
+  console.log('Hover')
+  section.temporary = !perm
+  section.active = true
+  console.log("Adding section");
+  var time = course.schedules[section.schedule];
+  var color = ColourGen.get(section.uniq)
+  Outer:
   for (var i = 0; i < 5; i++) {
-    if (!time[i]) {
-      continue
-    }
+    if(!time[i]) {continue}
 
-    // If there's a interesect, add to it.
-    for (var g = Schedule.days[i]; g--;) {
-      var nT = Schedule.days[i].time
-      if (nT & time[i]) {
-        Schedule.days[i].time |= time[i]
-        Schedule.days[i].sections.push(section)
-        continue NextDay
-      }
+    //CREATING A STYLE OBJECT FOR SECTION
+    //Getting the top value
+    var top = 0;
+    for (var top = 0; top < 32; top++) {
+      if ((time[i] >> top) & 1) break
     }
-    // No interesect, make a new group.
-    Schedule.days[i].push({
-      time: time[i],
-      sections: [section]
-    }) 
+    height = top;
+    //Getting the height value
+    for (height; height < 32; height++) {
+      if (!(time[i] >> height) & 1) break
+    }
+    height = height - top;
+    height *= Mu.View.BLOCK_HEIGHT;
+    top *= Mu.View.BLOCK_HEIGHT;
+    var style = {
+      top: top + "px",
+      height: height + "px",
+      left: 0 + "%",
+      width: 100 + "%",
+      backgroundColor: color
+    };
+    console.log(time);
+    console.log(style);
+    console.log(this.days[i]);
+    //ADDING {time:[], blocks:[]} TO DAYS, MODIFYING STYLES OF EXISTING BLOCKS IF NECESSARY
+    for (var s = 0; s < this.days[i].length; s++) { //s : sectionblock
+      var d = this.days[i][s]
+      var dt = d.time;
+      if (dt[i] & time[i])  {
+        console.log("Intersection found");
+        // | each day in time
+        for (var t = 0; t < 5; t++) {
+          dt[t] |= time[t];
+        }
+        // Update the width and left of each style object 
+        var numOverlappingSchedules = d.blocks.length;
+        var width = 100 / (numOverlappingSchedules + 1); // width in % (adding 1 because we're going to add another sectionblock)
+        for (var sb = 0; sb < numOverlappingSchedules; sb++) {
+          d.blocks[sb].style.width = width + "%";
+          d.blocks[sb].style.left = (sb * width) + "%";
+        }
+        //Add section and add the {style, section} to blocks
+        style.left = (numOverlappingSchedules * width) + "%";
+        style.width = width + "%";
+        console.log("Pushing section to block aggregate");
+        d.blocks.push({
+          style: style,
+          section: section
+        })
+        continue Outer
+      } 
+    }
+    //Add new {time:[], blocks:[]} object
+    console.log("Pushing section to new block");
+    this.days[i].push({
+      time: time,
+      blocks: [{
+        style: style,
+        section: section 
+      }]
+    })
   }
+
+  this.$forceUpdate()
 }
 
 
-
-Schedule.add = function (time) {
-  for (var day = 0; day < 7; day++) {
-    var curDay = this.tempDays[day]
-    var dayObj = {}
-
-    // If there's a day item, add it. 
-    if (time[day]) {
-      // Find the starting position
-      dayObj.start = 0
-      for (var i = 0; i < 32; i++) {
-        if ((time[day] >> i) & 1) break
+Schedule.removeSection = function (section, perm) {
+  // Go through all the days
+  for (var i = 0; i < 5; i++) {
+    // Go through all the groups.
+    for (var s = this.days[i].length; s--;){
+      // Go through all the blocks in a group.
+      for (var n = this.days[i][s].blocks.length; n--;) {
+        // If there is a collision, remove it. and recalculate the remaining blocks
+        if (this.days[i][s].blocks[n].section.uniq == section.uniq) {
+          this.days[i][s].blocks.splice(n,1)
+          var d = this.days[i][s]
+          console.log(d)
+            // Update the width and left of each style object 
+          var numOverlappingSchedules = d.blocks.length;
+          var width = 100 / (numOverlappingSchedules + 1); // width in % (adding 1 because we're going to add another sectionblock)
+          for (var sb = 0; sb < numOverlappingSchedules; sb++) {
+            d.blocks[sb].style.width = width + "%";
+            d.blocks[sb].style.left = (sb * width) + "%";
+          }
+        }
       }
-      dayObj.start = i
-
-      for (i; i < 32; i++) {
-        if ((time[day] >> i) & 1) break
-      }
-      dayObj.end = i
-      dayObj.height = (dayObj.end - dayObj.start)
-
-      curDay.push(dayObj)
     }
   }
+  this.$forceUpdate()
 }
 
 Schedule.displayGenerated = function(days) {

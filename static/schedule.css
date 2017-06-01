@@ -92,28 +92,37 @@
     }
 
 
-.calendar__blockWrap {
-  width: 92%%;
-  height: 0px;
-  position: absolute;
-  left:8%;
-  top:25px;
-}
-  .block__dayCol {
-    width: calc(92%/5);
-    height: 100%;
-    display: inline-block;
-    position: relative;
+.calendar__blockWrap{
+    position: absolute;
+    top: 25px;
+    left: 8%;
+    width: 92%;
+    height: calc(100% - 25px);
   }
-    .block__dayGroup {
-      position: absolute;
+    .block__dayCol{
+      width: calc(100% / 5);
       display: inline-block;
-      background-color: #999;
-      width: 100%;
-      left: 0px;
+      height: 100%;
+      position: relative;
     }
-
+    .block__dayGroup{
+      width: 100%;
+      display: inline-block;
+      background-color: rgba(0,0,0,0.1);
+    }
+      .block__section{
+        color: #FFF;
+        border-radius: 5px;
+        font-family: Montserrat;
+        font-size: 11px;
+        background-color: #999;
+        position: absolute;
+        padding: 2px;
+        box-sizing: border-box;
+      }
 
 .gen__btn {
   display: inline-block;
 }
+
+

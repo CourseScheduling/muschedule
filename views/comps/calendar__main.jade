@@ -20,9 +20,9 @@ link(rel="stylesheet" href="/static/navigation.css")
             each day in [0, 1, 2, 3, 4]
               td.cal__block(data-time=hour, data-day=day)
     .calendar__blockWrap#main__calendar__blockWrap
-      // This is where we can begin view modification.
-      div(v-for="day in [0,1,2,3,4]").block__dayCol      
-        div(v-for="section in days[day]" v-bind:style="section.styleObject").block__dayGroup {{section.sectionCode}}
+      div(v-for="day in days").block__dayCol
+        template(v-for="group in day")
+          div(v-for="block in group.blocks" v-bind:style="block.style" v-bind:class="{'block__section--temp':block.section.temporary}").block__section {{block.section.uniq}}
 
 .index__wrap
   span#gen__index(v-text="index + 1")

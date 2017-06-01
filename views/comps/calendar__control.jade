@@ -22,7 +22,7 @@ link(rel="stylesheet" href="/static/calendar__control.css")
             .course__typeBox(v-for="sectionsByActivity in termObject.sectionMap")
               .course__typeHeader {{sectionsByActivity.activity}}
               .course__section(v-for="index in sectionsByActivity.indices"
-                @mouseover="showTemp(termObject.sections[index])" 
+                @mouseover="showTemp(termObject.sections[index], c)" 
                 @mouseout="removeTemp(termObject.sections[index])"
                 @click="select(termObject.sections[index])"
                 v-bind:class="{'course__section--selected': termObject.sections[index].selected}") {{ termObject.sections[index].section}}

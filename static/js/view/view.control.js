@@ -110,17 +110,17 @@ Control.activeToggle = function (c) {
   //this.$forceUpdate()
 }
 
-Control.showTemp = function (section, course) {
+Control.showTemp = function (section, course, temp) {
   if (!section.selected) {
     section.added = true;
-    View.Schedule.addSection(section, 0)
+    View.Schedule.addSection(section, course, 0)
   }  
 }
 
 Control.removeTemp = function (section, course) {
   if (!section.selected) {
     section.added = false;
-    View.Schedule.removeSection(section, 0)
+    View.Schedule.removeSection(section, course, 0)
   } 
 }
 
