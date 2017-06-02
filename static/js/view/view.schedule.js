@@ -19,28 +19,19 @@ var Schedule = new Vue({
 
 
 Schedule.addSection = function (section, course, perm) {
-  console.log('Hover')
   section.temporary = !perm
   section.active = true
-  console.log("Adding section");
   var time = course.schedules[section.schedule];
   var color = ColourGen.get(section.uniq)
+
   Outer:
   for (var i = 0; i < 5; i++) {
     if(!time[i]) {continue}
 
     //CREATING A STYLE OBJECT FOR SECTION
-    //Getting the top value
-    var top = 0;
-    for (var top = 0; top < 32; top++) {
-      if ((time[i] >> top) & 1) break
-    }
-    height = top;
-    //Getting the height value
-    for (height; height < 32; height++) {
-      if (!(time[i] >> height) & 1) break
-    }
-    height = height - top;
+    var top = UTILS.getStart(time[i]);
+    var height = UTILS.getHeight(time[i], top);
+
     height *= Mu.View.BLOCK_HEIGHT;
     top *= Mu.View.BLOCK_HEIGHT;
     var style = {
@@ -121,17 +112,20 @@ Schedule.removeSection = function (section, perm) {
             d.blocks[sb].style.left = (sb * width) + "%";
 
             //Update block.time
-            
+
           }         
           //Remove block object if empty
           if (this.days[i][s].blocks.length == 0) {
-            this.days[i].splice(s);
+            console.log("removing because empty");
+            
+            this.days[i].splice(s, 1);
           }
 
         }
       }
     }
   }
+  View.Control.$forceUpdate();
   this.$forceUpdate()
 }
 

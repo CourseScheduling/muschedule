@@ -21,7 +21,8 @@ var Control = new Vue({
   methods: {
     toggleTerm: null,
     select: null
-  }
+  },
+
 })
 
 Control.toggleTerm = function (term) {

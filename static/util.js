@@ -51,9 +51,9 @@ var UTILS = {
     }
   },
   getHeight: function (scheduleInt, start) {
-    for (var i = startPos; i < 32; i++) {
+    for (var i = start; i < 32; i++) {
       if (!((scheduleInt >> i) & 1)) {
-        return i - startPos;
+        return i - start;
       }
     }
   }
