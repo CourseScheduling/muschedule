@@ -87,6 +87,7 @@ Generate.listenToBreaks = function() {
   var rescheduleTimeout;
 
   function handleTrigger(target) {
+    console.log("Handling trigger");
     attributes = target.attributes;
     dataTime = attributes["data-time"].value;
     dataDay = attributes["data-day"].value;   
@@ -128,33 +129,47 @@ Generate.listenToBreaks = function() {
 }
 
 
-/** Adds sections to data.days */
-Generate._updateDays = function(scheduleToRender, schedules, sections) {
+/** Adds sections to data.days 
+  Kind of like a trimmed down version of addSEction in view.schedule.js
+*/
+Generate._updateDays = function(scheduleToRender, courses) {
+  var term = View.Control.term;
+
   for (var i = 0; i < scheduleToRender.length; i++) {
-    groupingNumber = scheduleToRender[i][0];
-    sectionNumber = scheduleToRender[i][1];
-    sectionSchedule = schedules[groupingNumber][sectionNumber];
-    section = sections[groupingNumber][sectionNumber];
+    //Getting the section
+    mangledCombo = scheduleToRender[i].mangledCombo;
+    course = courses[scheduleToRender[i].courseIndex];
 
-    for (var ii = sectionSchedule.length; ii--;) {
-      if (sectionSchedule[ii]) {
-        courseCode = section.uniq.split(" ").slice(0, 2).join(" ");
+    for (var ml = mangledCombo.length; ml--; ) {
+      var section = course.terms.find((termObject) => { return 't'+termObject.name == term }).sections[mangledCombo[ml]]
+      var time = course.schedules[section.schedule];      
+      var color = ColourGen.get(section.uniq);
 
-        start = UTILS.getStart(sectionSchedule[ii]);
-        height = UTILS.getHeight(sectionSchedule[ii], start) * Mu.View.BLOCK_HEIGHT;
-        start = start * Mu.View.BLOCK_HEIGHT;
-        this.days[ii].push({
-          sectionCode: section.uniq,
-          courseCode: courseCode,
-          styleObject: {
-            top: start + 'px',
-            height: height + 'px'
-          },
-          sch: groupingNumber,
-          sec: sectionNumber
-        });
+      //Add to days if there is a section on this day
+      for (var t = 0; t < 5; t++) {
+        if (!time[t]) continue;
+
+        var top = UTILS.getStart(time[t]);
+        var height = UTILS.getHeight(time[t], top);
+        height *= Mu.View.BLOCK_HEIGHT;
+        top *= Mu.View.BLOCK_HEIGHT;
+
+        var style = {
+          top: top + "px",
+          height: height + "px",
+          left: 0 + "%",
+          width: 100 + "%",
+          backgroundColor: color
+        }
+
+        this.days[t].push({
+          blocks:[{
+            style:style,
+            section: section
+          }]
+        })
       }
-    }
+    }    
   }
 };
 
@@ -168,9 +183,8 @@ Generate.draw = function(index) {
       []
     ];
   var scheduleToRender = Mu.Controller.getSchedule(this.index);
-  var schedules = Mu.Model.getSchedules();
-  var sections = Mu.Model.getSections();
-  this._updateDays(scheduleToRender, schedules, sections);
+  var courses = Mu.Model.courses;
+  this._updateDays(scheduleToRender, courses);
   this.maxIndex = Mu.Controller.validSchedules.length;
 }
 
@@ -182,7 +196,7 @@ Generate.start = function () {
     this.loading = true
     this.loading = false
     Mu.Controller.schedule_2()
-    //this.draw(this.index);    
+    this.draw(this.index);    
   }
   this.loading = false
 }
@@ -220,9 +234,7 @@ Generate.select = function() {
 }
 
 
-
 View.Generate = Generate;
 View.Generate.listenToBreaks();
 View.Generate.listenToLocks();
-
 

@@ -42,15 +42,11 @@ Schedule.addSection = function (section, course, perm) {
       width: 100 + "%",
       backgroundColor: color
     };
-    console.log(time);
-    console.log(style);
-    console.log(this.days[i]);
     //ADDING {time:[], blocks:[]} TO DAYS, MODIFYING STYLES OF EXISTING BLOCKS IF NECESSARY
     for (var s = 0; s < this.days[i].length; s++) { //s : sectionblock
       var d = this.days[i][s]
       var dt = d.time;
       if (dt[i] & time[i])  {
-        console.log("Intersection found");
         // | each day in time
         for (var t = 0; t < 5; t++) {
           dt[t] |= time[t];
@@ -65,7 +61,6 @@ Schedule.addSection = function (section, course, perm) {
         //Add section and add the {style, section} to blocks
         style.left = (numOverlappingSchedules * width) + "%";
         style.width = width + "%";
-        console.log("Pushing section to block aggregate");
         d.blocks.push({
           style: style,
           section: section

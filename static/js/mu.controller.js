@@ -1,6 +1,5 @@
 
 function Controller () {
-  this.stateMap = []
   this.validSchedules = [];
 }
 
@@ -47,7 +46,11 @@ Controller.prototype.schedule_2 = function () {
       if (time[0]&m || time[1]&t || time[2]&w || time[3]&r || time[4]&f) {
         continue
       }   
-      acc.push(mangled[i]);   
+
+      acc.push({
+        courseIndex: count,
+        mangledCombo: mangled[i]
+      });   
       if (!recursiveSchedule(time[0]|m, time[1]|t, time[2]|w, time[3]|r, time[4]|f, count+1, acc)) return 0;
       acc.pop();
     }  
