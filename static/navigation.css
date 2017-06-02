@@ -6,7 +6,15 @@
 }
   .arrow {
     display: inline-block;
+    color: #ddd;
+    cursor: pointer;
   }
+    .arrow:hover {
+      color: #8E44AD;
+    }
+    .arrow i {
+      font-size: 50px;
+    }
     .arrow__left {
       position: relative;
       left: -325px;
@@ -20,7 +28,7 @@
   margin-top: 25px;
 }
   .index__wrap span {
-    font-size: 12px;
+    font-size: 16px;
     color: white;
     margin: 5px;
   }
