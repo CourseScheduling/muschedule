@@ -24,7 +24,7 @@ link(rel="stylesheet" href="/static/navigation.css")
         template(v-for="group in day")
           div(v-for="block in group.blocks" v-bind:style="block.style" v-bind:class="{'block__section--temp':block.section.temporary}").block__section 
             span {{block.section.uniq}}   
-            .block__removeBtn
+            .block__removeBtn(@click="removeSection(block.section)")
               i.material-icons &#xE5CD;       
       //- .block__dayCol
       //-   .block__section(style="top: 320px; height: 80px; left: 0%; width: 100%; background-color: rgb(30, 130, 76);")

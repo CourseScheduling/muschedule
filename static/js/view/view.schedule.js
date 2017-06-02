@@ -108,13 +108,26 @@ Schedule.removeSection = function (section, perm) {
           this.days[i][s].blocks.splice(n,1)
           var d = this.days[i][s]
           console.log(d)
-            // Update the width and left of each style object 
+          
+          //Unselect in control
+          section.selected = false;   
+
           var numOverlappingSchedules = d.blocks.length;
-          var width = 100 / (numOverlappingSchedules + 1); // width in % (adding 1 because we're going to add another sectionblock)
+          var width = 100 / (numOverlappingSchedules + 1); 
           for (var sb = 0; sb < numOverlappingSchedules; sb++) {
+            // Update the width and left of each style object
+            // width in % (adding 1 because we're going to add another sectionblock)
             d.blocks[sb].style.width = width + "%";
             d.blocks[sb].style.left = (sb * width) + "%";
+
+            //Update block.time
+            
+          }         
+          //Remove block object if empty
+          if (this.days[i][s].blocks.length == 0) {
+            this.days[i].splice(s);
           }
+
         }
       }
     }
