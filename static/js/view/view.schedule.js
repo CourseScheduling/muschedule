@@ -22,6 +22,7 @@ Schedule.addSection = function (section, course, perm) {
   section.temporary = !perm
   section.active = true
   var time = course.schedules[section.schedule];
+  section.time = time;
   var color = ColourGen.get(section.uniq)
 
   Outer:
@@ -103,6 +104,7 @@ Schedule.removeSection = function (section, perm) {
           //Unselect in control
           section.selected = false;   
 
+          var time = [0,0,0,0,0];
           var numOverlappingSchedules = d.blocks.length;
           var width = 100 / (numOverlappingSchedules + 1); 
           for (var sb = 0; sb < numOverlappingSchedules; sb++) {
@@ -112,7 +114,10 @@ Schedule.removeSection = function (section, perm) {
             d.blocks[sb].style.left = (sb * width) + "%";
 
             //Update block.time
-
+            sbTime = d.blocks[sb].section.time;
+            for (var t= 0; t<5; t++) {
+              time[t] |= sbTime[t];
+            }
           }         
           //Remove block object if empty
           if (this.days[i][s].blocks.length == 0) {

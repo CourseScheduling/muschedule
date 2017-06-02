@@ -24,11 +24,11 @@ link(rel="stylesheet" href="/static/calendar__control.css")
               .course__section(v-for="index in sectionsByActivity.indices"
                 @mouseover="showTemp(termObject.sections[index], c)" 
                 @mouseout="removeTemp(termObject.sections[index])"
-                @click="select(termObject.sections[index])"
+                @click.stop="select(termObject.sections[index])"
                 v-bind:class="{'course__section--selected': termObject.sections[index].selected}") {{ termObject.sections[index].section}}
     .control__wrap
       .control__btn.control__btn--gen(@click="generate()") AUTO GEN
-      .control__btn ADD BREAK
+      .control__btn REGISTER
 
 
 
