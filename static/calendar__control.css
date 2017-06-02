@@ -171,7 +171,9 @@ body{
       border-color: #FFF;
       transition: background-color .25s;
     }
-
+    .course__section--selected {
+      background-color: transparent; 
+    }
 
 
 
