@@ -18,6 +18,7 @@ var Generate = new Vue({
       [],
       []
     ],
+    schedules: [],
     index: 0,
     maxIndex: 0,
     breakTable: breakTable,
@@ -39,17 +40,6 @@ var Generate = new Vue({
     }
   }
 })
-
-
-//Returns the starting index, 0 being 8, in 30 minute blocks
-function getStart(scheduleInt) {
-
-}
-
-//Returns the size of the blocks (number of 30 minute blocks)
-function getHeight(scheduleInt, startPos) {
-
-}
 
 
 
@@ -187,12 +177,12 @@ Generate.draw = function(index) {
 /** Simply turns the generator screen on. Also checks for scheduling. */
 Generate.start = function () {
   this.visible = true
-
+  console.log(this.schedules.length); 
   if (!this.schedules.length) {
     this.loading = true
-    this.loading = false; //TODO: remove later
+    this.loading = false
     Mu.Controller.schedule_2()
-    this.draw(this.index);    
+    //this.draw(this.index);    
   }
   this.loading = false
 }

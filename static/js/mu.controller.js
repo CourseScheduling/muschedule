@@ -9,15 +9,15 @@ function Controller () {
 Controller.prototype.schedule_2 = function () {
   var start = performance.now();
   var self = this;
-  var schedules = Mu.Model.getSchedules();
-
+  var courses = Mu.Model.courses;
+  var term = View.Control.term;
   var lockedSections = View.Generate.lockedSections;
 
 
   this.validSchedules = [];
   var breaks = View.Generate.breaks;
 
-  var maxLength = filteredSchedules.length;
+  var maxLength = courses.length;
   var numSchedules = 0;
   function recursiveSchedule(m, t, w, r, f, count, acc) {
     if (count == maxLength) {
@@ -29,16 +29,25 @@ Controller.prototype.schedule_2 = function () {
       return 1;
     }
 
-    var newSec = schedules[count];
-    
+    var termObject = courses[count].terms.find((termObject) => { return 't'+termObject.name == term });
+    var mangled = termObject.mangled;    
 
-    for (var i = newSec.length; i--;) {
-      
-      var time = newSec[i];
+    for (var i = mangled.length; i--;) {
+      //Creating a aggregate time array from mangled indexes
+      var time = [0,0,0,0,0];
+      var oneMangledCombo = mangled[i];
+      for (var l = oneMangledCombo.length; l--;) {
+        mangledTime = termObject.sections[oneMangledCombo[l]]
+        for (var t = 0; t < 5; t++) {
+          time[t] |= mangledTime[t]
+        }
+      }
+
+      //Checking collisions
       if (time[0]&m || time[1]&t || time[2]&w || time[3]&r || time[4]&f) {
         continue
       }   
-      acc.push([count, i]);   
+      acc.push(mangled[i]);   
       if (!recursiveSchedule(time[0]|m, time[1]|t, time[2]|w, time[3]|r, time[4]|f, count+1, acc)) return 0;
       acc.pop();
     }  
@@ -68,39 +77,3 @@ Controller.prototype.getSchedule = function(index) {
 
 // Yet another Singleton
 Mu.Controller = Controller = new Controller()
-// 
-// 
-// 
-// section_1 -> [1,2,3]
-// section_2 -> [4,5,6]
-// section_3 -> [7,8,9]
-// 
-// 
-// 
-//  
-//    4 7
-//      8
-//      9
-//  1 5
-//      7
-//      8
-//      9
-//    6
-//      7
-//      8
-//      9
-//    
-//    
-//    
-//    
-//    4 7
-//      8
-//      9
-//  2 5
-//      7
-//      8
-//      9
-//    6
-//      7
-//      8
-//      9
