@@ -13,6 +13,8 @@ Controller.prototype.schedule_2 = function () {
   var lockedSections = View.Generate.lockedSections;
 
 
+
+
   this.validSchedules = [];
   var breaks = View.Generate.breaks;
 
@@ -36,7 +38,7 @@ Controller.prototype.schedule_2 = function () {
       var time = [0,0,0,0,0];
       var oneMangledCombo = mangled[i];
       for (var l = oneMangledCombo.length; l--;) {
-        mangledTime = termObject.sections[oneMangledCombo[l]]
+        mangledTime = courses[count].schedules[termObject.sections[oneMangledCombo[l]].schedule]
         for (var t = 0; t < 5; t++) {
           time[t] |= mangledTime[t]
         }

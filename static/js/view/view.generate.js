@@ -216,7 +216,7 @@ Generate.halt = function () {
 Generate.displayNext = function() {
   console.log("displaynext in Generate")
   this.index = (this.index + 1) % this.maxIndex;
-  this.draw(index);
+  this.draw(this.index);
 }
 
 Generate.displayPrevious = function() {
@@ -224,7 +224,7 @@ Generate.displayPrevious = function() {
   index = (this.index - 1) % this.maxIndex;
   if (index == -1) index = maxIndex - 1;
   this.index = index;
-  this.draw(index);
+  this.draw(this.index);
 }
 
 Generate.select = function() {
