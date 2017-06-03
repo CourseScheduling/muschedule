@@ -30,7 +30,8 @@ var Generate = new Vue({
     halt:  null,
     displayPrevious: null,
     displayNext: null,
-    select: null
+    select: null,
+    lockSection: null
   },
   watch: {
     breakTable: {
@@ -42,44 +43,26 @@ var Generate = new Vue({
 })
 
 
-
-
-Generate.listenToLocks = function() {
-  var self = this;
+Generate.lockSection = function(section, event) {
+  console.log("Lock section triggered");
+  event.preventDefault();
   var lockedSections = this.lockedSections;
-  sectionBlockElements = document.getElementsByClassName('block__dayGroup');
-  console.log(sectionBlockElements.length);
-  for (var i = sectionBlockElements.length; i--;) {
-    console.log("binding onmousedown to section block");
-    document.oncontextmenu = function(event) {
-      if (event.target.className.includes("block__dayGroup")) {
-        console.log("Locking section");
-        sch = event.target.getAttribute("data-sch");
-        sec = event.target.getAttribute("data-sec"); 
-        isLocked = event.target.className.includes("section__block--locked");
-        
-        if (isLocked) {
-          for (var i = lockedSections.length; i--;) {
-            if (lockedSections[i][0] == sch && lockedSections[i][1] == sec) {
-              lockedSections.splice(i, 1);
-              break;
-            }
-          }
-        } else {
-          lockedSections.push([sch, sec]);
-        }     
-        self.restart();
-        return false;
-        //Toggle data to toggle class 
-      } else {
-        return true;
+  var self = this;
+
+  if (section.locked) {
+    for (var i = lockedSections.length; i--;) {
+      if (lockedSections[i].uniq == section.uniq) {
+        lockedSections.splice(i, 1);
+        section.locked = false;
+        break;
       }
     }
-
-    sectionBlockElements[i].onmouseover = function(event) {
-
-    }
-  }
+  } else {
+    section.locked = true;
+    lockedSections.push(section);
+  }     
+  self.restart();
+  return false;
 }
 
 Generate.listenToBreaks = function() {  
@@ -87,7 +70,7 @@ Generate.listenToBreaks = function() {
   var rescheduleTimeout;
 
   function handleTrigger(target) {
-    console.log("Handling trigger");
+    console.log("Handling break trigger");
     attributes = target.attributes;
     dataTime = attributes["data-time"].value;
     dataDay = attributes["data-day"].value;   
@@ -236,5 +219,5 @@ Generate.select = function() {
 
 View.Generate = Generate;
 View.Generate.listenToBreaks();
-View.Generate.listenToLocks();
+//View.Generate.listenToLocks();
 

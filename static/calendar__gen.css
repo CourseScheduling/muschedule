@@ -19,3 +19,21 @@
       background-color: #A9A9A9;
     }
 
+
+.block__section {
+
+}
+  .block__section--locked .block__section--lock {
+    display: inline-block;
+  }
+  .block__section--lock {
+    display: none;
+    position:absolute;
+    top:0px;
+    right:0px;
+  }
+  .block__section--lock i {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 18px;
+    padding: 4px;
+  }
