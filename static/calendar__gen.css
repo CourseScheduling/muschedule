@@ -10,10 +10,10 @@
     position: relative;
   }
     #gen__calendarWrap * {
-      -webkit-user-select: none;
+/*      -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
-      user-select: none;
+      user-select: none;*/
     }
     .cal__block--highlighted {
       background-color: #A9A9A9;

@@ -82,7 +82,8 @@ Generate.listenToBreaks = function() {
 
   calBlockElements = document.getElementsByClassName("cal__block--data");
   for (var i = calBlockElements.length; i--;) {
-    calBlockElements[i].onmousedown = function(event) {
+    calBlockElements[i].addEventListener('mousedown', function(event) {
+      console.log("CAPTURE")
       if (event.which !== 1) return;
       clearTimeout(rescheduleTimeout);
       attributes = event.target.attributes;
@@ -92,7 +93,7 @@ Generate.listenToBreaks = function() {
       breakTableData ? addBreaks = false : addBreaks = true;
       handleTrigger(event.target);
       mousedown = true;
-    }
+    }, true);
   }
 
 
@@ -220,4 +221,3 @@ Generate.select = function() {
 View.Generate = Generate;
 View.Generate.listenToBreaks();
 //View.Generate.listenToLocks();
-
