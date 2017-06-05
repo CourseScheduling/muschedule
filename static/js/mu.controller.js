@@ -12,7 +12,8 @@ Controller.prototype.schedule_2 = function () {
   var term = View.Control.term;
   var lockedSections = View.Generate.lockedSections;
   //Filtering lockedSections
-/*  for (var i = lockedSections.length; i--;) {
+/*  var filteredCoursesMap = [];
+  for (var i = lockedSections.length; i--;) {
     for (var j = courses.length; j--;) {
       if (courses[j].code !== lockedSections[i].code) continue;
       filteredMangled = [];
@@ -23,10 +24,18 @@ Controller.prototype.schedule_2 = function () {
           filteredMangled.push(courses[j].mangled[k];
         }
       }
+      filteredCourse = [j, courses[j].mangled] //[course, originalMangled]
+      filteredCoursesMap.push(filteredCourse)
       courses[j].mangled = filteredMangled;
     }
   }
-*/
+
+  //TODO: Move this to the end
+  //Reverting filtered changes
+  for (var i = filteredCoursesMap.length; i--) {
+    courses[filteredCoursesMap[0]].mangled = filteredCoursesMap[1];
+  }*/
+
   this.validSchedules = [];
   var breaks = View.Generate.breaks;
 
@@ -77,6 +86,7 @@ Controller.prototype.schedule_2 = function () {
   recursiveSchedule(breaks[0],breaks[1],breaks[2],breaks[3],breaks[4],0,acc);
   console.info('Scheduling took: ' + (performance.now() - start) + 'ms')
   console.log(self.validSchedules);
+
 
 
 }
