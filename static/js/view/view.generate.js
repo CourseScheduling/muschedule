@@ -171,7 +171,8 @@ Generate._updateDays = function(scheduleToRender, courses) {
           blocks:[{
             style:style,
             section: section
-          }]
+          }],
+          time: section.time
         })
       }
     }    
@@ -195,6 +196,7 @@ Generate.draw = function(index) {
 
 /** Simply turns the generator screen on. Also checks for scheduling. */
 Generate.start = function () {
+  //TODO: take all the sections current in main schedule, push to lockedSections if not exists and set section.locked to true
   this.visible = true
   console.log(this.schedules.length); 
   if (!this.schedules.length) {
