@@ -21,7 +21,7 @@ div.gen__loadingText Generated Schedules
     .calendar__blockWrap#gen__calendar__blockWrap
       div(v-for="day in days").block__dayCol
         template(v-for="group in day")
-          div(v-for="block in group.blocks" v-bind:style="block.style" v-bind:class="{'block__section--locked':block.section.locked}" @contextmenu="lockSection(block.section, $event)").block__section 
+          div(v-for="block in group.blocks" v-bind:style="block.style" v-bind:class="{'block__section--locked':block.section.locked}" @mousedown="triggerLowerElement($event)" @contextmenu="lockSection(block.section, $event)").block__section 
             span {{block.section.uniq}}
             .block__section--lock
               i.material-icons &#xE897;    

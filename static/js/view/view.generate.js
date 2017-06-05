@@ -42,6 +42,22 @@ var Generate = new Vue({
   }
 })
 
+// Function to bubble event even when elements aren't nested in dom
+Generate.triggerLowerElement = function(event) {
+  var mouseX = event.pageX;
+  var mouseY = event.pageY;
+  var underlyingCell = document.elementsFromPoint(mouseX, mouseY);
+  for (var i = 0; i < underlyingCell.length; i++) {
+    if (underlyingCell[i].classList.contains("cal__block--data")) {
+      console.log("Dispatchign event");
+      console.log(underlyingCell[i]);
+      delegateEvent = new MouseEvent('mousedown', {which: 1, target: underlyingCell[i]});
+      underlyingCell[i].dispatchEvent(delegateEvent);
+    }
+  }
+}
+
+
 
 Generate.lockSection = function(section, event) {
   console.log("Lock section triggered");
@@ -84,12 +100,13 @@ Generate.listenToBreaks = function() {
   for (var i = calBlockElements.length; i--;) {
     calBlockElements[i].addEventListener('mousedown', function(event) {
       console.log("CAPTURE")
+      console.log(event);
       if (event.which !== 1) return;
       clearTimeout(rescheduleTimeout);
       attributes = event.target.attributes;
       dataTime = attributes["data-time"].value;
       dataDay = attributes["data-day"].value;
-      breakTableData = self.breakTable[dataTime][dataDay]; 
+      breakTableData = self.breakTable[dataTime][dataDay];
       breakTableData ? addBreaks = false : addBreaks = true;
       handleTrigger(event.target);
       mousedown = true;

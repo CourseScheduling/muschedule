@@ -18,10 +18,12 @@
     .cal__block--highlighted {
       background-color: #A9A9A9;
     }
-
+    #gen__calendar__blockWrap {
+      pointer-events: none;
+    }
 
 .block__section {
-
+  pointer-events: auto;
 }
   .block__section--locked .block__section--lock {
     display: inline-block;
