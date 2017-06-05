@@ -78,7 +78,6 @@ Schedule.addSection = function (section, course, perm) {
       }]
     })
   }
-
   this.$forceUpdate()
 }
 
@@ -101,7 +100,8 @@ Schedule.removeSection = function (section, perm) {
 
           var time = [0,0,0,0,0];
           var numOverlappingSchedules = d.blocks.length;
-          var width = 100 / (numOverlappingSchedules + 1); 
+
+          var width = 100 / (numOverlappingSchedules); 
           for (var sb = 0; sb < numOverlappingSchedules; sb++) {
             // Update the width and left of each style object
             // width in % (adding 1 because we're going to add another sectionblock)

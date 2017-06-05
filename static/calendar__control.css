@@ -173,6 +173,7 @@ body{
     }
     .course__section--selected {
       background-color: transparent; 
+      color: #FFF;
     }
 
 

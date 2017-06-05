@@ -136,6 +136,7 @@ Control.select = function(section) {
   section.selected = true;
   section.added = true; 
   section.temporary = false
+  this.$forceUpdate();
 }
 
 Control.delete = function (course) {
