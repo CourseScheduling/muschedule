@@ -60,6 +60,16 @@ var UTILS = {
 }
 
 
+Array.prototype.pushUnique = function(object, compareMethod) {
+  var found = false;
+  for (var i = this.length; i--;) {
+    if (compareMethod(this[i], object) == 0) {
+      found = true;
+    }
+  }
+  if (!found) this.push(object);
+}
+
 
 
 

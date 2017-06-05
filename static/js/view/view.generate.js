@@ -197,6 +197,23 @@ Generate.draw = function(index) {
 /** Simply turns the generator screen on. Also checks for scheduling. */
 Generate.start = function () {
   //TODO: take all the sections current in main schedule, push to lockedSections if not exists and set section.locked to true
+  currentDays = View.Schedule.days;
+  //Iterating week days
+  for (var i = 0; i < 5; i++) {
+    //Iterating timegrouped blocks
+    for (var j = currentDays[i].length; j--;) {
+      //Iterating blocks in specific timeblock
+      for (var k = currentDays[i][j].blocks.length; k--;) {
+        section = currentDays[i][j].blocks[k].section;
+        this.lockedSections.pushUnique(section, (s1, s2) => {
+          return !(s1.uniq == s2.uniq);
+        })
+        section.locked = true;
+      }
+    }
+  }
+
+
   this.visible = true
   console.log(this.schedules.length); 
   if (!this.schedules.length) {
