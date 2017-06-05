@@ -131,6 +131,14 @@ Schedule.removeSection = function (section, perm) {
 
 Schedule.displayGenerated = function(days) {
   this.days = days;
+  //Toggling selected to modify view in view.control
+  for (var i = 0; i < 5; i++) {
+    for (var j = days[i].length; j--;) {
+      days[i][j].blocks[0].section.selected = true;
+      console.log(days[i][j].blocks[0].section);
+    }
+  }
+  View.Control.$forceUpdate();
 }
 
 Schedule.displayPrevious = function() {
