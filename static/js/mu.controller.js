@@ -8,11 +8,25 @@ function Controller () {
 Controller.prototype.schedule_2 = function () {
   var start = performance.now();
   var self = this;
-  var courses = Mu.Model.courses;
+  courses = Mu.Model.courses;
   var term = View.Control.term;
   var lockedSections = View.Generate.lockedSections;
-
-
+  //Filtering lockedSections
+/*  for (var i = lockedSections.length; i--;) {
+    for (var j = courses.length; j--;) {
+      if (courses[j].code !== lockedSections[i].code) continue;
+      filteredMangled = [];
+      typeIndex = lockedSections[i].type;
+      //Filter out all the mangled with out this section
+      for (var k = courses[j].mangled.length; k--;) {
+        if (courses[j].mangled[k][typeIndex] == lockedSections[i].schedule) {
+          filteredMangled.push(courses[j].mangled[k];
+        }
+      }
+      courses[j].mangled = filteredMangled;
+    }
+  }
+*/
   this.validSchedules = [];
   var breaks = View.Generate.breaks;
 

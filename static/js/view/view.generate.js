@@ -102,13 +102,16 @@ Generate.listenToBreaks = function() {
     calBlockElements[i].addEventListener('mousedown', function(event) {
       console.log("CAPTURE")
       console.log(event);
-      if (event.button !== 1) return;
+      if (event.button !== 1 && event.which !== 1) return;
+      console.log("0")
       clearTimeout(rescheduleTimeout);
+      console.log("1");
       attributes = event.target.attributes;
       dataTime = attributes["data-time"].value;
       dataDay = attributes["data-day"].value;
       breakTableData = self.breakTable[dataTime][dataDay];
       breakTableData ? addBreaks = false : addBreaks = true;
+      console.log("2");
       handleTrigger(event.target);
       mousedown = true;
     }, true);

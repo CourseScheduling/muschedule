@@ -103,5 +103,12 @@ Model.prototype.updateOld = function () {
   }
 }
 
+Model.prototype.contains = function(courseCode) {
+  for (var i = this.courses.length; i--;) {
+    if (this.courses[i].code == courseCode) return true;
+  }
+  return false;
+}
+
 // Yet another Singleton
 Mu.Model = Model = new Model()
