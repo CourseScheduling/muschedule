@@ -51,7 +51,7 @@ Generate.triggerLowerElement = function(event) {
     if (underlyingCell[i].classList.contains("cal__block--data")) {
       console.log("Dispatchign event");
       console.log(underlyingCell[i]);
-      delegateEvent = new MouseEvent('mousedown', {which: 1, target: underlyingCell[i]});
+      delegateEvent = new MouseEvent('mousedown', {button: event.which, target: underlyingCell[i]});
       underlyingCell[i].dispatchEvent(delegateEvent);
     }
   }
@@ -62,11 +62,12 @@ Generate.triggerLowerElement = function(event) {
 Generate.lockSection = function(section, event) {
   console.log("Lock section triggered");
   event.preventDefault();
-  var lockedSections = this.lockedSections;
+  lockedSections = this.lockedSections;
   var self = this;
 
   if (section.locked) {
     for (var i = lockedSections.length; i--;) {
+      //Toggling locked
       if (lockedSections[i].uniq == section.uniq) {
         lockedSections.splice(i, 1);
         section.locked = false;
@@ -101,7 +102,7 @@ Generate.listenToBreaks = function() {
     calBlockElements[i].addEventListener('mousedown', function(event) {
       console.log("CAPTURE")
       console.log(event);
-      if (event.which !== 1) return;
+      if (event.button !== 1) return;
       clearTimeout(rescheduleTimeout);
       attributes = event.target.attributes;
       dataTime = attributes["data-time"].value;

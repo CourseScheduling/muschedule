@@ -13,8 +13,6 @@ Controller.prototype.schedule_2 = function () {
   var lockedSections = View.Generate.lockedSections;
 
 
-
-
   this.validSchedules = [];
   var breaks = View.Generate.breaks;
 
