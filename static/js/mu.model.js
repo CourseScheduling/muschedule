@@ -110,5 +110,15 @@ Model.prototype.contains = function(courseCode) {
   return false;
 }
 
+Model.prototype.removeCourse = function(course) {
+  console.log("removing course in model");
+  for (var i = this.courses.length; i--;) {
+    if (this.courses[i].code == course.code) {
+      this.courses.splice(i, 1);
+      return;
+    }
+  }
+}
+
 // Yet another Singleton
 Mu.Model = Model = new Model()

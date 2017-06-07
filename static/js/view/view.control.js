@@ -168,11 +168,13 @@ Control.register = function() {
 
 Control.removeCourse = function(course) {
   console.log("Removing course", course)
+  Mu.Model.removeCourse(course);
   for (var i = this.courses.length; i--;) {
     if (this.courses[i].code == course.code) {
       this.courses.splice(i, 1);
       return;
     }
   }
+
 }
 View.Control = Control
