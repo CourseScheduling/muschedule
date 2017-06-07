@@ -17,7 +17,8 @@ var Control = new Vue({
   },
   methods: {
     toggleTerm: null,
-    select: null
+    select: null,
+    newTemplate: null
   },
 
 })
@@ -154,6 +155,11 @@ Control.select = function(section) {
 Control.delete = function (course) {
   console.log(course)
   delete this.courses[this.term][course.code]
+}
+
+Control.newTemplate = function() {
+  //Delegate to View.Schedule
+  View.Schedule.newTemplate();
 }
 
 View.Control = Control
