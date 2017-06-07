@@ -247,7 +247,7 @@ Generate.displayNext = function() {
 Generate.displayPrevious = function() {
   console.log("displayPrevious in Generate")
   index = (this.index - 1) % this.maxIndex;
-  if (index == -1) index = maxIndex - 1;
+  if (index == -1) index = this.maxIndex - 1;
   this.index = index;
   this.draw(this.index);
 }
