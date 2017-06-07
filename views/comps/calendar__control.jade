@@ -13,8 +13,8 @@ link(rel="stylesheet" href="/static/calendar__control.css")
       button(v-on:click="toggleTerm('t1')" v-bind:class="{'term__btn--active': (term == 't1')}").term__btn.term__btn--left TERM 1
       button(v-on:click="toggleTerm('t2')" v-bind:class="{'term__btn--active': (term == 't2')}").term__btn TERM 2
     .wrap__header :: COURSES ::
-    .course__container(v-for="(val, t) in courses")
-      .course(v-for="c in courses[t]" @click="activeToggle(c)" v-bind:style="{backgroundColor: c.colour}" v-bind:class="{'course--active':c.active}")
+    .course__container
+      .course(v-for="c in courses" @click="activeToggle(c)" v-bind:style="{backgroundColor: c.colour}" v-bind:class="{'course--active':c.active}")
         .course__code {{c.code}}
         .course__extra(v-show="c.active")
           .course__description {{c.description}}
