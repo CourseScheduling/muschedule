@@ -10,3 +10,22 @@
   margin: 5px;
   text-transform: uppercase;
 }
+
+.removeBtn__parent {
+  position: relative;
+}
+.removeBtn__parent:hover .removeBtn {
+  display: inline-block;
+}
+  .removeBtn {
+    display: none;
+    position: absolute;
+    top: 0px;
+    right:0px;
+    cursor: pointer;
+  }
+    .removeBtn i {
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 20px;
+      font-weight: bold;
+    }

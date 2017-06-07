@@ -104,6 +104,7 @@ Generate.listenToBreaks = function() {
       console.log(event);
       if (event.button !== 1 && event.which !== 1) return;
       console.log("0")
+      console.log("HELLO")
       clearTimeout(rescheduleTimeout);
       console.log("1");
       attributes = event.target.attributes;

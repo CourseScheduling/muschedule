@@ -128,18 +128,7 @@
         .block__section:hover .block__removeBtn {
           display: inline-block;
         }
-      .block__removeBtn {
-        display: none;
-        position: absolute;
-        top: 0px;
-        right:0px;
-        cursor: pointer;
-      }
-        .block__removeBtn i {
-          color: rgba(0, 0, 0, 0.7);
-          font-size: 20px;
-          font-weight: bold;
-        }
+      
 
 .gen__btn {
   display: inline-block;

@@ -18,7 +18,9 @@ var Control = new Vue({
   methods: {
     toggleTerm: null,
     select: null,
-    newTemplate: null
+    newTemplate: null,
+    register: null,
+    removeCourse: null,
   },
 
 })
@@ -153,14 +155,24 @@ Control.select = function(section) {
   this.$forceUpdate();
 }
 
-Control.delete = function (course) {
-  console.log(course)
-  delete this.courses[this.term][course.code]
-}
 
 Control.newTemplate = function() {
   //Delegate to View.Schedule
   View.Schedule.newTemplate();
 }
 
+Control.register = function() {
+  //Displays popup with link to sections
+  console.log("registering")
+}
+
+Control.removeCourse = function(course) {
+  console.log("Removing course", course)
+  for (var i = this.courses.length; i--;) {
+    if (this.courses[i].code == course.code) {
+      this.courses.splice(i, 1);
+      return;
+    }
+  }
+}
 View.Control = Control

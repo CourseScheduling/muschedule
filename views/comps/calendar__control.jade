@@ -14,7 +14,9 @@ link(rel="stylesheet" href="/static/calendar__control.css")
       button(v-on:click="toggleTerm('t2')" v-bind:class="{'term__btn--active': (term == 't2')}").term__btn TERM 2
     .wrap__header :: COURSES ::
     .course__container
-      .course(v-for="c in courses" @click="activeToggle(c)" v-bind:style="{backgroundColor: c.colour}" v-bind:class="{'course--active':c.active}")
+      .removeBtn__parent.course(v-for="c in courses" @click="activeToggle(c)" v-bind:style="{backgroundColor: c.colour}" v-bind:class="{'course--active':c.active}")
+        .removeBtn(@click="removeCourse(c)")
+          i.material-icons &#xE5CD; 
         .course__code {{c.code}}
         .course__extra(v-show="c.active")
           .course__description {{c.description}}
@@ -29,9 +31,10 @@ link(rel="stylesheet" href="/static/calendar__control.css")
     .control__wrap
       .control__btn.control__btn--gen(@click="generate()") AUTO GEN
       .control__btn(@click="newTemplate()") ADD NEW
-      .control__btn REGISTER
+      .control__btn(@click="register()") REGISTER
 
 
+      
 
 
 
