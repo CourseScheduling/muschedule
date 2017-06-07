@@ -26,6 +26,7 @@ var Control = new Vue({
 Control.toggleTerm = function (term) {
   TERM = term
   this.term = term
+  View.Schedule.toggleTerm(term);
   this.$forceUpdate()
 }
 

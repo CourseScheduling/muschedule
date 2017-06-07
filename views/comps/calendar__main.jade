@@ -20,7 +20,7 @@ link(rel="stylesheet" href="/static/navigation.css")
             each day in [0, 1, 2, 3, 4]
               td.cal__block(data-time=hour, data-day=day)
     .calendar__blockWrap#main__calendar__blockWrap
-      div(v-for="day in templates[index]").block__dayCol
+      div(v-for="day in templates[term][index]").block__dayCol
         template(v-for="group in day")
           div(v-for="block in group.blocks" v-bind:style="block.style" v-bind:class="{'block__section--temp':block.section.temporary}").block__section 
             span {{block.section.uniq}}   

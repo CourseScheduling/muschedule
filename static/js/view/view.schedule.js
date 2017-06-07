@@ -1,11 +1,17 @@
 var Schedule = new Vue({
   el: '#calendar__left',
   data: {
-    templates: [
-      [ [], [], [], [], [] ], //One template
-    ],    
+    templates: {
+      "t1":[
+        [ [], [], [], [], [] ], //One template
+      ],
+      "t2":[
+        [ [], [], [], [], [] ], //One template
+      ]    
+    },
     index: 0,
-    maxIndex: 1
+    maxIndex: 1,
+    term: 't1'
   },
   methods: {
     displayPrevious: null,
@@ -15,7 +21,7 @@ var Schedule = new Vue({
 
 
 Schedule.addSection = function (section, course, perm) {
-  days = this.templates[this.index];
+  days = this.templates[this.term][this.index];
   section.temporary = !perm
   section.active = true
   var time = course.schedules[section.schedule];
@@ -80,7 +86,7 @@ Schedule.addSection = function (section, course, perm) {
 
 
 Schedule.removeSection = function (section, perm) {
-  days = this.templates[this.index];
+  days = this.templates[this.term][this.index];
   // Go through all the days
   for (var i = 0; i < 5; i++) {
     // Go through all the groups.
@@ -128,15 +134,15 @@ Schedule.removeSection = function (section, perm) {
 }
 
 Schedule.displayGenerated = function(days) {
-  this.templates[this.index] = days;
+  this.templates[this.term][this.index] = days;
   //Toggling selected to modify view in view.control
   for (var i = 0; i < 5; i++) {
     for (var j = days[i].length; j--;) {
       days[i][j].blocks[0].section.selected = true;
-      console.log(days[i][j].blocks[0].section);
     }
   }
   View.Control.$forceUpdate();
+  this.$forceUpdate();
 }
 
 
@@ -168,32 +174,42 @@ function prepareDays(currentDays, days) {
 
 Schedule.displayPrevious = function() {
   console.log("displayPrevious in main schedule")
-  currentDays = this.templates[this.index];
+  currentDays = this.templates[this.term][this.index];
   index = (this.index - 1) % this.maxIndex;
   if (index == -1) index = maxIndex - 1;
   this.index = index;
-  prepareDays(currentDays, this.templates[this.index])
+  prepareDays(currentDays, this.templates[this.term][this.index])
   View.Control.$forceUpdate();
 }
 
 Schedule.displayNext = function() {
   console.log("displayNex in main schedule")
-  currentDays = this.templates[this.index];
+  currentDays = this.templates[this.term][this.index];
   this.index = (this.index + 1) % this.maxIndex;
-  prepareDays(currentDays, this.templates[this.index]);
+  prepareDays(currentDays, this.templates[this.term][this.index]);
   View.Control.$forceUpdate();
 }
 
 Schedule.newTemplate = function () {
   console.log("Adding new template");
-  var currentDays = this.templates[this.index];
+  var currentDays = this.templates[this.term][this.index];
   resetSectionsInDays(currentDays)
-
   var newTemplateDays = [ [], [], [], [], []];
-  this.templates.push(newTemplateDays);
+  this.templates[this.term].push(newTemplateDays);
 
-  this.index = this.templates.length-1;
-  this.maxIndex = this.templates.length;
+  this.index = this.templates[this.term].length-1;
+  this.maxIndex = this.templates[this.term].length;
   View.Control.$forceUpdate();
+}
+
+Schedule.currentDays = function() {
+  return this.templates[this.term][this.index];
+}
+
+Schedule.toggleTerm = function(term) {
+  this.term = term;
+  this.index = 0;
+  this.maxIndex = this.templates[this.term].length;
+  this.$forceUpdate();
 }
 View.Schedule = Schedule

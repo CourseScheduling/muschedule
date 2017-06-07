@@ -172,7 +172,7 @@ Generate._updateDays = function(scheduleToRender, courses) {
             style:style,
             section: section
           }],
-          time: section.time
+          time: time
         })
       }
     }    
@@ -196,8 +196,10 @@ Generate.draw = function(index) {
 
 /** Simply turns the generator screen on. Also checks for scheduling. */
 Generate.start = function () {
+  this.index = 0;
+  this.maxIndex = 0;
   //TODO: take all the sections current in main schedule, push to lockedSections if not exists and set section.locked to true
-  currentDays = View.Schedule.days;
+  currentDays = View.Schedule.currentDays();
   //Iterating week days
   for (var i = 0; i < 5; i++) {
     //Iterating timegrouped blocks
@@ -216,12 +218,11 @@ Generate.start = function () {
 
   this.visible = true
   console.log(this.schedules.length); 
-  if (!this.schedules.length) {
-    this.loading = true
-    this.loading = false
-    Mu.Controller.schedule_2()
-    this.draw(this.index);    
-  }
+  
+  this.loading = true
+  Mu.Controller.schedule_2()
+  this.draw(this.index);    
+  
   this.loading = false
 }
 
