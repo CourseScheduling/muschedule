@@ -17,11 +17,16 @@ div.gen__loadingText Generated Schedules
             template(v-else-if="hour[0] < 13")            
               td.cal__block.cal__block--time(rowspan="2") &nbsp;{{hour[0]}}:00
             template(v-for="day in [0, 1, 2, 3, 4]")            
-              td.cal__block.cal__block--data(v-bind:data-time="hour[1]", v-bind:data-day="day", v-bind:class="{'cal__block--highlighted':breakTable[hour[1]][day]}")    
+              td.cal__block.cal__block--data(v-bind:data-time="hour[1]", v-bind:data-day="day", v-bind:class="{'cal__block--highlighted':breakTable[hour[1]][day]}"
+              @mousedown="toggleBreak($event)"
+              @mouseover="toggleBreak($event)")    
     .calendar__blockWrap#gen__calendar__blockWrap
       div(v-for="day in days").block__dayCol
         template(v-for="group in day")
-          div(v-for="block in group.blocks" v-bind:style="block.style" v-bind:class="{'block__section--locked':block.section.locked}" @mousedown="triggerLowerElement($event)" @contextmenu="lockSection(block.section, $event)").block__section 
+          div(v-for="block in group.blocks" v-bind:style="block.style" v-bind:class="{'block__section--locked':block.section.locked}"
+          @mousedown="triggerLower($event)"
+          @mouseenter="triggerLower($event)"
+          @contextmenu="lockSection(block.section, $event)").block__section 
             span {{block.section.uniq}}
             .block__section--lock
               i.material-icons &#xE897;    

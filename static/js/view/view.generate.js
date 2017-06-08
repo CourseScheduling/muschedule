@@ -2,8 +2,7 @@ var breakTable = [];
 for (var i = 0; i < 28; i++) {
   this.breakTable.push({"0":false, "1":false, "2":false, "3":false, "4":false});
 }
-var mousedown = false; 
-var addBreaks = false;
+var initializedMouseupListener = false;
 
 var Generate = new Vue({
   el: '#gen__wrap',
@@ -23,7 +22,10 @@ var Generate = new Vue({
     maxIndex: 0,
     breakTable: breakTable,
     breaks: [0,0,0,0,0],
-    lockedSections: []
+    lockedSections: [],
+    mousedown: false,
+    addBreak: true,
+    rescheduleTimeout: null
   },    
   methods: {
     start: null,
@@ -31,7 +33,8 @@ var Generate = new Vue({
     displayPrevious: null,
     displayNext: null,
     select: null,
-    lockSection: null
+    lockSection: null,
+    triggerLower: null
   },
   watch: {
     breakTable: {
@@ -42,21 +45,72 @@ var Generate = new Vue({
   }
 })
 
-// Function to bubble event even when elements aren't nested in dom
-Generate.triggerLowerElement = function(event) {
-  var mouseX = event.pageX;
-  var mouseY = event.pageY;
-  var underlyingCell = document.elementsFromPoint(mouseX, mouseY);
-  for (var i = 0; i < underlyingCell.length; i++) {
-    if (underlyingCell[i].classList.contains("cal__block--data")) {
-      console.log("Dispatchign event");
-      console.log(underlyingCell[i]);
-      delegateEvent = new MouseEvent('mousedown', {button: event.which, target: underlyingCell[i]});
-      underlyingCell[i].dispatchEvent(delegateEvent);
-    }
+
+
+
+
+Generate.triggerLower = function(event) {
+  console.log("trigger lower");
+  switch (event.type) {
+    case "mousedown":
+      mouseX = event.pageX;
+      mouseY = event.pageY;
+      var underlyingCell = document.elementsFromPoint(mouseX, mouseY).find((element) => {
+        return element.classList.contains("cal__block--data")
+      });
+      event.target.parentElement.style.pointerEvents = "none";  //target is bubbled to span not the div
+      this.addBreak = true; //Always going to be the case    
+      this.mousedown = true;  
+      break;
+    case "mouseenter":
+      if (this.addBreak == true) event.target.style.pointerEvents = "none";
+      break;
+    default:
+      break;
   }
+  
 }
 
+Generate.toggleBreak = function(event) {
+  var self = this;
+  function updateBreaks (target) {
+    console.log("updating breaks")
+    attributes = target.attributes;
+    dataTime = attributes["data-time"].value;
+    dataDay = attributes["data-day"].value; 
+    console.log(self.addBreak);
+    self.breakTable[dataTime][dataDay] = self.addBreak;
+    mask = 1 << dataTime;
+    if (self.addBreak) self.breaks[dataDay] |= mask;
+    else self.breaks[dataDay] &= ~mask;
+  }
+  if (!initializedMouseupListener) {
+    //Initialize onmouseup listener once
+    document.onmouseup = function() {
+      if (self.mousedown == true) self.rescheduleTimeout = setTimeout(self.restart.bind(self), 1000);
+      self.mousedown = false;  
+      initializedListener = true;  
+    }
+  }
+  switch (event.type) {
+    case "mousedown":
+      clearTimeout(self.rescheduleTimeout);
+      attributes = event.target.attributes;
+      dataTime = attributes["data-time"].value;
+      dataDay = attributes["data-day"].value;
+      breakTableData = self.breakTable[dataTime][dataDay];
+      breakTableData ? self.addBreak = false : self.addBreak = true;
+      updateBreaks(event.target);
+      self.mousedown = true;
+      break;
+    case "mouseover":
+      if (self.mousedown) updateBreaks(event.target);
+      break;
+    default:
+      break;
+  }
+  //console.log(event);
+}
 
 
 Generate.lockSection = function(section, event) {
@@ -80,58 +134,6 @@ Generate.lockSection = function(section, event) {
   }     
   self.restart();
   return false;
-}
-
-Generate.listenToBreaks = function() {  
-  var self = this;
-  var rescheduleTimeout;
-
-  function handleTrigger(target) {
-    console.log("Handling break trigger");
-    attributes = target.attributes;
-    dataTime = attributes["data-time"].value;
-    dataDay = attributes["data-day"].value;   
-
-    self.breakTable[dataTime][dataDay] = addBreaks;    
-    mask = 1 << dataTime;
-    self.breaks[dataDay] ^= mask;
-  }
-
-  calBlockElements = document.getElementsByClassName("cal__block--data");
-  for (var i = calBlockElements.length; i--;) {
-    calBlockElements[i].addEventListener('mousedown', function(event) {
-      console.log("CAPTURE")
-      console.log(event);
-      if (event.button !== 1 && event.which !== 1) return;
-      console.log("0")
-      console.log("HELLO")
-      clearTimeout(rescheduleTimeout);
-      console.log("1");
-      attributes = event.target.attributes;
-      dataTime = attributes["data-time"].value;
-      dataDay = attributes["data-day"].value;
-      breakTableData = self.breakTable[dataTime][dataDay];
-      breakTableData ? addBreaks = false : addBreaks = true;
-      console.log("2");
-      handleTrigger(event.target);
-      mousedown = true;
-    }, true);
-  }
-
-
-  document.onmouseup = function() {
-    if (mousedown == true) rescheduleTimeout = setTimeout(self.restart.bind(self), 1000);
-    mousedown = false;    
-  }
-
-  dataBlocks = document.getElementsByClassName('cal__block--data');
-  for (var i = dataBlocks.length; i--; ) {
-    dataBlocks[i].onmouseover = function(event) {
-      if (mousedown) {
-        handleTrigger(event.target);
-      }
-    }
-  }
 }
 
 
@@ -261,5 +263,5 @@ Generate.select = function() {
 
 
 View.Generate = Generate;
-View.Generate.listenToBreaks();
+//View.Generate.listenToBreaks();
 //View.Generate.listenToLocks();
