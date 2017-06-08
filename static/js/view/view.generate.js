@@ -89,14 +89,14 @@ Generate.toggleBreak = function(event) {
   if (!initializedMouseupListener) {
     //Initialize onmouseup listener once
     document.onmouseup = function() {
-      //if (self.mousedown == true) self.rescheduleTimeout = setTimeout(self.schedule.bind(self), 1000);
+      if (self.mousedown == true) self.rescheduleTimeout = setTimeout(self.schedule.bind(self), 1000);
       self.mousedown = false;  
       initializedListener = true;  
     }
   }
   switch (event.type) {
     case "mousedown":
-      //clearTimeout(self.rescheduleTimeout);
+      clearTimeout(self.rescheduleTimeout);
       attributes = event.target.attributes;
       dataTime = attributes["data-time"].value;
       dataDay = attributes["data-day"].value;
@@ -234,6 +234,7 @@ Generate.start = function () {
 Generate.schedule = function() {
   Mu.Controller.schedule_2()
   if (Mu.Controller.validSchedules.length == 0) {
+    console.log("No schedules found");
     this.breaks = JSON.parse(JSON.stringify(this.tempBreaks));
     this.breakTable = JSON.parse(JSON.stringify(this.tempBreakTable));
     Mu.Controller.schedule_2();
