@@ -1,6 +1,6 @@
 var breakTable = [];
 for (var i = 0; i < 28; i++) {
-  this.breakTable.push({"0":false, "1":false, "2":false, "3":false, "4":false});
+  this.breakTable.push([false, false, false, false, false]);
 }
 var initializedMouseupListener = false;
 
@@ -20,8 +20,10 @@ var Generate = new Vue({
     schedules: [],
     index: 0,
     maxIndex: 0,
-    breakTable: breakTable,
+    breakTable: JSON.parse(JSON.stringify(breakTable)),
     breaks: [0,0,0,0,0],
+    tempBreakTable: null,
+    tempBreaks: null,
     lockedSections: [],
     mousedown: false,
     addBreak: true,
@@ -87,14 +89,14 @@ Generate.toggleBreak = function(event) {
   if (!initializedMouseupListener) {
     //Initialize onmouseup listener once
     document.onmouseup = function() {
-      if (self.mousedown == true) self.rescheduleTimeout = setTimeout(self.restart.bind(self), 1000);
+      //if (self.mousedown == true) self.rescheduleTimeout = setTimeout(self.schedule.bind(self), 1000);
       self.mousedown = false;  
       initializedListener = true;  
     }
   }
   switch (event.type) {
     case "mousedown":
-      clearTimeout(self.rescheduleTimeout);
+      //clearTimeout(self.rescheduleTimeout);
       attributes = event.target.attributes;
       dataTime = attributes["data-time"].value;
       dataDay = attributes["data-day"].value;
@@ -132,7 +134,7 @@ Generate.lockSection = function(section, event) {
     section.locked = true;
     lockedSections.push(section);
   }     
-  self.restart();
+  self.schedule();
   return false;
 }
 
@@ -203,6 +205,7 @@ Generate.start = function () {
   this.maxIndex = 0;
   //TODO: take all the sections current in main schedule, push to lockedSections if not exists and set section.locked to true
   currentDays = View.Schedule.currentDays();
+  this.lockedSections = [];
   //Iterating week days
   for (var i = 0; i < 5; i++) {
     //Iterating timegrouped blocks
@@ -217,23 +220,32 @@ Generate.start = function () {
       }
     }
   }
+  this.breaks = [0,0,0,0,0];
+  this.breakTable = JSON.parse(JSON.stringify(breakTable));
+  this.tempBreaks = [0,0,0,0,0];
+  this.tempBreakTable = JSON.parse(JSON.stringify(breakTable));
 
-
-  this.visible = true
-  console.log(this.schedules.length); 
-  
+  this.visible = true 
   this.loading = true
-  Mu.Controller.schedule_2()
-  this.draw(this.index);    
-  
+  this.schedule();  
   this.loading = false
 }
 
-Generate.restart = function() {
+Generate.schedule = function() {
+  Mu.Controller.schedule_2()
+  if (Mu.Controller.validSchedules.length == 0) {
+    this.breaks = JSON.parse(JSON.stringify(this.tempBreaks));
+    this.breakTable = JSON.parse(JSON.stringify(this.tempBreakTable));
+    Mu.Controller.schedule_2();
+    this.draw(this.index);
+    //Purposefully leaving index intact
+    return;
+  }
+  this.tempBreaks = JSON.parse(JSON.stringify(this.breaks));
+  this.tempBreakTable = JSON.parse(JSON.stringify(this.breakTable));
   this.index = 0;
-  this.start();
+  this.draw(this.index); 
 }
-
 
 /** Simply stops the entire generator. Also does other stuff. */
 Generate.halt = function () {

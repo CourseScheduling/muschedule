@@ -121,7 +121,7 @@ Control.flushCourses = function () {
 }
 
 Control.generate = function () {
-  View.Generate.start()
+  View.Generate.start();
 }
 
 Control.activeToggle = function (c) {
