@@ -1,6 +1,6 @@
 var breakTable = [];
 for (var i = 0; i < 28; i++) {
-  this.breakTable.push([false, false, false, false, false]);
+  this.breakTable.push({"0":false, "1":false, "2":false, "3":false, "4":false}); // {} needed to watch
 }
 var initializedMouseupListener = false;
 
