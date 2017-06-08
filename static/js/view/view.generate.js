@@ -228,6 +228,7 @@ Generate.start = function () {
   this.visible = true 
   this.loading = true
   this.schedule();  
+  //TODO:: Handle case when no schedules found
   this.loading = false
 }
 
