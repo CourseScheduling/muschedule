@@ -2,8 +2,9 @@
   width: 600px;
   position: relative;
   display: inline-block;
-  overflow: hidden;
+  overflow: visible;
   background-color: #fafafa;
+  box-shadow: none;
 }
   .cal__dayWrap{
     width: 100%;

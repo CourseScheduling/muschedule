@@ -1,0 +1,36 @@
+
+#plate__bar{
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: -30px;
+  width: 30px;
+  background-color: #FFF;
+  border-left: 1px solid #DDD;
+  padding-top: 51px;
+  box-sizing: border-box;
+}
+
+  .plate__number{
+    font-family: Montserrat;
+    font-size: 11px;
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+    .plate__button{
+      height: 30px;
+      width: 30px;
+      border-top: 1px solid #EEE;
+      border-bottom: 1px solid #EEE;
+      margin-top: -1px;
+    }
+      .plate__button--next{
+        font-family: Montserrat;
+        font-size: 11px;
+        font-weight: 300;
+      }
+      .plate__button--prev{
+        font-family: Montserrat;
+        font-size: 11px;
+        font-weight: 300;
+      }

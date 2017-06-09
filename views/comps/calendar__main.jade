@@ -11,7 +11,7 @@ link(rel="stylesheet" href="/static/calendar__main.css")
         div.cal__rowTime #{hour}:00
       else
         div.cal__rowTime &nbsp;#{hour}:00
-
+  include plate__control
 
   #calendar__blockWrap
     div(v-for="day in days").block__dayCol
