@@ -1,8 +1,9 @@
-var BLOCK_HEIGHT = 20;
+const BLOCK_HEIGHT = 20;
 
 var Schedule = new Vue({
   el: '#calendar__left',
   data: {
+    schedules: Mu.Model.timeMap,
     days: [
       [],
       [],
@@ -12,164 +13,74 @@ var Schedule = new Vue({
     ]
   },
   methods: {
-
+    section: {
+      add: null,
+      remove: null,
+      lock: null
+    }
   }
 })
 
-Schedule.addSection = function (section, perm) {
-  console.log('Hover')
-  section.temporary = !perm
-  section.active = true
-  console.log("Adding section");
-  var time = Mu.Model.timeArr[section.schedule]
-  var color = ColourGen.get(section.uniq)
-  Outer:
-  for (var i = 0; i < 5; i++) {
-    if(!time[i]) {continue}
 
-    //CREATING A STYLE OBJECT FOR SECTION
-    //Getting the top value
-    var top = 0;
-    for (var top = 0; top < 32; top++) {
-      if ((time[i] >> top) & 1) break
+/**
+ * Adds a section to the schedule plate
+ * @param  {Section} section - The course section object
+ */
+Schedule.section.add = (section) => {
+  var schedule = Mu.Model.timeMap[section.schedule]
+
+  // Go through all the days.
+  for (var i = 0; i < 5; i++) {
+    if (!schedule[i])
+      return
+
+    // Go through the groups in the day.
+    for (var g = this.days[i].length; g--;) {
+      var group = this.days[i][g]
+
+      // If there's an intersect add it to the current group.
+      if (group.time&schedule[i]) {
+        group.sections.push(section)
+        group.sections.set[section.uniq] = true
+        return
+      }
     }
-    height = top;
-    //Getting the height value
-    for (height; height < 32; height++) {
-      if (!(time[i] >> height) & 1) break
-    }
-    height = height - top;
-    height *= BLOCK_HEIGHT;
-    top *= BLOCK_HEIGHT;
-    var style = {
-      top: top + "px",
-      height: height + "px",
-      left: 0 + "%",
-      width: 100 + "%",
-      backgroundColor: color
-    };
-    console.log(time);
-    console.log(style);
-    console.log(this.days[i]);
-    //ADDING {time:[], blocks:[]} TO DAYS, MODIFYING STYLES OF EXISTING BLOCKS IF NECESSARY
-    for (var s = 0; s < this.days[i].length; s++) { //s : sectionblock
-      var d = this.days[i][s]
-      var dt = d.time;
-      if (dt[i] & time[i])  {
-        console.log("Intersection found");
-        // | each day in time
-        for (var t = 0; t < 5; t++) {
-          dt[t] |= time[t];
-        }
-        // Update the width and left of each style object 
-        var numOverlappingSchedules = d.blocks.length;
-        var width = 100 / (numOverlappingSchedules + 1); // width in % (adding 1 because we're going to add another sectionblock)
-        for (var sb = 0; sb < numOverlappingSchedules; sb++) {
-          d.blocks[sb].style.width = width + "%";
-          d.blocks[sb].style.left = (sb * width) + "%";
-        }
-        //Add section and add the {style, section} to blocks
-        style.left = (numOverlappingSchedules * width) + "%";
-        style.width = width + "%";
-        console.log("Pushing section to block aggregate");
-        d.blocks.push({
-          style: style,
-          section: section
-        })
-        continue Outer
-      } 
-    }
-    //Add new {time:[], blocks:[]} object
-    console.log("Pushing section to new block");
+
+    // Worst case, insert it as an extra.
+    var set = {}
+    set[section.uniq] = true
+
     this.days[i].push({
-      time: time,
-      blocks: [{
-        style: style,
-        section: section 
-      }]
+      set: set,
+      time: schedule,
+      sections: [section]
     })
   }
-
-  this.$forceUpdate()
 }
 
-Schedule.removeSection = function (section, perm) {
-  // Go through all the days
-  for (var i = 0; i < 5; i++) {
-    // Go through all the groups.
-    for (var s = this.days[i].length; s--;){
-      // Go through all the blocks in a group.
-      for (var n = this.days[i][s].blocks.length; n--;) {
-        // If there is a collision, remove it. and recalculate the remaining blocks
-        if (this.days[i][s].blocks[n].section.uniq == section.uniq) {
-          this.days[i][s].blocks.splice(n,1)
-          var d = this.days[i][s]
-          console.log(d)
-            // Update the width and left of each style object 
-          var numOverlappingSchedules = d.blocks.length;
-          var width = 100 / (numOverlappingSchedules + 1); // width in % (adding 1 because we're going to add another sectionblock)
-          for (var sb = 0; sb < numOverlappingSchedules; sb++) {
-            d.blocks[sb].style.width = width + "%";
-            d.blocks[sb].style.left = (sb * width) + "%";
-          }
-        }
-      }
-    }
-  }
-  this.$forceUpdate()
-
-
-}
-View.Schedule = Schedule
-
-
-/*
-
-
-
-Schedule.add = function (time) {
-  for (var day = 0; day < 7; day++) {
-    var curDay = this.tempDays[day]
-    var dayObj = {}
-
-    // If there's a day item, add it. 
-    if (time[day]) {
-      // Find the starting position
-      dayObj.start = 0
-      for (var i = 0; i < 32; i++) {
-        if ((time[day] >> i) & 1) break
-      }
-      dayObj.start = i
-
-      for (i; i < 32; i++) {
-        if ((time[day] >> i) & 1) break
-      }
-      dayObj.end = i
-      dayObj.height = (dayObj.end - dayObj.start)
-  
-      curDay.push(dayObj)
-    }
-  }
-}
-
+/**
+ * Removes a section from the section plate.
+ * @param  {Section} section - The course section object.
  */
+Schedule.section.remove = (section) => {
+  var schedule = Mu.Model.timeMap[section.schedule]
 
-/*
-{
-        time: [0,1,1,2,3]
-        blocks: [
-          {
-            style: {},
-            section: Section
-          },
-          {
+  // Go through all the days.
+  for(var i = 0; i < 5; i++) {
+    if (!schedule[i])
+      return
 
-          }
-        ]
-      },
-      {
+    // Go through all the days.
+    for (var g = this.days[i].length; g--;) {
+      var group = this.days[i][g]
 
-      }
-*/
+      if (!group.set[section.uniq])
+        return
 
-//CPSC 210 103 MWF 2-3 and STAT 200 103 MWT 2-3 overlap
+      // Update the group.
+      delete group.set[section.uniq]
+      group.sections = group.sections.filter(s => (s.uniq == section.uniq))
+      group.time = group.sections.reduce((acc, val) => (acc|val), 0)
+    }
+  }
+}
