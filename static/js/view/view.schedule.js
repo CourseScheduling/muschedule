@@ -17,7 +17,8 @@ var Schedule = new Vue({
       add: null,
       remove: null,
       lock: null
-    }
+    },
+    style: null
   }
 })
 
@@ -28,6 +29,8 @@ var Schedule = new Vue({
  */
 Schedule.section.add = (section) => {
   var schedule = Mu.Model.timeMap[section.schedule]
+  // Add a style to this section, based on schedule.
+  section.style = this.style(schedule)
 
   // Go through all the days.
   for (var i = 0; i < 5; i++) {
@@ -83,4 +86,14 @@ Schedule.section.remove = (section) => {
       group.time = group.sections.reduce((acc, val) => (acc|val), 0)
     }
   }
+}
+
+
+/**
+ * Creates a simple style object for the schedule.
+ * @param  {Array} schedule - the M-F array schedule
+ * @return {Object}         - contains 2 main attributes, height and top.
+ */
+Schedule.style = (schedule) => {
+
 }
