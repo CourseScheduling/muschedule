@@ -84,7 +84,6 @@ Generate.toggleBreak = function(event) {
     attributes = target.attributes;
     dataTime = attributes["data-time"].value;
     dataDay = attributes["data-day"].value; 
-    console.log(self.addBreak);
     self.breakTable[dataTime][dataDay] = self.addBreak;
     mask = 1 << dataTime;
     if (self.addBreak) self.breaks[dataDay] |= mask;
@@ -244,7 +243,6 @@ Generate.schedule = function() {
     this.breakTable = JSON.parse(JSON.stringify(this.tempBreakTable));
     Mu.Controller.schedule_2();
     this.draw(this.index);
-    //Purposefully leaving index intact
     return;
   }
   this.tempBreaks = JSON.parse(JSON.stringify(this.breaks));
@@ -260,13 +258,11 @@ Generate.halt = function () {
 
 
 Generate.displayNext = function() {
-  console.log("displaynext in Generate")
   this.index = (this.index + 1) % this.maxIndex;
   this.draw(this.index);
 }
 
 Generate.displayPrevious = function() {
-  console.log("displayPrevious in Generate")
   index = (this.index - 1) % this.maxIndex;
   if (index == -1) index = this.maxIndex - 1;
   this.index = index;
@@ -274,7 +270,6 @@ Generate.displayPrevious = function() {
 }
 
 Generate.select = function() {
-  console.log("Generate select clicked");
   View.Schedule.displayGenerated(this.days);
   this.halt();
 }

@@ -24,60 +24,37 @@ Schedule.addSection = function (section, course, perm) {
   days = this.templates[this.term][this.index];
   section.temporary = !perm
   section.active = true
-  var time = course.schedules[section.schedule];
+  time = course.schedules[section.schedule];
   section.time = time;
-  var color = ColourGen.get(section.uniq)
+  color = ColourGen.get(section.uniq)
+ 
 
+  // Go through all the days.
   Outer:
   for (var i = 0; i < 5; i++) {
-    if(!time[i]) {continue}
+    if(!time[i]) continue;
 
-    //CREATING A STYLE OBJECT FOR SECTION
-    var top = UTILS.getStart(time[i]);
-    var height = UTILS.getHeight(time[i], top);
+    style = Mu.View.style(time[i], color);
 
-    height *= Mu.View.BLOCK_HEIGHT;
-    top *= Mu.View.BLOCK_HEIGHT;
-    var style = {
-      top: top + "px",
-      height: height + "px",
-      left: 0 + "%",
-      width: 100 + "%",
-      backgroundColor: color
-    };
-    //ADDING {time:[], blocks:[]} TO DAYS, MODIFYING STYLES OF EXISTING BLOCKS IF NECESSARY
-    for (var s = 0; s < days[i].length; s++) { //s : sectionblock
-      var d = days[i][s]
-      var dt = d.time;
-      if (dt[i] & time[i])  {
-        // | each day in time
-        for (var t = 0; t < 5; t++) {
-          dt[t] |= time[t];
-        }
-        // Update the width and left of each style object 
-        var numOverlappingSchedules = d.blocks.length;
-        var width = 100 / (numOverlappingSchedules + 1); // width in % (adding 1 because we're going to add another sectionblock)
-        for (var sb = 0; sb < numOverlappingSchedules; sb++) {
-          d.blocks[sb].style.width = width + "%";
-          d.blocks[sb].style.left = (sb * width) + "%";
-        }
-        //Add section and add the {style, section} to blocks
-        style.left = (numOverlappingSchedules * width) + "%";
-        style.width = width + "%";
-        d.blocks.push({
+    //Go through each blocks/time wrap and add section if there is an overlap
+    for (var s = days[i].length; s--; ) {
+      sb = days[i][s]
+      if (sb.time & time[i]) {
+        sb.time |= time[i];
+        sb.blocks.push({
           style: style,
           section: section
         })
-        continue Outer
-      } 
+        continue Outer;
+      }
     }
-    //Add new {time:[], blocks:[]} object
-    console.log("Pushing section to new block");
+
+    //If no overlaps are found, add new
     days[i].push({
-      time: time,
+      time: time[i],
       blocks: [{
         style: style,
-        section: section 
+        section: section
       }]
     })
   }
@@ -157,12 +134,7 @@ function resetSectionsInDays(days) {
 }
 function prepareDays(currentDays, days) {
   //Setting all currently scheduled sections locked and selected to false
-  for (var i = 0; i < 5; i++) {
-    for (var j = currentDays[i].length; j--;) {
-      currentDays[i][j].blocks[0].section.selected = false;
-      currentDays[i][j].blocks[0].section.locked = false;
-    }
-  }
+  this.resetSectionsInDays(currentDays);
 
   //Setting all sections.selected to true (we set locked later when generate is clicked)
   for (var i = 0; i < 5; i++) {

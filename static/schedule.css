@@ -111,6 +111,7 @@
       background-color: rgba(0,0,0,0.1);
     }
       .block__section{
+        position: absolute;
         color: #FFF;
         border-radius: 5px;
         font-family: Montserrat;
