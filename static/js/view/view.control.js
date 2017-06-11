@@ -105,9 +105,6 @@ Control.addCourse = function (course) {
         }
       }
     }
-
-
-
     // Vue can't auto-update maps.
     self.$forceUpdate()
   })
