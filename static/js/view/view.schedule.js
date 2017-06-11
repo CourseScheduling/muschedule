@@ -95,15 +95,14 @@ Schedule.section.remove = function (section) {
  * @return {Object}         - contains 2 main attributes, height and top.
  */
 Schedule.style = function (schedule) {
-  schedule.forEach(day => {
+  return schedule.reduce((acc, day) => {
     if (!day) {
-      return
+      return acc
     }
+    var start = arr[i].toString(2).indexOf('1')
+    var end = arr[i].toString(2).lastIndexOf('1')
 
-    for(var i = 0; i < 32; i++) {
-      if ((day >> i) & 1) {
-        break
-      }
-    }
-  })
+    acc.top = (BLOCK_HEIGHT * start) + 'px'
+    acc.height = (end - start) + 'px'
+  }, {})
 }
