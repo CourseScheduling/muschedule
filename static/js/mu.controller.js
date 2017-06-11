@@ -3,7 +3,31 @@ function Controller () {
   this.validSchedules = [];
 }
 
+Controller.prototype._filter = function(courses, lockedSections, filteredCourseMap, term) {
+  //Filtering lockedSections
+  for (var i = courses.length; i--;) {
+    ls = lockedSections.find(element => {
+      return element.code == courses[i].code;
+    });
+    if (ls) {
+      termObject = courses[i].terms[term];
+      index = termObject.sections.findIndex(section => {
+        return section.uniq == ls.uniq;
+      });
+      filteredMangled = termObject.mangled.filter(combo => {
+        return combo[ls.type] == index 
+      });
+      filteredCourseMap.push(termObject, termObject.mangled);
+      termObject.mangled = filteredMangled;
+    }
+  }
+}
 
+Controller.prototype._restore = function(filteredCourseMap) {
+  for (var i = filteredCourseMap.length; i--;) {
+    filteredCourseMap[0].mangled = filteredCourseMap[1];
+  }
+}
 
 Controller.prototype.schedule_2 = function () {
   var start = performance.now();
@@ -11,30 +35,9 @@ Controller.prototype.schedule_2 = function () {
   courses = Mu.Model.courses;
   var term = View.Control.term;
   var lockedSections = View.Generate.lockedSections;
-  //Filtering lockedSections
-/*  var filteredCoursesMap = [];
-  for (var i = lockedSections.length; i--;) {
-    for (var j = courses.length; j--;) {
-      if (courses[j].code !== lockedSections[i].code) continue;
-      filteredMangled = [];
-      typeIndex = lockedSections[i].type;
-      //Filter out all the mangled with out this section
-      for (var k = courses[j].mangled.length; k--;) {
-        if (courses[j].mangled[k][typeIndex] == lockedSections[i].schedule) {
-          filteredMangled.push(courses[j].mangled[k];
-        }
-      }
-      filteredCourse = [j, courses[j].mangled] //[course, originalMangled]
-      filteredCoursesMap.push(filteredCourse)
-      courses[j].mangled = filteredMangled;
-    }
-  }
+  var filteredCourseMap = [];
 
-  //TODO: Move this to the end
-  //Reverting filtered changes
-  for (var i = filteredCoursesMap.length; i--) {
-    courses[filteredCoursesMap[0]].mangled = filteredCoursesMap[1];
-  }*/
+  this._filter(courses, lockedSections, filteredCourseMap, term);
 
   this.validSchedules = [];
   var breaks = View.Generate.breaks;
@@ -82,10 +85,12 @@ Controller.prototype.schedule_2 = function () {
 
 
   var acc = [];
-  console.log("breaks",breaks);
   recursiveSchedule(breaks[0], breaks[1] , breaks[2], breaks[3], breaks[4],0,acc);
   console.info('Scheduling took: ' + (performance.now() - start) + 'ms')
-  console.log(self.validSchedules);
+  this._restore(filteredCourseMap);
+
+
+
 }
 
 
@@ -101,3 +106,30 @@ Controller.prototype.getSchedule = function(index) {
 
 // Yet another Singleton
 Mu.Controller = Controller = new Controller()
+
+
+
+/*  
+  var filteredCoursesMap = [];
+  for (var i = lockedSections.length; i--;) {
+    for (var j = courses.length; j--;) {
+      if (courses[j].code !== lockedSections[i].code) continue;
+      filteredMangled = [];
+      typeIndex = lockedSections[i].type;
+      var termObject = courses[j].terms[term];
+      //Filter out all the mangled with out this section
+      for (var k = termObject.mangled.length; k--;) {
+        if (termObject.mangled[k][typeIndex] == lockedSections[i].schedule) {
+          filteredMangled.push(courses[j].mangled[k]);
+        }
+      }
+      filteredCourse = [j, courses[j].mangled] //[course, originalMangled]
+      filteredCoursesMap.push(filteredCourse)
+      termObject.mangled = filteredMangled;
+    }
+  }
+
+  //Reverting filtered changes
+  for (var i = filteredCoursesMap.length; i--;) {
+    courses[filteredCoursesMap[0]].mangled = filteredCoursesMap[1];
+  }*/
