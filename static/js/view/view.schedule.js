@@ -24,7 +24,7 @@ Schedule.addSection = function (section, course, perm) {
   days = this.templates[this.term][this.index];
   section.temporary = !perm
   section.active = true
-  time = course.schedules[section.schedule];
+  time = course.schedules[section.schedule]; //used when removing section
   section.time = time;
   color = ColourGen.get(section.uniq)
  
@@ -61,54 +61,36 @@ Schedule.addSection = function (section, course, perm) {
   this.$forceUpdate()
 }
 
-
 Schedule.removeSection = function (section, perm) {
   days = this.templates[this.term][this.index];
+  section.selected = false;
+  //Find section in blocks, update time and remove
   // Go through all the days
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 5 ; i++) {
     // Go through all the groups.
-    for (var s = days[i].length; s--;){
+    for (var s = days[i].length; s--;) {
       // Go through all the blocks in a group.
-      for (var n = days[i][s].blocks.length; n--;) {
-        // If there is a collision, remove it. and recalculate the remaining blocks
-        if (days[i][s].blocks[n].section.uniq == section.uniq) {
-          days[i][s].blocks.splice(n,1)
-          var d = days[i][s]
-          console.log(d)
-          
-          //Unselect in control
-          section.selected = false;   
+      var sb = days[i][s];
+      for (var n = sb.blocks.length; n--;) {
+        if (sb.blocks[n].section.uniq == section.uniq) {
+          sb.blocks.splice(n, 1);
 
-          var time = [0,0,0,0,0];
-          var numOverlappingSchedules = d.blocks.length;
+          sb.time = sb.blocks.reduce((acc, sb) => {
+            return acc | sb.section.time[i];
+          }, 0);
 
-          var width = 100 / (numOverlappingSchedules); 
-          for (var sb = 0; sb < numOverlappingSchedules; sb++) {
-            // Update the width and left of each style object
-            // width in % (adding 1 because we're going to add another sectionblock)
-            d.blocks[sb].style.width = width + "%";
-            d.blocks[sb].style.left = (sb * width) + "%";
-
-            //Update block.time
-            sbTime = d.blocks[sb].section.time;
-            for (var t= 0; t<5; t++) {
-              time[t] |= sbTime[t];
-            }
-          }         
-          //Remove block object if empty
-          if (days[i][s].blocks.length == 0) {
-            console.log("removing because empty");
-            
-            days[i].splice(s, 1);
-          }
-
+          if (sb.blocks.length == 0) {
+            days[i].splice(s, 1);            
+          }          
         }
       }
     }
   }
   View.Control.$forceUpdate();
-  this.$forceUpdate()
+  this.$forceUpdate();
 }
+
+
 
 Schedule.displayGenerated = function(days) {
   this.templates[this.term][this.index] = days;
@@ -145,7 +127,6 @@ function prepareDays(currentDays, days) {
 }
 
 Schedule.displayPrevious = function() {
-  console.log("displayPrevious in main schedule")
   currentDays = this.templates[this.term][this.index];
   index = (this.index - 1) % this.maxIndex;
   if (index == -1) index = this.maxIndex - 1;
@@ -155,7 +136,6 @@ Schedule.displayPrevious = function() {
 }
 
 Schedule.displayNext = function() {
-  console.log("displayNex in main schedule")
   currentDays = this.templates[this.term][this.index];
   this.index = (this.index + 1) % this.maxIndex;
   prepareDays(currentDays, this.templates[this.term][this.index]);
@@ -163,7 +143,6 @@ Schedule.displayNext = function() {
 }
 
 Schedule.newTemplate = function () {
-  console.log("Adding new template");
   var currentDays = this.templates[this.term][this.index];
   resetSectionsInDays(currentDays)
   var newTemplateDays = [ [], [], [], [], []];
