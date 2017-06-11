@@ -7,7 +7,9 @@ body{
   text-align: center;
   font-family: Montserrat;
 }
-
+  body * {
+    user-select: none;
+  }
 /** Header stuff on the Calendar */
 #calendar__header{
   font-family: Montserrat;

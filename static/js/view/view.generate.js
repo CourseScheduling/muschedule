@@ -161,26 +161,17 @@ Generate._updateDays = function(scheduleToRender, courses) {
       //Add to days if there is a section on this day
       for (var t = 0; t < 5; t++) {
         if (!time[t]) continue;
+        style = Mu.View.style(time[t], color);
+        style.left = 0+"%";
+        style.width = 100 + "%";
 
-        var top = UTILS.getStart(time[t]);
-        var height = UTILS.getHeight(time[t], top);
-        height *= Mu.View.BLOCK_HEIGHT;
-        top *= Mu.View.BLOCK_HEIGHT;
-
-        var style = {
-          top: top + "px",
-          height: height + "px",
-          left: 0 + "%",
-          width: 100 + "%",
-          backgroundColor: color
-        }
-
+        //Formatting in blocks to make pushing to schedule easier
         this.days[t].push({
           blocks:[{
             style:style,
             section: section
           }],
-          time: time
+          time: time[t]
         })
       }
     }    
@@ -189,13 +180,7 @@ Generate._updateDays = function(scheduleToRender, courses) {
 
 
 Generate.draw = function(index) {
-  this.days = [
-      [],
-      [],
-      [],
-      [],
-      []
-    ];
+  this.days = [[], [], [], [], []];
   var scheduleToRender = Mu.Controller.getSchedule(this.index);
   var courses = Mu.Model.courses;
   this._updateDays(scheduleToRender, courses);
@@ -276,5 +261,3 @@ Generate.select = function() {
 
 
 View.Generate = Generate;
-//View.Generate.listenToBreaks();
-//View.Generate.listenToLocks();

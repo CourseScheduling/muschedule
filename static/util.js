@@ -35,7 +35,6 @@ var ColourGen = {
   get: function (section) {
     var a = section.split(' ')
     a.pop()
-    console.log(a.join(' '))
     return ColourGen.colorMap[a.join(' ')]
   }
 }

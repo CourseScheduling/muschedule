@@ -107,29 +107,3 @@ Controller.prototype.getSchedule = function(index) {
 // Yet another Singleton
 Mu.Controller = Controller = new Controller()
 
-
-
-/*  
-  var filteredCoursesMap = [];
-  for (var i = lockedSections.length; i--;) {
-    for (var j = courses.length; j--;) {
-      if (courses[j].code !== lockedSections[i].code) continue;
-      filteredMangled = [];
-      typeIndex = lockedSections[i].type;
-      var termObject = courses[j].terms[term];
-      //Filter out all the mangled with out this section
-      for (var k = termObject.mangled.length; k--;) {
-        if (termObject.mangled[k][typeIndex] == lockedSections[i].schedule) {
-          filteredMangled.push(courses[j].mangled[k]);
-        }
-      }
-      filteredCourse = [j, courses[j].mangled] //[course, originalMangled]
-      filteredCoursesMap.push(filteredCourse)
-      termObject.mangled = filteredMangled;
-    }
-  }
-
-  //Reverting filtered changes
-  for (var i = filteredCoursesMap.length; i--;) {
-    courses[filteredCoursesMap[0]].mangled = filteredCoursesMap[1];
-  }*/
