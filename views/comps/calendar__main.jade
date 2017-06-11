@@ -18,8 +18,8 @@ link(rel="stylesheet" href="/static/calendar__main.css")
       div(v-for="group in day")
         div(v-for="section in group.sections"
           v-bind:style="{\
-            top: section.style.top
-            height: section.style.height
+            top: section.style.top,\
+            height: section.style.height,\
             width: (100 / group.sections.length) + '%'\
             }"
           v-bind:class="{'block__section--temp': section.temp}"

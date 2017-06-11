@@ -19,18 +19,40 @@
   }
     .plate__button{
       height: 30px;
-      width: 30px;
+      width: 29px;
       border-top: 1px solid #EEE;
       border-bottom: 1px solid #EEE;
       margin-top: -1px;
+      cursor: pointer;
+      box-sizing: border-box;
     }
       .plate__button--next{
         font-family: Montserrat;
         font-size: 11px;
         font-weight: 300;
+        background: url(/static/img/right.png) center center no-repeat;
+        background-size: 40%;
+        height: 42.5px;
       }
       .plate__button--prev{
         font-family: Montserrat;
         font-size: 11px;
         font-weight: 300;
+        background: url(/static/img/left.png) center center no-repeat;
+        background-size: 40%;
+        height: 42.5px;
+      }
+      .plate__button--add{
+        font-family: Montserrat;
+        font-size: 11px;
+        font-weight: 300;
+        background: url(/static/img/plus.png) center center no-repeat;
+        background-size: 60%;
+      }
+      .plate__button--trash{
+        font-family: Montserrat;
+        font-size: 11px;
+        font-weight: 300;
+        background: url(/static/img/trash.png) center center no-repeat;
+        background-size: 60%;
       }
