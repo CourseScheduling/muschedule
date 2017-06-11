@@ -60,9 +60,9 @@ Controller.prototype.schedule_2 = function () {
       var oneMangledCombo = mangled[i];
       for (var l = oneMangledCombo.length; l--;) {
         mangledTime = courses[count].schedules[termObject.sections[oneMangledCombo[l]].schedule]
-        for (var t = 0; t < 5; t++) {
-          time[t] |= mangledTime[t]
-        }
+        mangledTime.forEach((element, index) => {
+          time[index] |= element
+        });
       }
 
       //Checking collisions
@@ -83,12 +83,9 @@ Controller.prototype.schedule_2 = function () {
 
   var acc = [];
   console.log("breaks",breaks);
-  recursiveSchedule(breaks[0],breaks[1],breaks[2],breaks[3],breaks[4],0,acc);
+  recursiveSchedule(breaks[0], breaks[1] , breaks[2], breaks[3], breaks[4],0,acc);
   console.info('Scheduling took: ' + (performance.now() - start) + 'ms')
   console.log(self.validSchedules);
-
-
-
 }
 
 
