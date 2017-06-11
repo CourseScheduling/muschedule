@@ -27,7 +27,7 @@ var Schedule = new Vue({
  * Adds a section to the schedule plate
  * @param  {Section} section - The course section object
  */
-Schedule.section.add = (section) => {
+Schedule.section.add = function (section) {
   var schedule = Mu.Model.timeMap[section.schedule]
   // Add a style to this section, based on schedule.
   section.style = this.style(schedule)
@@ -65,7 +65,7 @@ Schedule.section.add = (section) => {
  * Removes a section from the section plate.
  * @param  {Section} section - The course section object.
  */
-Schedule.section.remove = (section) => {
+Schedule.section.remove = function (section) {
   var schedule = Mu.Model.timeMap[section.schedule]
 
   // Go through all the days.
@@ -94,6 +94,16 @@ Schedule.section.remove = (section) => {
  * @param  {Array} schedule - the M-F array schedule
  * @return {Object}         - contains 2 main attributes, height and top.
  */
-Schedule.style = (schedule) => {
+Schedule.style = function (schedule) {
+  schedule.forEach(day => {
+    if (!day) {
+      return
+    }
 
+    for(var i = 0; i < 32; i++) {
+      if ((day >> i) & 1) {
+        break
+      }
+    }
+  })
 }
