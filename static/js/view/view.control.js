@@ -94,17 +94,6 @@ Control.addCourse = function (course) {
     self.flushCourses()
     self.courses.push(course)
 
-    //TEMP Preprocessing to fix term 2 indexes (going to be fixed in scraper)
-    if (course.terms[1]) {
-      numT1Sections = course.terms[0].sections.length;
-      console.log("numT1Sections", numT1Sections);
-      t2SectionMap = course.terms[1].sectionMap;
-      for (var i = t2SectionMap.length; i--;) {
-        for (var j = t2SectionMap[i].indices.length; j--;) {
-          t2SectionMap[i].indices[j] -= numT1Sections;
-        }
-      }
-    }
     // Vue can't auto-update maps.
     self.$forceUpdate()
   })

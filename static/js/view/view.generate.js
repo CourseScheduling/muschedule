@@ -53,6 +53,10 @@ var Generate = new Vue({
 
 Generate.triggerLower = function(event) {
   console.log("trigger lower");
+  console.log(event);
+  if (event.button !== 0) {
+    return false;
+  }
   switch (event.type) {
     case "mousedown":
       mouseX = event.pageX;
@@ -65,7 +69,7 @@ Generate.triggerLower = function(event) {
       this.mousedown = true;  
       break;
     case "mouseenter":
-      if (this.addBreak == true) event.target.style.pointerEvents = "none";
+      if (this.addBreak == true && this.mousedown == true) event.target.style.pointerEvents = "none";
       break;
     default:
       break;
@@ -151,7 +155,7 @@ Generate._updateDays = function(scheduleToRender, courses) {
     course = courses[scheduleToRender[i].courseIndex];
 
     for (var ml = mangledCombo.length; ml--; ) {
-      var section = course.terms.find((termObject) => { return 't'+termObject.name == term }).sections[mangledCombo[ml]]
+      var section = course.terms[term].sections[mangledCombo[ml]]
       var time = course.schedules[section.schedule];      
       var color = ColourGen.get(section.uniq);
 

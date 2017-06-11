@@ -51,7 +51,7 @@ Controller.prototype.schedule_2 = function () {
       return 1;
     }
 
-    var termObject = courses[count].terms.find((termObject) => { return 't'+termObject.name == term });
+    var termObject = courses[count].terms[term];
     var mangled = termObject.mangled;    
 
     for (var i = mangled.length; i--;) {

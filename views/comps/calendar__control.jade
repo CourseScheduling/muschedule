@@ -20,14 +20,13 @@ link(rel="stylesheet" href="/static/calendar__control.css")
         .course__code {{c.code}}
         .course__extra(v-show="c.active")
           .course__description {{c.description}}
-          template(v-for="termObject in c.terms" v-if="'t'+termObject.name == term")            
-            .course__typeBox(v-for="sectionsByActivity in termObject.sectionMap")
-              .course__typeHeader {{sectionsByActivity.activity}}
-              .course__section(v-for="index in sectionsByActivity.indices"
-                @mouseover="showTemp(termObject.sections[index], c)" 
-                @mouseout="removeTemp(termObject.sections[index])"
-                @click.stop="select(termObject.sections[index])"
-                v-bind:class="{'course__section--selected': termObject.sections[index].selected}") {{ termObject.sections[index].section}}
+          .course__typeBox(v-for="sectionsByActivity in c.terms[term].sectionMap")
+            .course__typeHeader {{sectionsByActivity.activity}}
+            .course__section(v-for="index in sectionsByActivity.indices"
+              @mouseover="showTemp(c.terms[term].sections[index], c)" 
+              @mouseout="removeTemp(c.terms[term].sections[index])"
+              @click.stop="select(c.terms[term].sections[index])"
+              v-bind:class="{'course__section--selected': c.terms[term].sections[index].selected}") {{ c.terms[term].sections[index].section}}
     .control__wrap
       .control__btn.control__btn--gen(@click="generate()") AUTO GEN
       .control__btn(@click="newTemplate()") ADD NEW

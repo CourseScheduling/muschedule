@@ -76,32 +76,6 @@ Model.prototype.addCourse = function (course) {
   this.courses.push(course)  
 }
 
-//Move this logic to server?
-Model.prototype.updateOld = function () {
-  var _convertOld = function (arr) {
-    var oldTime = []
-    for(var i = 0; i < 5; i++) {
-      if (arr[i]) {
-        var start = arr[i].toString(2).indexOf("1")
-        var end = arr[i].toString(2).lastIndexOf("1")
-
-        oldTime.push({
-          day: i,
-          start: (start * 30) + 480,
-          end: (end * 30) + 480,
-          length: ((end - start) * 30)
-        })
-      }
-    }
-
-    return oldTime
-  }
-
-
-  for(var i = this.oldTime.length; i < this.timeArr.length; i++) {
-    this.oldTime.push(_convertOld(this.timeArr[i]))
-  }
-}
 
 Model.prototype.contains = function(courseCode) {
   for (var i = this.courses.length; i--;) {
