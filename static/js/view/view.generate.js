@@ -28,6 +28,7 @@ var Generate = new Vue({
     mousedown: false,
     addBreak: true,
     rescheduleTimeout: null,
+    started: false
   },    
   methods: {
     start: null,
@@ -180,6 +181,7 @@ Generate._updateDays = function(scheduleToRender, courses) {
 
 
 Generate.draw = function(index) {
+  this.started = true;
   this.days = [[], [], [], [], []];
   var scheduleToRender = Mu.Controller.getSchedule(this.index);
   var courses = Mu.Model.courses;
@@ -215,7 +217,7 @@ Generate.start = function () {
 
   this.visible = true 
   this.loading = true
-
+  this.started = false;
   this.schedule();  
   //TODO:: Handle case when no schedules found
   this.loading = false
@@ -225,7 +227,7 @@ Generate.schedule = function() {
   Mu.Controller.schedule_2()
   if (Mu.Controller.validSchedules.length == 0) {
     console.log("No schedules found");
-    if (this.breaks.join(',') == [0,0,0,0,0].join(',')) {
+    if (this.started == false) {
       this.loading = false;
       this.visible = false;
       swal({
@@ -250,6 +252,12 @@ Generate.schedule = function() {
 
 /** Simply stops the entire generator. Also does other stuff. */
 Generate.halt = function () {
+  //Removes section.lock
+  for (var i = 0; i < 5; i++) {
+    for (var l = this.days[i].length; l--;) {
+      this.days[i][l].blocks[0].section.locked = false;
+    }
+  }
   this.visible = false
 }
 

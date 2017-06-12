@@ -25,7 +25,6 @@ Controller.prototype._filter = function(courses, lockedSections, filteredCourseM
 }
 
 Controller.prototype._restore = function(filteredCourseMap) {
-  console.log(filteredCourseMap);
   for (var i = filteredCourseMap.length; i--;) {
     filteredCourseMap[i][0].mangled = filteredCourseMap[i][1];
   }
@@ -89,6 +88,7 @@ Controller.prototype.schedule_2 = function () {
   var acc = [];
   recursiveSchedule(breaks[0], breaks[1] , breaks[2], breaks[3], breaks[4],0,acc);
   console.info('Scheduling took: ' + (performance.now() - start) + 'ms')
+
   this._restore(filteredCourseMap);
 
 
