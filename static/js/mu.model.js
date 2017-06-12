@@ -1,7 +1,41 @@
 const API_URL = 'http://schedulerserver.azurewebsites.net/api/v1/ubc'
 //const API_URL = 'http://localhost:3000/api/v1/ubc'
+//const API_URL = 'http://ec2-34-211-121-5.us-west-2.compute.amazonaws.com:3000/api/v1/ubc'
+//const API_URL = 'http://40.86.179.55:3000/api/v1/ubc'
 function Model () {
   this.courses = []
+  this.courselist = []
+}
+/**
+  - Grab courselist from the API.
+  @return Promise
+*/
+
+Model.prototype.getCourselist = function() {
+  var self = this;
+  var start = performance.now();
+  this._request({
+    type: 'GET',
+    url: '/courselist'
+  }).then(courselist => {
+    console.log("Fetching courselist took: ", performance.now() - start);
+    self.courselist = JSON.parse(courselist);
+  });
+}
+
+Model.prototype.getMatchingCourses = function(query) {
+  //For now - brute force - later use some binary search or smth
+  var results = [];
+  for (var i = this.courselist.length; i--;) {
+    if (this.courselist[i][0].startsWith(query.toUpperCase())) {
+      results.push({
+        'code':this.courselist[i][0],
+        'name':this.courselist[i][1]
+      });
+      if (results.length == 5) break;
+    }
+  }
+  return results;
 }
 
 /** 
@@ -96,3 +130,4 @@ Model.prototype.removeCourse = function(course) {
 
 // Yet another Singleton
 Mu.Model = Model = new Model()
+Model.getCourselist();

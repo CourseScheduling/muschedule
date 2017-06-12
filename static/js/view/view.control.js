@@ -11,7 +11,7 @@ var Control = new Vue({
     query: "",
     results: [],
     courses: [],
-    searchTimeout: null,
+    courseList: [],
     loading: false,
     current: -1
   },
@@ -25,12 +25,17 @@ var Control = new Vue({
 
 })
 
+//Get all courses
+//After not typing for a bit, update the top 5 courses
+
 Control.toggleTerm = function (term) {
   TERM = term
   this.term = term
   View.Schedule.toggleTerm(term);
   this.$forceUpdate()
 }
+
+
 
 Control.search = function (e) {
   var self = this
@@ -45,42 +50,19 @@ Control.search = function (e) {
         this.query = "";
         this.results = [];
         this.current = -1;
-        this.loading = false;         
-        
 
       }
     case UP:
     case DOWN:
       this.current = (this.current + (e.keyCode == UP? -1: 1)) % this.results.length
-
-      clearTimeout(this.searchTimeout) 
-      this.loading = false
       e.preventDefault()
       return
   }
+  
+  // Retrieves up to 5 courses from Model.courselist
+  this.results = Mu.Model.getMatchingCourses(self.query);
+  self.current = -1;
 
-  // This is soo that if people are typing.
-  // We only need make a request 200ms after they're done.
-  this.loading = true
-
-  clearTimeout(this.searchTimeout)
-  this.searchTimeout = setTimeout(function () {
-    if (!self.query.trim()) {
-      self.loading = false
-      self.results = []
-      self.current = -1
-      return
-    }
-    
-    Mu.Model.searchCourses(self.query).then(function (results) {
-      self.loading = false
-      self.results = JSON.parse(results).slice(0,5)
-      self.current = -1
-    }, function () {
-      self.loading = false
-
-    })
-  }, 400)
 }
 
 Control.addCourse = function (course) {
