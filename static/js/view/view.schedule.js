@@ -98,6 +98,8 @@ Schedule.displayGenerated = function(days) {
   for (var i = 0; i < 5; i++) {
     for (var j = days[i].length; j--;) {
       days[i][j].blocks[0].section.selected = true;
+      
+      
     }
   }
   View.Control.$forceUpdate();
@@ -109,8 +111,11 @@ function resetSectionsInDays(days) {
   //Setting all currently scheduled sections locked and selected to false
   for (var i = 0; i < 5; i++) {
     for (var j = days[i].length; j--;) {
-      days[i][j].blocks[0].section.selected = false;
-      days[i][j].blocks[0].section.locked = false;
+      for (var k = days[i][j].blocks.length; k--;) {
+        days[i][j].blocks[k].section.selected = false;
+        days[i][j].blocks[k].section.locked = false;
+      }
+      
     }
   }
 }
@@ -121,7 +126,9 @@ function prepareDays(currentDays, days) {
   //Setting all sections.selected to true (we set locked later when generate is clicked)
   for (var i = 0; i < 5; i++) {
     for (var j = days[i].length; j--;) {
-      days[i][j].blocks[0].section.selected = true;
+      for (var k = days[i][j].blocks.length; k--;) {
+        days[i][j].blocks[k].section.selected = true;
+      }
     }
   }
 }
