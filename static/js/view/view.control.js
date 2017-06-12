@@ -101,9 +101,10 @@ Control.addCourse = function (course) {
 
 Control.flushCourses = function () {
   var self = this
-  for (var course in this.courses[self.term]){
-    this.courses[self.term][course].active = false
-  }
+  //console.log(this.courses);
+  this.courses.forEach(course => {
+    course.active = false;
+  });
 }
 
 Control.generate = function () {
@@ -145,11 +146,37 @@ Control.select = function(section) {
 Control.newTemplate = function() {
   //Delegate to View.Schedule
   View.Schedule.newTemplate();
+
 }
 
 Control.register = function() {
   //Displays popup with link to sections
   console.log("registering")
+  var sectionList = [];
+  template = View.Schedule.templates[this.term][View.Schedule.index];
+  for (var i = template.length; i--;) {
+    for (var j = template[i].length; j--;) {
+      blocks = template[i][j].blocks;
+      blocks.forEach(sb => {
+        if (!sectionList.includes(sb.section.uniq))  sectionList.push(sb.section.uniq);
+      });
+    }
+  }
+
+  var html = "";
+  linkTemplate = document.getElementById("section__linkWrap").cloneNode(true);
+  linkTemplate.style.display = 'table';
+
+  sectionList.forEach(section => {
+    linkTemplate.getElementsByTagName('a')[0].innerHTML = section;
+    html += linkTemplate.outerHTML;
+  });
+
+  swal({
+    title: 'Click and register!',
+    html: html,
+    confirmButtonText: 'Done',
+  })
 }
 
 Control.removeCourse = function(course) {

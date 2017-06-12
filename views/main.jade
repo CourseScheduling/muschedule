@@ -5,6 +5,7 @@ html
     link(rel="stylesheet" href="/static/template.css")
     link(rel="stylesheet" href="/static/schedule.css")
     link(rel="stylesheet" href="/static/commons.css")
+    link(rel="stylesheet" href="/node_modules/sweetalert2/dist/sweetalert2.css")
     link(rel='stylesheet', href="https://fonts.googleapis.com/icon?family=Material+Icons")
     title µSchedule
   body
@@ -19,7 +20,7 @@ html
       #gen__exit(@click="halt()")
       include comps/schedule__loading
 
-
+    script(src="/node_modules/sweetalert2/dist/sweetalert2.min.js")
     script(src="/static/js/vue.js")
     script(src="/static/js/mu.main.js")
     script(src="/static/js/mu.model.js")

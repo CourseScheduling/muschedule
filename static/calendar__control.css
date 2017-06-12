@@ -207,3 +207,20 @@ body{
   float: left;
 }
 
+
+.section__linkWrap {
+  display: none;
+  color: black;
+  margin: auto;
+}
+  a.section__link {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 20px;
+    text-decoration: none;
+    color: black !important;
+  }
+  .section__linkWrap .checkmark {
+    display: inline-block;
+    padding: 5px;
+  }

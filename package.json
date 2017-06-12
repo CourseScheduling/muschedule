@@ -24,6 +24,7 @@
   "dependencies": {
     "async": "^2.1.5",
     "pump": "^1.0.2",
+    "sweetalert2": "^6.6.5",
     "whoop": "0.0.2",
     "xml2js": "^0.4.17"
   },
