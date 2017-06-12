@@ -118,6 +118,43 @@ Model.prototype.addCourse = function (course) {
       section.time = course.schedules[section.schedule];
     });
   }
+
+  /* * Moving lecture to the front (this will be done in scraper in the future, so verbosity is okay)
+    1. Swap Lecture to the front if exists
+    2. For each term: Go through Each section and replace section.type 
+    3.                Swap the position of sectionMap
+    4.                Swap mangled
+  */
+  var tempIndex = -1;
+  for (var i = course.types.length; i--;) {
+    if (course.types[i] == "Lecture") {
+      temp = course.types[0];
+      course.types[0] = "Lecture";
+      course.types[i] = temp;
+      tempIndex = i;
+      break;
+    }
+  }
+  for (term in course.terms) {
+    sections = course.terms[term].sections;
+    sectionMap = course.terms[term].sectionMap;
+    mangled = course.terms[term].mangled;
+
+    sections.forEach(section => {
+      if (section.type == 0) section.type = tempIndex;
+      if (section.type == tempIndex) section.type = 0;
+    })
+    temp = sectionMap[0];
+    sectionMap[0] = sectionMap[tempIndex];
+    sectionMap[tempIndex] = temp;
+    mangled.forEach(mangledCombo => {
+      t = mangledCombo[0];
+      mangledCombo[0] = mangledCombo[tempIndex];
+      mangledCombo[tempIndex] = t;
+    });
+  }
+
+  /*******/
   this.courses.push(course)  
 }
 
