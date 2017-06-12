@@ -154,8 +154,10 @@ Generate._updateDays = function(scheduleToRender, courses) {
     course = courses[scheduleToRender[i].courseIndex];
 
     for (var ml = mangledCombo.length; ml--; ) {
+      console.log('sectionindex',mangledCombo[ml]);
+      console.log('course.terms[term]', course.terms[term])
       var section = course.terms[term].sections[mangledCombo[ml]]
-      var time = course.schedules[section.schedule];      
+      var time = section.time;    
       var color = ColourGen.get(section.uniq);
 
       //Add to days if there is a section on this day
@@ -231,7 +233,7 @@ Generate.schedule = function() {
       swal({
         title: "No schedules found... ):",
         type: 'warning',
-        timer: 2000,
+        timer: 1000,
         showConfirmButton: false
       })
       return;
