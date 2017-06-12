@@ -6,19 +6,19 @@ function Controller () {
 Controller.prototype._filter = function(courses, lockedSections, filteredCourseMap, term) {
   //Filtering lockedSections
   for (var i = courses.length; i--;) {
-    ls = lockedSections.find(element => {
-      return element.code == courses[i].code;
-    });
-    if (ls) {
-      termObject = courses[i].terms[term];
-      index = termObject.sections.findIndex(section => {
-        return section.uniq == ls.uniq;
-      });
-      filteredMangled = termObject.mangled.filter(combo => {
+    for (var l = lockedSections.length; l--; ) {
+      if (lockedSections[l].code == courses[i].code) {
+        ls = lockedSections[l];
+        termObject = courses[i].terms[term];
+        index = termObject.sections.findIndex(section => {
+          return section.uniq == ls.uniq;
+        })
+        filteredMangled = termObject.mangled.filter(combo => {
         return combo[ls.type] == index 
-      });
-      filteredCourseMap.push(termObject, termObject.mangled);
-      termObject.mangled = filteredMangled;
+        });
+        filteredCourseMap.push(termObject, termObject.mangled);
+        termObject.mangled = filteredMangled;
+      }
     }
   }
 }
