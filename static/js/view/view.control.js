@@ -2,6 +2,7 @@ const UP = 38
 const DOWN = 40
 const ENTER = 13
 var TERM = 't1'
+var listenersRegistered = false;
 
 /* The control panel is on the right. */
 var Control = new Vue({
@@ -134,8 +135,18 @@ Control.newTemplate = function() {
 }
 
 Control.register = function() {
+  if (!listenersRegistered) {
+    //Changing color with js for now. Might be able to do this in pure css
+    document.addEventListener('click', (e) => {
+      if(e.target && e.target.classList.contains('section__link')) {
+        e.target.previousSibling.style.color = 'green';
+      }
+    });
+    listenersRegistered = true;
+  }
+
+
   //Displays popup with link to sections
-  console.log("registering")
   var sectionList = [];
   template = View.Schedule.templates[this.term][View.Schedule.index];
   for (var i = template.length; i--;) {
@@ -152,7 +163,10 @@ Control.register = function() {
   linkTemplate.style.display = 'table';
 
   sectionList.forEach(section => {
-    linkTemplate.getElementsByTagName('a')[0].innerHTML = section;
+    linkElement = linkTemplate.getElementsByTagName('a')[0];
+    sectionSplit = section.split(" ");
+    linkElement.innerHTML = section;
+    linkElement.href = `https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=${sectionSplit[0]}&course=${sectionSplit[1]}&section=${sectionSplit[2]}`;
     html += linkTemplate.outerHTML;
   });
 
