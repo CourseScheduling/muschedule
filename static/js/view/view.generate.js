@@ -27,7 +27,7 @@ var Generate = new Vue({
     lockedSections: [],
     mousedown: false,
     addBreak: true,
-    rescheduleTimeout: null
+    rescheduleTimeout: null,
   },    
   methods: {
     start: null,
@@ -215,6 +215,7 @@ Generate.start = function () {
 
   this.visible = true 
   this.loading = true
+
   this.schedule();  
   //TODO:: Handle case when no schedules found
   this.loading = false
@@ -224,6 +225,17 @@ Generate.schedule = function() {
   Mu.Controller.schedule_2()
   if (Mu.Controller.validSchedules.length == 0) {
     console.log("No schedules found");
+    if (this.breaks.join(',') == [0,0,0,0,0].join(',')) {
+      this.loading = false;
+      this.visible = false;
+      swal({
+        title: "No schedules found... ):",
+        type: 'warning',
+        timer: 2000,
+        showConfirmButton: false
+      })
+      return;
+    }
     this.breaks = JSON.parse(JSON.stringify(this.tempBreaks));
     this.breakTable = JSON.parse(JSON.stringify(this.tempBreakTable));
     Mu.Controller.schedule_2();

@@ -25,7 +25,7 @@ Schedule.addSection = function (section, course, perm) {
   section.temporary = !perm
   section.active = true
   time = course.schedules[section.schedule]; //used when removing section
-  section.time = time;
+
   color = ColourGen.get(section.uniq)
  
 
@@ -74,9 +74,9 @@ Schedule.removeSection = function (section, perm) {
       for (var n = sb.blocks.length; n--;) {
         if (sb.blocks[n].section.uniq == section.uniq) {
           sb.blocks.splice(n, 1);
-
-          sb.time = sb.blocks.reduce((acc, sb) => {
-            return acc | sb.section.time[i];
+          console.log("sb.blocks", sb.blocks);
+          sb.time = sb.blocks.reduce((acc, b) => {
+            return acc | b.section.time[i];
           }, 0);
 
           if (sb.blocks.length == 0) {

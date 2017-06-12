@@ -111,6 +111,13 @@ Model.prototype._request = function (opts) {
 
 Model.prototype.addCourse = function (course) {
   var self = this  
+  //Updating section.time
+  for (term in course.terms) {
+    sections = course.terms[term].sections
+    sections.forEach(section => {
+      section.time = course.schedules[section.schedule];
+    });
+  }
   this.courses.push(course)  
 }
 
