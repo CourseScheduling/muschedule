@@ -14,18 +14,20 @@ Controller.prototype._filter = function(courses, lockedSections, filteredCourseM
           return section.uniq == ls.uniq;
         })
         filteredMangled = termObject.mangled.filter(combo => {
-        return combo[ls.type] == index 
+          return combo[ls.type] == index 
         });
-        filteredCourseMap.push(termObject, termObject.mangled);
+        filteredCourseMap.push([termObject, termObject.mangled]);
         termObject.mangled = filteredMangled;
       }
     }
   }
+
 }
 
 Controller.prototype._restore = function(filteredCourseMap) {
+  console.log(filteredCourseMap);
   for (var i = filteredCourseMap.length; i--;) {
-    filteredCourseMap[0].mangled = filteredCourseMap[1];
+    filteredCourseMap[i][0].mangled = filteredCourseMap[i][1];
   }
 }
 
