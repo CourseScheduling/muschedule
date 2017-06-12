@@ -1,5 +1,5 @@
-//const API_URL = 'http://schedulerserver.azurewebsites.net/api/v1/ubc'
-const API_URL = 'http://localhost:3000/api/v1/ubc'
+const API_URL = 'http://schedulerserver.azurewebsites.net/api/v1/ubc'
+//const API_URL = 'http://localhost:3000/api/v1/ubc'
 function Model () {
   this.courses = []
 }

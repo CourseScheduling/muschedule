@@ -28,6 +28,10 @@
         letter-spacing: 1px;
         font-weight: 100;
       }
+      .gen__loadingDesc {
+        color: #FFF;
+        font-weight: 100;
+      }
       .gen__loadingSubText{
         font-family: Montserrat;
         font-size: 12px;

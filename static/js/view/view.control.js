@@ -85,7 +85,10 @@ Control.search = function (e) {
 
 Control.addCourse = function (course) {
   var self = this
+  start = performance.now();
+  console.log("Getting course");
   Mu.Model.getCourse(course.code).then(function (course) {
+    console.log("received course. took: ", performance.now() - start);
     course = JSON.parse(course)
     course.colour = ColourGen.add(course.code)
     // Process the course
@@ -178,6 +181,8 @@ Control.register = function() {
     confirmButtonText: 'Done',
   })
 }
+
+
 
 Control.removeCourse = function(course) {
   console.log("Removing course", course)
