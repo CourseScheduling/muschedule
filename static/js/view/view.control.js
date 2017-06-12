@@ -62,7 +62,6 @@ Control.search = function (e) {
   // Retrieves up to 5 courses from Model.courselist
   this.results = Mu.Model.getMatchingCourses(self.query);
   self.current = -1;
-
 }
 
 Control.addCourse = function (course) {

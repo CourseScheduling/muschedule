@@ -19,14 +19,18 @@ Model.prototype.getCourselist = function() {
     url: '/courselist'
   }).then(courselist => {
     console.log("Fetching courselist took: ", performance.now() - start);
-    self.courselist = JSON.parse(courselist);
+    cl = JSON.parse(courselist);
+
+    self.courselist = cl;
   });
 }
 
 Model.prototype.getMatchingCourses = function(query) {
   //For now - brute force - later use some binary search or smth
+  if (!query) return [];
+
   var results = [];
-  for (var i = this.courselist.length; i--;) {
+  for (var i = 0; i < this.courselist.length; i++) {
     if (this.courselist[i][0].startsWith(query.toUpperCase())) {
       results.push({
         'code':this.courselist[i][0],
