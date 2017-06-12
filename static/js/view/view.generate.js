@@ -182,7 +182,7 @@ Generate._updateDays = function(scheduleToRender, courses) {
 Generate.draw = function(index) {
   this.days = [[], [], [], [], []];
   var scheduleToRender = Mu.Controller.getSchedule(this.index);
-  var courses = Mu.Model.courses;
+  var courses = View.Control.getCourses();
   this._updateDays(scheduleToRender, courses);
   this.maxIndex = Mu.Controller.validSchedules.length;
 }

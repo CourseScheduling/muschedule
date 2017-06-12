@@ -11,7 +11,7 @@ var Control = new Vue({
     term: TERM,
     query: "",
     results: [],
-    courses: [],
+    courses: {'t1':[], 't2':[]},
     courseList: [],
     loading: false,
     current: -1
@@ -77,7 +77,7 @@ Control.addCourse = function (course) {
     Mu.Model.addCourse(course)
     course.active = true
     self.flushCourses()
-    self.courses.push(course)
+    self.courses[self.term].push(course)
 
     // Vue can't auto-update maps.
     self.$forceUpdate()
@@ -87,7 +87,7 @@ Control.addCourse = function (course) {
 Control.flushCourses = function () {
   var self = this
   //console.log(this.courses);
-  this.courses.forEach(course => {
+  this.courses[this.term].forEach(course => {
     course.active = false;
   });
 }
@@ -182,12 +182,15 @@ Control.register = function() {
 Control.removeCourse = function(course) {
   console.log("Removing course", course)
   Mu.Model.removeCourse(course);
-  for (var i = this.courses.length; i--;) {
-    if (this.courses[i].code == course.code) {
-      this.courses.splice(i, 1);
+  for (var i = this.courses[term].length; i--;) {
+    if (this.courses[term][i].code == course.code) {
+      this.courses[term].splice(i, 1);
       return;
     }
   }
+}
 
+Control.getCourses = function() {
+  return this.courses[this.term];
 }
 View.Control = Control
