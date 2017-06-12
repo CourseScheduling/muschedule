@@ -37,7 +37,11 @@ Control.toggleTerm = function (term) {
 }
 
 
-
+Control._reset = function() {
+  this.query = "";
+  this.results = [];
+  this.current = -1;
+} 
 Control.search = function (e) {
   var self = this
 
@@ -48,9 +52,7 @@ Control.search = function (e) {
         if (!Mu.Model.contains(this.results[this.current].code)) {
           this.addCourse(this.results[this.current])
         }
-        this.query = "";
-        this.results = [];
-        this.current = -1;
+        this._reset();
 
       }
     case UP:
@@ -77,6 +79,7 @@ Control.addCourse = function (course) {
     Mu.Model.addCourse(course)
     course.active = true
     self.flushCourses()
+    self._reset()
     self.courses.push(course)
 
     // Vue can't auto-update maps.
