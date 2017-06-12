@@ -154,10 +154,8 @@ Generate._updateDays = function(scheduleToRender, courses) {
     course = courses[scheduleToRender[i].courseIndex];
 
     for (var ml = mangledCombo.length; ml--; ) {
-      console.log('sectionindex',mangledCombo[ml]);
-      console.log('course.terms[term]', course.terms[term])
       var section = course.terms[term].sections[mangledCombo[ml]]
-      var time = section.time;    
+      var time = course.schedules[section.schedule];      
       var color = ColourGen.get(section.uniq);
 
       //Add to days if there is a section on this day
@@ -184,7 +182,7 @@ Generate._updateDays = function(scheduleToRender, courses) {
 Generate.draw = function(index) {
   this.days = [[], [], [], [], []];
   var scheduleToRender = Mu.Controller.getSchedule(this.index);
-  var courses = View.Control.getCourses();
+  var courses = Mu.Model.courses;
   this._updateDays(scheduleToRender, courses);
   this.maxIndex = Mu.Controller.validSchedules.length;
 }
@@ -233,7 +231,7 @@ Generate.schedule = function() {
       swal({
         title: "No schedules found... ):",
         type: 'warning',
-        timer: 1000,
+        timer: 2000,
         showConfirmButton: false
       })
       return;
