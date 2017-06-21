@@ -193,7 +193,7 @@ Control.register = function() {
 
 Control.removeCourse = function(course) {
   console.log("Removing course", course)
-  //View.Schedule.removeCourse(course);
+  View.Schedule.removeCourse(course);
   Mu.Model.removeCourse(course);
   for (var i = this.courses[this.term].length; i--;) {
     if (this.courses[this.term][i].code == course.code) {

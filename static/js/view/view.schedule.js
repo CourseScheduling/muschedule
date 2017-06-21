@@ -89,6 +89,29 @@ Schedule.removeSection = function (section, perm) {
   this.$forceUpdate();
 }
 
+// Removes all sections of this course
+Schedule.removeCourse = function(course) {
+  days = this.templates[this.term][this.index];
+
+  for (var i = 0; i < 5; i++) {
+    for (var s = days[i].length; s--;) {
+      var sb = days[i][s];
+      for (var n = sb.blocks.length; n--;) {
+        if (sb.blocks[n].section.code == course.code) {
+          sb.blocks.splice(n, 1);
+          sb.time = sb.blocks.reduce((acc, b) => {
+            return acc | b.section.time[i];
+          }, 0);
+
+          if (sb.blocks.length == 0) {
+            days[i].splice(s, 1);            
+          }         
+        }
+      }
+    }
+  }
+  this.$forceUpdate();
+}
 
 
 Schedule.displayGenerated = function(days) {
@@ -170,8 +193,5 @@ Schedule.toggleTerm = function(term) {
   this.$forceUpdate();
 }
 
-Schedule.reomveCourse = function(course) {
-
-}
 
 View.Schedule = Schedule
