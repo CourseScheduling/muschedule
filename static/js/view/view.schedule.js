@@ -141,10 +141,7 @@ function resetSectionsInDays(days) {
     }
   }
 }
-function prepareDays(currentDays, days) {
-  //Setting all currently scheduled sections locked and selected to false
-  this.resetSectionsInDays(currentDays);
-
+function selectSectionsInDays(days) {
   //Setting all sections.selected to true (we set locked later when generate is clicked)
   for (var i = 0; i < 5; i++) {
     for (var j = days[i].length; j--;) {
@@ -153,6 +150,13 @@ function prepareDays(currentDays, days) {
       }
     }
   }
+}
+function prepareDays(currentDays, days) {
+  //Setting all currently scheduled sections locked and selected to false
+  this.resetSectionsInDays(currentDays);
+
+  //Setting all sections.selected to true (we set locked later when generate is clicked)
+  selectSectionsInDays(days);
 }
 
 Schedule.displayPrevious = function() {
@@ -190,9 +194,13 @@ Schedule.currentDays = function() {
 }
 
 Schedule.toggleTerm = function(term) {
+  var currentDays = this.templates[this.term][this.index];
+  resetSectionsInDays(currentDays)
   this.term = term;
   this.index = 0;
   this.maxIndex = this.templates[this.term].length;
+  currentDays = this.templates[this.term][this.index];
+  selectSectionsInDays(currentDays);
   this.$forceUpdate();
 }
 

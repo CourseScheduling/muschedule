@@ -1,4 +1,4 @@
-var COLORS = [
+/*var COLORS = [
   "#26A65B",
   "#1E824C",
   "#4DAF7C",
@@ -15,15 +15,38 @@ var COLORS = [
   "#3A539B",
   "#1E8BC3",
   "#1F3A93"
-]
+]*/
+
+var COLORS = [
+  "#5271FF",
+  "#52A5FF", 
+  "#10bbff", 
+  "#7690AD", 
+  "#8052FF", 
+  "#C15EFF", 
+  "#7340A3", 
+  "#4EB2BF", 
+  "#FF4D4D", 
+  "#43AB5B", 
+  "#348547", 
+  "#5EDB7B", 
+  "#76AD83", 
+  "FF824D", 
+  "#4EBF87", 
+  "#424385", 
+  "#E36DBA", 
+  "#FFAC52"];
+
 var ColourGen = {
   colorMap: {},
   usedMap: {},
   add: function (course) {
     if (ColourGen.colorMap[course]) return ColourGen.colorMap[course];
     var i = 0
-    while(ColourGen.usedMap[COLORS[(i = ~~(Math.random() * COLORS.length))]]){}
-
+    //while(ColourGen.usedMap[COLORS[(i = ~~(Math.random() * COLORS.length))]]){}
+    while(ColourGen.usedMap[i] != null) {
+      i = (i + 1) % COLORS.length;
+    }
     ColourGen.colorMap[course] = COLORS[i]
     ColourGen.usedMap[i] = course
     return COLORS[i]

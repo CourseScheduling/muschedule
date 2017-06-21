@@ -34,10 +34,10 @@ Controller.prototype.schedule_2 = function () {
   var start = performance.now();
   var self = this;
   courses = View.Control.getCourses();
-  //var term = View.Control.term;
+  if (!courses) return;
+  var term = View.Control.term;
   var lockedSections = View.Generate.lockedSections;
   var filteredCourseMap = [];
-
   this._filter(courses, lockedSections, filteredCourseMap, term);
 
   this.validSchedules = [];
@@ -88,7 +88,6 @@ Controller.prototype.schedule_2 = function () {
   var acc = [];
   recursiveSchedule(breaks[0], breaks[1] , breaks[2], breaks[3], breaks[4],0,acc);
   console.info('Scheduling took: ' + (performance.now() - start) + 'ms')
-
   this._restore(filteredCourseMap);
 
 
