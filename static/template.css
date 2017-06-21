@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500');
 
+
 body{
   background: url(/static/img/background.png) #232526;  
   background-size: 20%;
@@ -9,6 +10,7 @@ body{
 }
   body * {
     user-select: none;
+    box-sizing:border-box;
   }
 /** Header stuff on the Calendar */
 #calendar__header{
