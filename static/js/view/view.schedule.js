@@ -161,6 +161,7 @@ Schedule.displayPrevious = function() {
   if (index == -1) index = this.maxIndex - 1;
   this.index = index;
   prepareDays(currentDays, this.templates[this.term][this.index])
+  View.Control.index = this.index;
   View.Control.$forceUpdate();
 }
 
@@ -168,6 +169,7 @@ Schedule.displayNext = function() {
   currentDays = this.templates[this.term][this.index];
   this.index = (this.index + 1) % this.maxIndex;
   prepareDays(currentDays, this.templates[this.term][this.index]);
+  View.Control.index = this.index;
   View.Control.$forceUpdate();
 }
 
@@ -179,6 +181,7 @@ Schedule.newTemplate = function () {
 
   this.index = this.templates[this.term].length-1;
   this.maxIndex = this.templates[this.term].length;
+  View.Control.index = this.index;
   View.Control.$forceUpdate();
 }
 

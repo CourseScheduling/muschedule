@@ -33,8 +33,8 @@ Controller.prototype._restore = function(filteredCourseMap) {
 Controller.prototype.schedule_2 = function () {
   var start = performance.now();
   var self = this;
-  courses = Mu.Model.courses;
-  var term = View.Control.term;
+  courses = View.Control.getCourses();
+  //var term = View.Control.term;
   var lockedSections = View.Generate.lockedSections;
   var filteredCourseMap = [];
 

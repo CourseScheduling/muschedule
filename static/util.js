@@ -20,6 +20,7 @@ var ColourGen = {
   colorMap: {},
   usedMap: {},
   add: function (course) {
+    if (ColourGen.colorMap[course]) return ColourGen.colorMap[course];
     var i = 0
     while(ColourGen.usedMap[COLORS[(i = ~~(Math.random() * COLORS.length))]]){}
 

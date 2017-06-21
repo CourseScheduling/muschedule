@@ -17,7 +17,8 @@ var Control = new Vue({
     },
     courseList: [],
     loading: false,
-    current: -1
+    current: -1,
+    index: 0
   },
   methods: {
     toggleTerm: null,
@@ -35,6 +36,7 @@ var Control = new Vue({
 Control.toggleTerm = function (term) {
   TERM = term
   this.term = term
+  this.index = 0;
   View.Schedule.toggleTerm(term);
   this.$forceUpdate()
 }
@@ -71,8 +73,10 @@ Control.search = function (e) {
 }
 
 Control._contains = function(courseCode) {
-  for (var i = this.courses[this.term].length; i--;) {
-    if (this.courses[this.term][i].code == courseCode) return true;
+  courses = this.courses[this.term][this.index];
+  if (!courses) return false;
+  for (var i = courses.length; i--;) {
+    if (courses[i].code == courseCode) return true;
   }
   return false;
 }
@@ -89,7 +93,7 @@ Control.addCourse = function (course) {
     course.active = true
     self.flushCourses()
     self._reset()
-    self.courses[self.term].push(course)
+    self.courses[self.term][self.index]==null ? self.courses[self.term].push([course]) : self.courses[self.term][self.index].push(course);
 
     // Vue can't auto-update maps.
     self.$forceUpdate()
@@ -99,7 +103,8 @@ Control.addCourse = function (course) {
 Control.flushCourses = function () {
   var self = this
   //console.log(this.courses);
-  this.courses[self.term].forEach(course => {
+  if (!this.courses[self.term][self.index]) return;
+  this.courses[self.term][self.index].forEach(course => {
     course.active = false;
   });
 }
@@ -195,12 +200,17 @@ Control.removeCourse = function(course) {
   console.log("Removing course", course)
   View.Schedule.removeCourse(course);
   Mu.Model.removeCourse(course);
-  for (var i = this.courses[this.term].length; i--;) {
-    if (this.courses[this.term][i].code == course.code) {
-      this.courses[this.term].splice(i, 1);
+  courses = this.courses[this.term][this.index];
+  for (var i = courses.length; i--;) {
+    if (courses[i].code == course.code) {
+      courses.splice(i, 1);
       return;
     }
   }
 
+}
+
+Control.getCourses = function () {
+  return this.courses[this.term][this.index];
 }
 View.Control = Control
