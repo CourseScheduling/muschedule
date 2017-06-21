@@ -74,7 +74,6 @@ Schedule.removeSection = function (section, perm) {
       for (var n = sb.blocks.length; n--;) {
         if (sb.blocks[n].section.uniq == section.uniq) {
           sb.blocks.splice(n, 1);
-          console.log("sb.blocks", sb.blocks);
           sb.time = sb.blocks.reduce((acc, b) => {
             return acc | b.section.time[i];
           }, 0);
@@ -170,4 +169,9 @@ Schedule.toggleTerm = function(term) {
   this.maxIndex = this.templates[this.term].length;
   this.$forceUpdate();
 }
+
+Schedule.reomveCourse = function(course) {
+
+}
+
 View.Schedule = Schedule

@@ -11,7 +11,10 @@ var Control = new Vue({
     term: TERM,
     query: "",
     results: [],
-    courses: [],
+    courses: {
+      't1': [],
+      't2': []
+    },
     courseList: [],
     loading: false,
     current: -1
@@ -49,7 +52,7 @@ Control.search = function (e) {
   switch (e.keyCode) {
     case ENTER:
       if (this.current >= 0 && this.current < this.results.length) {
-        if (!Mu.Model.contains(this.results[this.current].code)) {
+        if (!this._contains(this.results[this.current].code)) {
           this.addCourse(this.results[this.current])
         }
         this._reset();
@@ -67,6 +70,12 @@ Control.search = function (e) {
   self.current = -1;
 }
 
+Control._contains = function(courseCode) {
+  for (var i = this.courses[this.term].length; i--;) {
+    if (this.courses[this.term][i].code == courseCode) return true;
+  }
+  return false;
+}
 Control.addCourse = function (course) {
   var self = this
   start = performance.now();
@@ -80,7 +89,7 @@ Control.addCourse = function (course) {
     course.active = true
     self.flushCourses()
     self._reset()
-    self.courses.push(course)
+    self.courses[self.term].push(course)
 
     // Vue can't auto-update maps.
     self.$forceUpdate()
@@ -90,7 +99,7 @@ Control.addCourse = function (course) {
 Control.flushCourses = function () {
   var self = this
   //console.log(this.courses);
-  this.courses.forEach(course => {
+  this.courses[self.term].forEach(course => {
     course.active = false;
   });
 }
@@ -184,10 +193,11 @@ Control.register = function() {
 
 Control.removeCourse = function(course) {
   console.log("Removing course", course)
+  //View.Schedule.removeCourse(course);
   Mu.Model.removeCourse(course);
-  for (var i = this.courses.length; i--;) {
-    if (this.courses[i].code == course.code) {
-      this.courses.splice(i, 1);
+  for (var i = this.courses[this.term].length; i--;) {
+    if (this.courses[this.term][i].code == course.code) {
+      this.courses[this.term].splice(i, 1);
       return;
     }
   }
